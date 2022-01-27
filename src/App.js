@@ -1,6 +1,8 @@
 import './App.css';
 import styled from 'styled-components';
 import { AccountBox } from './accountBox';
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import Dashboard from './dashboard';
 
 const AppContainer = styled.div`
   width: 100%;
@@ -13,9 +15,14 @@ const AppContainer = styled.div`
 
 function App() {
   return (
-    <AppContainer>
-      <AccountBox/>
-    </AppContainer>
+    <Router>
+      <Switch>
+        <AppContainer>
+            <Route exact path="/" component={AccountBox} />
+            <Route exact path="/dashboard" component={Dashboard} />
+        </AppContainer>
+      </Switch>
+    </Router>
   );
 }
 
