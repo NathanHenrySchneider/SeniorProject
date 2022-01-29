@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton } from "./common";
-import { Marginer } from "../marginer"
+import { Marginer } from "../components/marginer"
 import { AccountContext } from "./accountContext";
 import { useHistory } from "react-router-dom"; 
 
