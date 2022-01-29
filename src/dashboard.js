@@ -1,7 +1,7 @@
 import React from "react";
 
 function Dashboard(){
-    return <div>This will be the dashboard page~</div>
+    return <div>Will remove this so just ignore</div>
 }
 
 export default Dashboard;
