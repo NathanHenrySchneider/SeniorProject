@@ -9,6 +9,7 @@ export function LoginForm(props){
 
     const { switchToSignup } = useContext(AccountContext);
     let history = useHistory();
+    
 
     return <BoxContainer>
         <FormContainer>

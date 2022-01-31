@@ -1,21 +1,36 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton } from "./common";
 import { Marginer } from "../components/marginer"
 import { AccountContext } from "./accountContext";
 
 export function SignUpForm(props){
     const { switchToLogin } = useContext(AccountContext);
+    const[name, setName] = useState('');
+    const[email, setEmail] = useState('');
+    const[password, setPassword] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("Dd")
+        console.log("name: " + name)
+        console.log("email: " + email)
+        console.log("password: " + password)
+    }
 
     return <BoxContainer>
-        <FormContainer>
-            <Input type ="text" name= "txt" placeholder="Full Name"/>
-            <Input type="email" name="email" placeholder="Email"/>
-            <Input type ="password" name="password" placeholder="Password"/>
+        <FormContainer onSubmit = {e => {handleSubmit(e)}}>
+            <Input type ="text" name= "txt" placeholder="Full Name" 
+                onChange = {e => setName(e.target.value)}/>
+            <Input type="email" name="email" placeholder="Email"
+                onChange = {e => setEmail(e.target.value)}/>
+            <Input type ="password" name="password" placeholder="Password"
+                onChange = {e => setPassword(e.target.value)}/>
             <Input type ="password" name="password" placeholder="Confirm Password"/>
+            <Marginer direction="vertical" margin="1.6em" />
+            <SubmitButton type="submit">Register</SubmitButton>
+            <Marginer direction="vertical" margin="1em" />
         </FormContainer>
-        <Marginer direction="vertical" margin="1.6em" />
-        <SubmitButton type="submit">Register</SubmitButton>
-        <Marginer direction="vertical" margin="1em" />
+        
         <MutedLink>Already have an account?<BoldLink href ="#" onClick={switchToLogin}>Login</BoldLink></MutedLink>
     </BoxContainer>
 }
