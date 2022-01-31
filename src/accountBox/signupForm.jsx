@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton } from "./common";
 import { Marginer } from "../components/marginer"
 import { AccountContext } from "./accountContext";
+import axios from "axios";
 
 export function SignUpForm(props){
     const { switchToLogin } = useContext(AccountContext);
@@ -11,10 +12,20 @@ export function SignUpForm(props){
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Dd")
         console.log("name: " + name)
         console.log("email: " + email)
         console.log("password: " + password)
+        axios.post('http://localhost:3001/register', {
+            full_name: name,
+            email : email,
+            password: password
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error.response);
+          });
     }
 
     return <BoxContainer>
