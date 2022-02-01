@@ -32,7 +32,8 @@ export function SignUpForm(props){
           .catch(function (error) {
             setError(true);
             // console.log(error.response.data);
-            setMessage(error.response.data);
+            if(error.response) setMessage(error.response.data)
+            else setMessage("Something went wrong.")
           });
     }
 
