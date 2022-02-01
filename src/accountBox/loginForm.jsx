@@ -15,14 +15,13 @@ export function LoginForm(props){
         <FormContainer>
             <Input type="email" name="email" placeholder="Email"/>
             <Input type ="password" name= "password" placeholder="Password"/>
+            <Marginer direction="vertical" margin={10} />
+            <MutedLink href = "#">Forgot your password?</MutedLink>
+            <Marginer direction="vertical" margin="1.6em" />
+            <SubmitButton type="button" onClick={() => {history.push("/CustomerHomePage")}}>Login</SubmitButton>
+            <Marginer direction="vertical" margin="1em" />
         </FormContainer>
-        <Marginer direction="vertical" margin={10} />
-        <MutedLink href = "#">Forgot your password?</MutedLink>
-        <Marginer direction="vertical" margin="1.6em" />
-        <SubmitButton type="button" onClick={() => {history.push("/CustomerHomePage")}}>Login</SubmitButton>
-        <Marginer direction="vertical" margin="1em" />
         <MutedLink>Don't have an account?<BoldLink href="#" onClick={switchToSignup}>Sign Up</BoldLink></MutedLink>
-        <Marginer direction="vertical" margin={10} />
         <Marginer direction="vertical" margin={10} />
         <MutedLink href = "#"><Link to="/EmployeeLogin">Employee Login</Link></MutedLink>
     </BoxContainer>
