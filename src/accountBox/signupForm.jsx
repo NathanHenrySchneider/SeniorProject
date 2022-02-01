@@ -4,12 +4,15 @@ import { Marginer } from "../components/marginer"
 import { AccountContext } from "./accountContext";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import Alert from 'react-bootstrap/Alert'
 
 export function SignUpForm(props){
     const { switchToLogin } = useContext(AccountContext);
     const[name, setName] = useState('');
     const[email, setEmail] = useState('');
     const[password, setPassword] = useState('');
+    const[err, setError] = useState(false);
+    const[message, setMessage] = useState('');
     const history = useHistory();
 
     const handleSubmit = (e) => {
@@ -27,7 +30,9 @@ export function SignUpForm(props){
             history.push("/CustomerHomePage")
           })
           .catch(function (error) {
-            console.log(error.response);
+            setError(true);
+            // console.log(error.response.data);
+            setMessage(error.response.data);
           });
     }
 
@@ -41,6 +46,7 @@ export function SignUpForm(props){
                 onChange = {e => setPassword(e.target.value)}/>
             <Input type ="password" name="password" placeholder="Confirm Password"/>
             <Marginer direction="vertical" margin="1.6em" />
+            {err ? <Alert variant = "danger">{message}</Alert> : <></>}
             <SubmitButton type="submit">Register</SubmitButton>
             <Marginer direction="vertical" margin="1em" />
         </FormContainer>
