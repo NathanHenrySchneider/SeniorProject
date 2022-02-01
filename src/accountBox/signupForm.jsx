@@ -3,12 +3,14 @@ import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton }
 import { Marginer } from "../components/marginer"
 import { AccountContext } from "./accountContext";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 export function SignUpForm(props){
     const { switchToLogin } = useContext(AccountContext);
     const[name, setName] = useState('');
     const[email, setEmail] = useState('');
     const[password, setPassword] = useState('');
+    const history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -22,6 +24,7 @@ export function SignUpForm(props){
           })
           .then(function (response) {
             console.log(response);
+            history.push("/CustomerHomePage")
           })
           .catch(function (error) {
             console.log(error.response);
