@@ -23,7 +23,7 @@ export const MutedLink = styled.a`
 `;
 
 export const BoldLink = styled.a`
-    font-size: 12px;
+    font-size: 14px;
     color: rgba(0,212,255,1);
     font-weight: 500;
     text-decoration: none;
