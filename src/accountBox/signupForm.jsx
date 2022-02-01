@@ -12,9 +12,9 @@ export function SignUpForm(props){
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("name: " + name)
-        console.log("email: " + email)
-        console.log("password: " + password)
+        // console.log("name: " + name)
+        // console.log("email: " + email)
+        // console.log("password: " + password)
         axios.post('http://localhost:3001/register', {
             full_name: name,
             email : email,
