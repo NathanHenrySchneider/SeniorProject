@@ -75,7 +75,7 @@ export function CustomerHomePage(props){
 				<img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/>
 			</ImageComponent>
 			<TitleComponent>
-				<h4>Appointments</h4>
+            <h4><Link to="/customerhomepage/appointments">Appointments</Link></h4>
 			</TitleComponent>
 		</Card>
         <Card>
@@ -83,7 +83,7 @@ export function CustomerHomePage(props){
 				<img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/>
 			</ImageComponent>
 			<TitleComponent>
-				<h4>VideoCall</h4>
+            <h4><Link to="/customerhomepage/videocall">Video Call</Link></h4>
 			</TitleComponent>
 		</Card>
         <Card>
@@ -91,7 +91,7 @@ export function CustomerHomePage(props){
 				<img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/>
 			</ImageComponent>
 			<TitleComponent>
-				<h4>Chat</h4>
+            <h4><Link to="/customerhomepage/chat">Chat</Link></h4>
 			</TitleComponent>
 		</Card>
         <Card>
@@ -99,7 +99,7 @@ export function CustomerHomePage(props){
 				<img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/>
 			</ImageComponent>
 			<TitleComponent>
-				<h4>Documents</h4>
+            <h4><Link to="/customerhomepage/documents">Documents</Link></h4>
 			</TitleComponent>
 		</Card>
 
