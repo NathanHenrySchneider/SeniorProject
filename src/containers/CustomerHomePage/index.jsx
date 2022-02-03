@@ -55,9 +55,10 @@ const TitleComponent = styled.div`
 `;
 
 export function CustomerHomePage(props){
-    return (
-    <PageContainer>
+    return (<>
         <NavBar />
+
+    <PageContainer>
         <Main>
 		<div>
 			<PseudoBorder>Home Page</PseudoBorder>
@@ -107,6 +108,6 @@ export function CustomerHomePage(props){
 
 
 	</Main>
-    </PageContainer>
+    </PageContainer></>
     );
 }
