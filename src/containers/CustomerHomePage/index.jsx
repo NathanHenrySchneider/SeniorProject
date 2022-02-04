@@ -4,7 +4,8 @@ import { NavBar } from "../../components/navbar";
 import { PageContainer } from "../../components/pageContainer";
 import { Link } from "react-router-dom";
 import axios from 'axios';
-
+import { useState } from "react";
+import { useEffect } from "react";
 const Main = styled.div`
     margin: 2%;
     height: 684px;
@@ -54,23 +55,24 @@ const TitleComponent = styled.div`
     
 `;
 
-
 export function CustomerHomePage(props){
-	const config = {
-		  withCredentials: true
-	}
-	axios.defaults.withCredentials = true;
+	const [email, setEmail] = useState('Not logged in');
+	useEffect(() => {
+		axios.defaults.withCredentials = true;
 
-	axios.post('http://localhost:3001/me', config)
-    .then((response) => {
-      console.log(response.data)
-    })
-	.catch((err) => {
-		console.log("CHP/index.jsx" +err);
-	})
+		axios.post('http://localhost:3001/me', {withCredentials: true})
+		.then((response) => {
+		  console.log(response.data)
+		  setEmail(response.data.email)
+		})
+		.catch((err) => {
+			console.log("CHP/index.jsx" +err);
+		})
+	}, [])
+	
 
     return (<>
-        <NavBar />
+        <NavBar email = {email}/>
 
     <PageContainer>
         <Main>

@@ -29,7 +29,6 @@ export function LoginForm(props){
             withCredentials: true
           })
           .then(function (response) {
-              console.log(response)
               history.push("/CustomerHomePage")
           })
           .catch(function (error) {

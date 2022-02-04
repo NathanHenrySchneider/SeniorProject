@@ -25,7 +25,7 @@ export function NavBar(props){
           </Navbar.Brand>
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text style = {{marginRight: '7px'}}>
-                <a href="#profile" style = {{fontWeight:'bold'}}>Mark Otto</a>
+                <a href="#profile" style = {{fontWeight:'bold'}}>{props.email}</a>
             </Navbar.Text>{'|'}
             <Navbar.Text style = {{marginLeft: '7px'}}>
                 <button style = {{border: 'none', background: 'none'}} onClick = {()=>{
