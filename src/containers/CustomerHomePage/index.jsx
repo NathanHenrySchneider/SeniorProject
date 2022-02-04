@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { NavBar } from "../../components/navbar";
 import { PageContainer } from "../../components/pageContainer";
 import { Link } from "react-router-dom";
-
+import axios from 'axios';
 
 const Main = styled.div`
     margin: 2%;
@@ -54,7 +54,21 @@ const TitleComponent = styled.div`
     
 `;
 
+
 export function CustomerHomePage(props){
+	const config = {
+		  withCredentials: true
+	}
+	axios.defaults.withCredentials = true;
+
+	axios.post('http://localhost:3001/me', config)
+    .then((response) => {
+      console.log(response.data)
+    })
+	.catch((err) => {
+		console.log("CHP/index.jsx" +err);
+	})
+
     return (<>
         <NavBar />
 

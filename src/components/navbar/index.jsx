@@ -2,12 +2,14 @@ import React from "react";
 // import styled from "styled-components";
 // import { BrandLogo } from "../brandLogo";
 // import { Marginer } from "../marginer";
-// import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Navbar from 'react-bootstrap/Navbar';
 import {Container} from 'react-bootstrap';
+import axios from 'axios';
 
 //old styles commented at the bottom if you need it 
 export function NavBar(props){
+    let history = useHistory();
     return (
         <Navbar bg="light">
         <Container>
@@ -26,7 +28,16 @@ export function NavBar(props){
                 <a href="#profile" style = {{fontWeight:'bold'}}>Mark Otto</a>
             </Navbar.Text>{'|'}
             <Navbar.Text style = {{marginLeft: '7px'}}>
-                <a href="#s">Sign Out</a>
+                <button style = {{border: 'none', background: 'none'}} onClick = {()=>{
+                  axios.post('http://localhost:3001/logout')
+                  .then((response) => {
+                    if(response.statusText === "OK"){
+                      history.goBack();
+                    }
+                  }).catch((err) => {
+                    console.log(err.response.data);
+                  })
+                }}>Sign Out</button>
             </Navbar.Text>
             </Navbar.Collapse>
         </Container>

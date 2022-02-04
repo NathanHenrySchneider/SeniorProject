@@ -1,5 +1,6 @@
 
 import './App.css';
+import React, { useState, useEffect } from 'react';
 import { CustomerHomePage } from './containers/CustomerHomePage';
 import { EmployeeHomePage } from './containers/EmployeeHomePage';
 import { BrowserRouter as Router, Switch, Route, } from "react-router-dom";
@@ -12,6 +13,8 @@ import { Chat } from './containers/Chat';
 import { Documents } from './containers/Documents';
 
 function App() {
+ 
+ 
   return (
     <div className="App">
       <Router>

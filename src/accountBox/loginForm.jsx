@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import Alert from 'react-bootstrap/Alert'
 import { Link} from "react-router-dom";
 import axios from "axios";
+// axios.defaults.withCredentials = true;
 
 export function LoginForm(props){
 
@@ -21,9 +22,15 @@ export function LoginForm(props){
         axios.post('http://localhost:3001/login', {
             email : email,
             password: password
+          },{
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            withCredentials: true
           })
           .then(function (response) {
-            history.push("/CustomerHomePage")
+              console.log(response)
+              history.push("/CustomerHomePage")
           })
           .catch(function (error) {
             setError(true);
