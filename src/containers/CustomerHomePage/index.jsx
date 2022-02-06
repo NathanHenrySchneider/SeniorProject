@@ -21,7 +21,8 @@ const Main = styled.div`
 `;
 
 const PseudoBorder = styled.h1`
-position: relative;
+	position: relative;
+	color: white;
 	display: inline-block;
     &:after {
         content:'';
@@ -42,6 +43,7 @@ const Card = styled.div`
 width: 20%;
 display: inline-block;
 box-shadow: 2px 2px 20px black;
+background: white; 
 border-radius: 5px; 
 margin: 2%;
 
@@ -50,10 +52,15 @@ margin: 2%;
 const ImageComponent = styled.div`
    
     border-top-right-radius: 5px;
-    border-top-left-radius: 5px; 
+    border-top-left-radius: 5px;
+	position: relative;
+	display: inline-block;
+	margin-top: 5px;
+  	margin-left: 45px;
+  	width: 50%; 
     img {
-        width: 100%;
-        height: 100%;
+        width: 200px;
+        height: auto;
     }
 `;
 const TitleComponent = styled.div`
@@ -79,68 +86,64 @@ export function CustomerHomePage(props){
 	}, [])
 	
 	const NavStyle ={
-		color:"white"
+		color:"Black"
 	}
 
     return (<>
         <NavBar email = {email}/>
-    <PageContainer>
-		<TopSection>
-        <Main>
-		<div>
-			<PseudoBorder>Home Page</PseudoBorder>
-		</div>
-		<Card>
-			<ImageComponent>
-				{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
-				<img src = {accountIcon} alt = "accountIcon"/>
-			</ImageComponent>
-			<TitleComponent>
-                <h4><Link style={NavStyle} to="/customerhomepage/yourprofile">Your Profile</Link></h4>
-			</TitleComponent>
-		</Card>
-        <Card>
-			<ImageComponent>
-				{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
-				<img src = {calendarIcon} alt = "calendarIcon"/>
-			</ImageComponent>
-			<TitleComponent>
-            <h4><Link style={NavStyle} to="/customerhomepage/appointments">Appointments</Link></h4>
-			</TitleComponent>
-		</Card>
-        <Card>
-			<ImageComponent>
-				{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
-				<img src = {videoIcon} alt = "videoIcon"/>
-			</ImageComponent>
-			<TitleComponent>
-            <h4><Link style={NavStyle} to="/customerhomepage/videocall">Video Call</Link></h4>
-			</TitleComponent>
-		</Card>
-        <Card>
-			<ImageComponent>
-				{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
-				<img src = {chatIcon} alt = "chatIcon"/>
-			</ImageComponent>
-			<TitleComponent>
-            <h4><Link style={NavStyle} to="/customerhomepage/chat">Chat</Link></h4>
-			</TitleComponent>
-		</Card>
-        <Card>
-			<ImageComponent>
-				{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
-				<img src = {documentsIcon} alt = "documentsIcon"/>
-			</ImageComponent>
-			<TitleComponent>
-            <h4><Link style={NavStyle} to="/customerhomepage/documents">Documents</Link></h4>
-			</TitleComponent>
-		</Card>
-
-
-
-
-	</Main>
-	</TopSection>
+    	<PageContainer>
+			<TopSection>
+        	<Main>
+			<div>
+				<PseudoBorder>Home Page</PseudoBorder>
+			</div>
+			<Card>
+				<ImageComponent>
+					{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
+					<img src = {accountIcon} alt = "accountIcon"/>
+				</ImageComponent>
+				<TitleComponent>
+               	 <h4><Link style={NavStyle} to="/customerhomepage/yourprofile">Your Profile</Link></h4>
+				</TitleComponent>
+			</Card>
+        	<Card>
+				<ImageComponent>
+					{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
+					<img src = {calendarIcon} alt = "calendarIcon"/>
+				</ImageComponent>
+				<TitleComponent>
+            	<h4><Link style={NavStyle} to="/customerhomepage/appointments">Appointments</Link></h4>
+				</TitleComponent>
+			</Card>
+        	<Card>
+				<ImageComponent>
+					{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
+					<img src = {videoIcon} alt = "videoIcon"/>
+				</ImageComponent>
+				<TitleComponent>
+            	<h4><Link style={NavStyle} to="/customerhomepage/videocall">Video Call</Link></h4>
+				</TitleComponent>
+			</Card>
+        	<Card>
+				<ImageComponent>
+					{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
+					<img src = {chatIcon} alt = "chatIcon"/>
+				</ImageComponent>
+				<TitleComponent>
+            	<h4><Link style={NavStyle} to="/customerhomepage/chat">Chat</Link></h4>
+				</TitleComponent>
+			</Card>
+        	<Card>
+				<ImageComponent>
+					{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
+					<img src = {documentsIcon} alt = "documentsIcon"/>
+				</ImageComponent>
+				<TitleComponent>
+            	<h4><Link style={NavStyle} to="/customerhomepage/documents">Documents</Link></h4>
+				</TitleComponent>
+				</Card>
+			</Main>
+		</TopSection>
     </PageContainer></>
     );
 }
