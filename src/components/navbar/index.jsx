@@ -22,7 +22,7 @@ export function NavBar(props){
               height="40"
               className="d-inline-block align-top"
             />{' '}
-          <Link to="/customerhomepage"><strong style = {{color:'#122a8e', size: '33px', margin:'0 0 0 5px'}}>Tele-Medic</strong></Link>
+          <strong style = {{color:'#122a8e', size: '33px', margin:'0 0 0 5px'}}>Tele-Medic</strong>
           </Navbar.Brand>
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text style = {{marginRight: '7px'}}>

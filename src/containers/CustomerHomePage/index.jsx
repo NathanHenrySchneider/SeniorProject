@@ -22,7 +22,7 @@ const Main = styled.div`
 
 const PseudoBorder = styled.h1`
 	position: relative;
-	color: white;
+	color: black;
 	display: inline-block;
     &:after {
         content:'';
@@ -37,7 +37,6 @@ const PseudoBorder = styled.h1`
       }
   
 `;
-
 
 const Card = styled.div`
 // width: 20%;
@@ -95,7 +94,7 @@ export function CustomerHomePage(props){
     return (<>
         <NavBar email = {email}/>
     	<PageContainer>
-			<TopSection>
+			{/* <TopSection> */}
         	<Main>
 			<div>
 				<PseudoBorder>Home Page</PseudoBorder>
@@ -146,7 +145,7 @@ export function CustomerHomePage(props){
 				</TitleComponent>
 				</Card>
 			</Main>
-		</TopSection>
+		{/* </TopSection> */}
     </PageContainer></>
     );
 }
