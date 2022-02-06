@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import Navbar from 'react-bootstrap/Navbar';
 import {Container} from 'react-bootstrap';
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 //old styles commented at the bottom if you need it 
 export function NavBar(props){
@@ -21,7 +22,7 @@ export function NavBar(props){
               height="40"
               className="d-inline-block align-top"
             />{' '}
-          <strong style = {{color:'#122a8e', size: '33px', margin:'0 0 0 5px'}}>Tele-Medic</strong>
+          <Link to="/customerhomepage"><strong style = {{color:'#122a8e', size: '33px', margin:'0 0 0 5px'}}>Tele-Medic</strong></Link>
           </Navbar.Brand>
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text style = {{marginRight: '7px'}}>
