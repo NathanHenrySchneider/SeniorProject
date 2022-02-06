@@ -7,6 +7,13 @@ import axios from 'axios';
 import { useState } from "react";
 import { useEffect } from "react";
 import { TopSection } from "../CustomerHomePage/topSection";
+import accountIcon from "../../images/account.png";
+import calendarIcon from "../../images/calendar.png";
+import chatIcon from "../../images/chat.png";
+import documentsIcon from "../../images/folder.png";
+import videoIcon from "../../images/video.png";
+
+
 const Main = styled.div`
     margin: 2%;
     height: 684px;
@@ -85,7 +92,8 @@ export function CustomerHomePage(props){
 		</div>
 		<Card>
 			<ImageComponent>
-				<img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/>
+				{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
+				<img src = {accountIcon} alt = "accountIcon"/>
 			</ImageComponent>
 			<TitleComponent>
                 <h4><Link style={NavStyle} to="/customerhomepage/yourprofile">Your Profile</Link></h4>
@@ -93,7 +101,8 @@ export function CustomerHomePage(props){
 		</Card>
         <Card>
 			<ImageComponent>
-				<img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/>
+				{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
+				<img src = {calendarIcon} alt = "calendarIcon"/>
 			</ImageComponent>
 			<TitleComponent>
             <h4><Link style={NavStyle} to="/customerhomepage/appointments">Appointments</Link></h4>
@@ -101,7 +110,8 @@ export function CustomerHomePage(props){
 		</Card>
         <Card>
 			<ImageComponent>
-				<img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/>
+				{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
+				<img src = {videoIcon} alt = "videoIcon"/>
 			</ImageComponent>
 			<TitleComponent>
             <h4><Link style={NavStyle} to="/customerhomepage/videocall">Video Call</Link></h4>
@@ -109,7 +119,8 @@ export function CustomerHomePage(props){
 		</Card>
         <Card>
 			<ImageComponent>
-				<img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/>
+				{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
+				<img src = {chatIcon} alt = "chatIcon"/>
 			</ImageComponent>
 			<TitleComponent>
             <h4><Link style={NavStyle} to="/customerhomepage/chat">Chat</Link></h4>
@@ -117,7 +128,8 @@ export function CustomerHomePage(props){
 		</Card>
         <Card>
 			<ImageComponent>
-				<img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/>
+				{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
+				<img src = {documentsIcon} alt = "documentsIcon"/>
 			</ImageComponent>
 			<TitleComponent>
             <h4><Link style={NavStyle} to="/customerhomepage/documents">Documents</Link></h4>
