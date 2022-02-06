@@ -40,7 +40,8 @@ const PseudoBorder = styled.h1`
 
 
 const Card = styled.div`
-width: 20%;
+// width: 20%;
+min-width: 250px;
 display: inline-block;
 box-shadow: 2px 2px 20px black;
 background: white; 
@@ -55,8 +56,10 @@ const ImageComponent = styled.div`
     border-top-left-radius: 5px;
 	position: relative;
 	display: inline-block;
-	margin-top: 5px;
-  	margin-left: 45px;
+	margin-top: 5%;
+	margin-bottom: 5%;
+  	margin-left: 10%;
+	margin-right: 5%;
   	width: 50%; 
     img {
         width: 200px;
