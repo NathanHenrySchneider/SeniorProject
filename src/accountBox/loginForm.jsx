@@ -44,15 +44,16 @@ export function LoginForm(props){
                 onChange = {e => setEmail(e.target.value)}/>
             <Input type ="password" name= "password" placeholder="Password" 
                 onChange = {e => setPassword(e.target.value)}/>
-            <Marginer direction="vertical" margin={10} />
-            <MutedLink href = "#">Forgot your password?</MutedLink>
-            <Marginer direction="vertical" margin="1.6em" />
             {err ? <Alert variant = "danger">{message}</Alert> : <></>}
+            <Marginer direction="vertical" margin="1.6em" />
             <SubmitButton type="submit">Login</SubmitButton>
             <Marginer direction="vertical" margin="1em" />
         </FormContainer>
+        <Marginer direction="vertical" margin={5} />
+        <MutedLink href = "#">Forgot your password?</MutedLink>
+        <Marginer direction="vertical" margin="0.8em" />
         <small>Don't have an account?<BoldLink href="#" onClick={switchToSignup}>Sign Up</BoldLink></small>
-        <Marginer direction="vertical" margin={10} />
+        <Marginer direction="vertical" margin={5} />
         <Link to="/EmployeeLogin">Employee Login</Link>
     </BoxContainer>
 }

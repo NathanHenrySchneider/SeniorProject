@@ -20,27 +20,6 @@ const BackgroundFilter = styled.div`
     flex-direction: column;
 `;
 
-const TopSectionInnerContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-`;
-
-const LogoContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-`;
-
-const SloganText = styled.h3`
-    margin: 0;
-    line-height: 1.4;
-    color: #fff;
-    font-weight: 500;
-    font-size: 30px;
-`;
 
 export function TopSection(props){
     const { children } = props;
@@ -48,14 +27,6 @@ export function TopSection(props){
     return <TopSectionContainer>
         <BackgroundFilter>
             {children}
-            <TopSectionInnerContainer>
-                <LogoContainer>
-                    <BrandLogo logoSize={75} textSize={50}/>
-                    <Marginer direction="vertical" margin={8} />
-                    <SloganText>Welcome!</SloganText>
-                    <SloganText>Get in touch with your doctor</SloganText>
-                </LogoContainer>
-            </TopSectionInnerContainer>
         </BackgroundFilter>
     </TopSectionContainer>
 }

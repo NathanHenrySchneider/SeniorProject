@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import { useState } from "react";
 import { useEffect } from "react";
+import { TopSection } from "../CustomerHomePage/topSection";
 const Main = styled.div`
     margin: 2%;
     height: 684px;
@@ -70,11 +71,14 @@ export function CustomerHomePage(props){
 		})
 	}, [])
 	
+	const NavStyle ={
+		color:"white"
+	}
 
     return (<>
         <NavBar email = {email}/>
-
     <PageContainer>
+		<TopSection>
         <Main>
 		<div>
 			<PseudoBorder>Home Page</PseudoBorder>
@@ -84,7 +88,7 @@ export function CustomerHomePage(props){
 				<img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/>
 			</ImageComponent>
 			<TitleComponent>
-                <h4><Link to="/customerhomepage/yourprofile">Your Profile</Link></h4>
+                <h4><Link style={NavStyle} to="/customerhomepage/yourprofile">Your Profile</Link></h4>
 			</TitleComponent>
 		</Card>
         <Card>
@@ -92,7 +96,7 @@ export function CustomerHomePage(props){
 				<img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/>
 			</ImageComponent>
 			<TitleComponent>
-            <h4><Link to="/customerhomepage/appointments">Appointments</Link></h4>
+            <h4><Link style={NavStyle} to="/customerhomepage/appointments">Appointments</Link></h4>
 			</TitleComponent>
 		</Card>
         <Card>
@@ -100,7 +104,7 @@ export function CustomerHomePage(props){
 				<img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/>
 			</ImageComponent>
 			<TitleComponent>
-            <h4><Link to="/customerhomepage/videocall">Video Call</Link></h4>
+            <h4><Link style={NavStyle} to="/customerhomepage/videocall">Video Call</Link></h4>
 			</TitleComponent>
 		</Card>
         <Card>
@@ -108,7 +112,7 @@ export function CustomerHomePage(props){
 				<img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/>
 			</ImageComponent>
 			<TitleComponent>
-            <h4><Link to="/customerhomepage/chat">Chat</Link></h4>
+            <h4><Link style={NavStyle} to="/customerhomepage/chat">Chat</Link></h4>
 			</TitleComponent>
 		</Card>
         <Card>
@@ -116,7 +120,7 @@ export function CustomerHomePage(props){
 				<img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/>
 			</ImageComponent>
 			<TitleComponent>
-            <h4><Link to="/customerhomepage/documents">Documents</Link></h4>
+            <h4><Link style={NavStyle} to="/customerhomepage/documents">Documents</Link></h4>
 			</TitleComponent>
 		</Card>
 
@@ -124,6 +128,7 @@ export function CustomerHomePage(props){
 
 
 	</Main>
+	</TopSection>
     </PageContainer></>
     );
 }
