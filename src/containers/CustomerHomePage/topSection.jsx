@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { BrandLogo } from "../../components/brandLogo";
-import { Marginer } from "../../components/marginer";
+/*import { BrandLogo } from "../../components/brandLogo";*/
+/*import { Marginer } from "../../components/marginer";*/
 import TopSectionBackgroundImg from "../../images/landing-page.jpg";
 
 const TopSectionContainer = styled.div`
     width: 100%;
-    height: 800px;
+    height: 900px;
     background: url(${TopSectionBackgroundImg});
     background-position: 0px -50px;
     background-size: cover;
