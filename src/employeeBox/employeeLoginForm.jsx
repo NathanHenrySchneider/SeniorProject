@@ -2,7 +2,7 @@ import React from "react";
 import { BoxContainer, FormContainer, Input, SubmitButton } from "./common";
 import { Marginer } from "../components/marginer";
 import { useHistory } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import Alert from 'react-bootstrap/Alert'
 
@@ -28,6 +28,7 @@ export function EmployeeLoginForm(props){
             withCredentials: true
           })
           .then(function (response) {
+              console.log(response)
               history.push("/EmployeeHomePage")
           })
           .catch(function (error) {
@@ -39,17 +40,17 @@ export function EmployeeLoginForm(props){
     
     return <BoxContainer>
         <FormContainer onSubmit={e=> {handleSubmit(e)} }>
-            <Input type="email" name="email" placeholder="Email"
+            <Input type="text" name="email" placeholder="Email"
                 onChange={(e)=>{setEmail(e.target.value)}}
             />
             <Input type ="password" name= "password" placeholder="Password"
                 onChange={(e)=>{setPassword(e.target.value)}}
             />
             {err ? <Alert variant = "danger">{message}</Alert> : <></>}
+          <SubmitButton type="submit">Login</SubmitButton>
         </FormContainer>
         <Marginer direction="vertical" margin={10} />
         <Marginer direction="vertical" margin="1.6em" />
-        <SubmitButton type="button" onClick={() => {history.push("/EmployeeHomePage")}}>Login</SubmitButton>
         <Marginer direction="vertical" margin="1em" />
     </BoxContainer>
 }
