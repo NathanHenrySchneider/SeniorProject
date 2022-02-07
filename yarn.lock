@@ -1569,6 +1569,94 @@
     "@svgr/plugin-svgo" "^5.5.0"
     "loader-utils" "^2.0.0"
 
+"@syncfusion/ej2-base@~19.4.48":
+  "integrity" "sha512-DQ9YXjJoSIM60rTriUJKTkMAACOsW8PTw5hPgujFSPKmLJW1h0jEDFLNvSqyyi0IaDAlStcu+dWrp+mMtaDD9Q=="
+  "resolved" "https://registry.npmjs.org/@syncfusion/ej2-base/-/ej2-base-19.4.48.tgz"
+  "version" "19.4.48"
+  dependencies:
+    "@syncfusion/ej2-icons" "~19.4.48"
+
+"@syncfusion/ej2-buttons@~19.4.48":
+  "integrity" "sha512-846HQBp4Om6GT1Er6jjv36PafQBKCjqXg/65bHb1cq7nuvk3UMwOJSGc0J6AqGzcqsa2oCMPejtBx+UshxMymQ=="
+  "resolved" "https://registry.npmjs.org/@syncfusion/ej2-buttons/-/ej2-buttons-19.4.48.tgz"
+  "version" "19.4.48"
+  dependencies:
+    "@syncfusion/ej2-base" "~19.4.48"
+
+"@syncfusion/ej2-calendars@19.4.48":
+  "integrity" "sha512-X1ox3rybaIBsRtri4AwDb+smF/msD8xJTEjurQVB/aWMJ1008hK+zvXecManW/S/mz4d8Od/++G5XI71JDQMyg=="
+  "resolved" "https://registry.npmjs.org/@syncfusion/ej2-calendars/-/ej2-calendars-19.4.48.tgz"
+  "version" "19.4.48"
+  dependencies:
+    "@syncfusion/ej2-base" "~19.4.48"
+    "@syncfusion/ej2-buttons" "~19.4.48"
+    "@syncfusion/ej2-inputs" "~19.4.48"
+    "@syncfusion/ej2-lists" "~19.4.48"
+    "@syncfusion/ej2-popups" "~19.4.48"
+
+"@syncfusion/ej2-data@~19.4.48":
+  "integrity" "sha512-cLRqDSuddCPFgqCtoNa0Al9BBGyH5eDiGtgnRbxjhnETkFmND/epO+J9tXs/KNH1WfW+Nt9LftKh0o+Hsfdk8w=="
+  "resolved" "https://registry.npmjs.org/@syncfusion/ej2-data/-/ej2-data-19.4.48.tgz"
+  "version" "19.4.48"
+  dependencies:
+    "@syncfusion/ej2-base" "~19.4.48"
+
+"@syncfusion/ej2-icons@~19.4.48":
+  "integrity" "sha512-aUByOjKgIDx/EZlVW002MPvzPRdqfKG3H1oLUceg3zcOKuw8R/RSqk89VZV8xtCoIoBNFP0M+fJTXPiO1lQWqQ=="
+  "resolved" "https://registry.npmjs.org/@syncfusion/ej2-icons/-/ej2-icons-19.4.48.tgz"
+  "version" "19.4.48"
+
+"@syncfusion/ej2-inputs@~19.4.48":
+  "integrity" "sha512-aXubnHmFHvUMxrMGrT8O+4o8WAhQMEIXhiJcTaMKwe2MLBSJZrsNp9kRb/En7f2QFOJZs/uciy1BCJPyfpuhnQ=="
+  "resolved" "https://registry.npmjs.org/@syncfusion/ej2-inputs/-/ej2-inputs-19.4.48.tgz"
+  "version" "19.4.48"
+  dependencies:
+    "@syncfusion/ej2-base" "~19.4.48"
+    "@syncfusion/ej2-buttons" "~19.4.48"
+    "@syncfusion/ej2-popups" "~19.4.48"
+    "@syncfusion/ej2-splitbuttons" "~19.4.48"
+
+"@syncfusion/ej2-lists@~19.4.48":
+  "integrity" "sha512-hmHn+8BWP9bBKZfyFNDcrseqOcXih2Caaw6KfjoijPj9Zs+DaKvQOo8f3TfuEkWilMVpVkdMoOrc5fhekzKkug=="
+  "resolved" "https://registry.npmjs.org/@syncfusion/ej2-lists/-/ej2-lists-19.4.48.tgz"
+  "version" "19.4.48"
+  dependencies:
+    "@syncfusion/ej2-base" "~19.4.48"
+    "@syncfusion/ej2-buttons" "~19.4.48"
+    "@syncfusion/ej2-data" "~19.4.48"
+
+"@syncfusion/ej2-popups@~19.4.48":
+  "integrity" "sha512-o9f+iAve1TbbCE/oNMqolTvrUmIT46LqXwoJg3EKuryh4hveoCODeS4/IyLuIWJXoeoXjgygkkxh2rtnME075A=="
+  "resolved" "https://registry.npmjs.org/@syncfusion/ej2-popups/-/ej2-popups-19.4.48.tgz"
+  "version" "19.4.48"
+  dependencies:
+    "@syncfusion/ej2-base" "~19.4.48"
+    "@syncfusion/ej2-buttons" "~19.4.48"
+
+"@syncfusion/ej2-react-base@~19.4.48":
+  "integrity" "sha512-MXYh0wES94r++6YMPgWY/hCwdu5G7niqZ87DZrF4t+EUN+Zw8GZG0R51pzgifjwgpOwg/Yqh2Veqo1LVeBLNWw=="
+  "resolved" "https://registry.npmjs.org/@syncfusion/ej2-react-base/-/ej2-react-base-19.4.48.tgz"
+  "version" "19.4.48"
+  dependencies:
+    "@syncfusion/ej2-base" "~19.4.48"
+
+"@syncfusion/ej2-react-calendars@^19.4.48":
+  "integrity" "sha512-fqECBxbomBtxcsDeM0vKEj9/XawIzQ+3D//dw7WjvN42tUtYujcV3fX4sMZ29wqpJFJMRw4kdsAmVJeQ5WKFgA=="
+  "resolved" "https://registry.npmjs.org/@syncfusion/ej2-react-calendars/-/ej2-react-calendars-19.4.48.tgz"
+  "version" "19.4.48"
+  dependencies:
+    "@syncfusion/ej2-base" "~19.4.48"
+    "@syncfusion/ej2-calendars" "19.4.48"
+    "@syncfusion/ej2-react-base" "~19.4.48"
+
+"@syncfusion/ej2-splitbuttons@~19.4.48":
+  "integrity" "sha512-q1xI7wXIcoNclkYsln/MsET9BLwPzIYIMu2mVlue/XLGrQqgZHe94AId3+E0muF3i6CHY7FY7J1ux6AM1CFkuQ=="
+  "resolved" "https://registry.npmjs.org/@syncfusion/ej2-splitbuttons/-/ej2-splitbuttons-19.4.48.tgz"
+  "version" "19.4.48"
+  dependencies:
+    "@syncfusion/ej2-base" "~19.4.48"
+    "@syncfusion/ej2-popups" "~19.4.48"
+
 "@testing-library/dom@^8.0.0", "@testing-library/dom@>=7.21.4":
   "integrity" "sha512-9LId28I+lx70wUiZjLvi1DB/WT2zGOxUh46glrSNMaWVx849kKAluezVzZrXJfTKKoQTmEOutLes/bHg4Bj3aA=="
   "resolved" "https://registry.npmjs.org/@testing-library/dom/-/dom-8.11.3.tgz"

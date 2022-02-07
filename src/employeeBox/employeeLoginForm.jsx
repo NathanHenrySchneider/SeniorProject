@@ -15,7 +15,6 @@ export function EmployeeLoginForm(props){
     const[message, setMessage] = useState('');
 
     const handleSubmit = (e) => {
-        console.log("inside handleSubmit")
         e.preventDefault();
 
         axios.post('http://localhost:3001/doctor-login', {
@@ -28,8 +27,9 @@ export function EmployeeLoginForm(props){
             withCredentials: true
           })
           .then(function (response) {
-              console.log(response)
-              history.push("/EmployeeHomePage")
+              if(response.status==200){
+                history.push("/EmployeeHomePage")
+              }
           })
           .catch(function (error) {
             setError(true);
