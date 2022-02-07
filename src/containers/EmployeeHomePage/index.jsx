@@ -9,7 +9,7 @@ export function EmployeeHomePage(props){
 	useEffect(() => {
 		axios.defaults.withCredentials = true;
 
-		axios.post('http://localhost:3001/me', {withCredentials: true})
+		axios.post('http://localhost:3001/me-doctor', {withCredentials: true})
 		.then((response) => {
 		  console.log(response.data)
 		  setEmail(response.data.email)
