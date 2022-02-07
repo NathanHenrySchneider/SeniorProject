@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton } from "./common";
+import { BoldLink, BoxContainer, FormContainer, Input, SubmitButton } from "./common";
 import { Marginer } from "../components/marginer"
 import { AccountContext } from "./accountContext";
 import axios from "axios";
@@ -17,9 +17,6 @@ export function SignUpForm(props){
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // console.log("name: " + name)
-        // console.log("email: " + email)
-        // console.log("password: " + password)
         axios.post('http://localhost:3001/register', {
             full_name: name,
             email : email,
@@ -52,6 +49,6 @@ export function SignUpForm(props){
             <Marginer direction="vertical" margin="1em" />
         </FormContainer>
         
-        <MutedLink>Already have an account?<BoldLink href ="#" onClick={switchToLogin}>Login</BoldLink></MutedLink>
+        <small>Already have an account?<BoldLink href ="#" onClick={switchToLogin}>Login</BoldLink></small>
     </BoxContainer>
 }
