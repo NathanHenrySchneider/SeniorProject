@@ -18,7 +18,7 @@ export function Appointments(props) {
       .then((response) => {
         console.log(response.data);
         setEmail(response.data.email);
-        setUserID(response.data.user_id)
+        setUserID(response.data.user_id);
       })
       .catch((err) => {
         console.log("CHP/index.jsx" + err);
@@ -45,7 +45,7 @@ export function Appointments(props) {
           appt_start: appt_start,
           appt_end: appt_start, //need to be fix to 30 after appt_start time.
           patient_id: userID,
-          provider_id: 2    //manually added.
+          provider_id: 2, //manually added.
         },
         {
           headers: {
@@ -55,7 +55,7 @@ export function Appointments(props) {
         }
       )
       .then(function (response) {
-          history.push("/CustomerHomePage");
+        history.push("/CustomerHomePage");
       })
       .catch(function (error) {
         setError(true);
@@ -69,24 +69,38 @@ export function Appointments(props) {
       <NavBar email={email} />
       <PageContainer>
         <PseudoBorder>Make Your Appointment</PseudoBorder>
-        <DateTimePicker
+        <FormContainer
           onSubmit={(e) => {
             handleSubmit(e);
           }}
         >
-          <input
+          <Title>Reason for appointment:</Title>
+          <ReasonInput name="text" />
+          <Title style={{ marginTop: "20px" }}>Appointment Date:</Title>
+          <Input
             type="datetime-local"
             id="appointment-time"
             name="appointment-time"
             min="2022-02-07T00:00"
             max="2022-12-30T00:00"
-            style={{ margin: "10px" }}
+            style={{ padding: "5px" }}
             onChange={(e) => {
               setDate(e.target.value);
             }}
           />
+          <Title style={{ marginTop: "20px" }}>Doctor:</Title>
+          <Select>
+            <Option disabled selected>
+              Doctor Name
+            </Option>
+            <Option>Doctor 1</Option>
+            <Option>Doctor 2</Option>
+            <Option>Doctor 3</Option>
+            <Option>Doctor 4</Option>
+            <Option>Doctor 5</Option>
+          </Select>
           <Submit>Schedule</Submit>
-        </DateTimePicker>
+        </FormContainer>
       </PageContainer>
     </>
   );
@@ -109,15 +123,45 @@ const PseudoBorder = styled.h1`
   }
 `;
 
-const DateTimePicker = styled.form`
+const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 30px;
+  width: 90vw;
+  margin-left: 40px;
 `;
+const Title = styled.h1`
+  font-size: 16px;
+  width: 200px;
+`;
+
+const Input = styled.input`
+  width: 220px;
+  margin-bottom: 5px;
+`;
+const ReasonInput = styled.textarea`
+  width: 300px;
+  height: 100px;
+  margin-bottom: 5px;
+`;
+
+const Select = styled.select`
+  padding: 5px;
+  width: 150px;
+`;
+
+const Option = styled.option``;
 
 const Submit = styled.button`
   display: flex;
   justify-content: center;
   width: 100px;
+  border-radius: 5px;
+  margin-top: 30px;
+  background-color: white;
+  transition: all 0.5s ease;
+
+  &:hover {
+    background-color: #e9f5f5;
+    transform: scale(1.02);
+  }
 `;
