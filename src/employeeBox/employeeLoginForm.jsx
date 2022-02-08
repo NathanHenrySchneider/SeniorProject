@@ -27,7 +27,7 @@ export function EmployeeLoginForm(props){
             withCredentials: true
           })
           .then(function (response) {
-              if(response.status==200){
+              if(response.status===200){
                 history.push("/EmployeeHomePage")
               }
           })
@@ -47,10 +47,10 @@ export function EmployeeLoginForm(props){
                 onChange={(e)=>{setPassword(e.target.value)}}
             />
             {err ? <Alert variant = "danger">{message}</Alert> : <></>}
+            <Marginer direction="vertical" margin="1.6em" />
           <SubmitButton type="submit">Login</SubmitButton>
         </FormContainer>
         <Marginer direction="vertical" margin={10} />
-        <Marginer direction="vertical" margin="1.6em" />
         <Marginer direction="vertical" margin="1em" />
     </BoxContainer>
 }
