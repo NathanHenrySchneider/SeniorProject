@@ -122,7 +122,7 @@ export function Appointments(props) {
           </Select>
           {date == null ? <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Please add appointment time.</Tooltip>}>
             <span className="d-inline-block">
-              <Button disabled style={{ pointerEvents: 'none' }}>
+              <Button disabled style={{ pointerEvents: 'none', marginTop: "30px" }}>
                 Schedule
               </Button>
             </span>
@@ -148,7 +148,7 @@ export function Appointments(props) {
               <tr>
                 <th scope="row">{item.appt_id}</th>
                 <td>{item.appt_date.split("T")[0]}</td>
-                <td>{item.appt_start}</td>
+                <td>{item.appt_start.split("+")[0]}</td>
                 <td>{item.appt_end}</td>
                 <td>Null</td>
                 <td>{item.confirmed ? `True`: `False`}</td>
