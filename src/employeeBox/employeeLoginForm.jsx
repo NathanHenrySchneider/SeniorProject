@@ -27,7 +27,7 @@ export function EmployeeLoginForm(props){
             withCredentials: true
           })
           .then(function (response) {
-              if(response.status==200){
+              if(response.status===200){
                 history.push("/EmployeeHomePage")
               }
           })

@@ -4,8 +4,8 @@ import { NavBar } from "../../components/navbar";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { DateTimePickerComponent } from "@syncfusion/ej2-react-calendars";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { OverlayTrigger, Button, Tooltip } from "react-bootstrap";
 
 export function Appointments(props) {
   const [email, setEmail] = useState("Not logged in");
@@ -32,7 +32,6 @@ export function Appointments(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const appt_date = date.split("T")[0];
     const appt_start = date.split("T")[1];
     console.log("apptDate: ", appt_date);
@@ -55,10 +54,12 @@ export function Appointments(props) {
         }
       )
       .then(function (response) {
-        history.push("/CustomerHomePage");
+        console.log(response)
+        // history.push("/CustomerHomePage");
       })
       .catch(function (error) {
         setError(true);
+        console.log(error)
         if (error.response) setMessage(error.response.data);
         else setMessage("Something went wrong.");
       });
@@ -99,7 +100,15 @@ export function Appointments(props) {
             <Option>Doctor 4</Option>
             <Option>Doctor 5</Option>
           </Select>
-          <Submit>Schedule</Submit>
+          {date == null ? <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Please add appointment time.</Tooltip>}>
+            <span className="d-inline-block">
+              <Button disabled style={{ pointerEvents: 'none' }}>
+                Schedule
+              </Button>
+            </span>
+          </OverlayTrigger> : <Button type = "submit">
+                Schedule
+          </Button>}
         </FormContainer>
       </PageContainer>
     </>
