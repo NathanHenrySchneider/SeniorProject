@@ -2,76 +2,21 @@ import React from "react";
 import styled from "styled-components";
 import { NavBar } from "../../components/navbar";
 import { PageContainer } from "../../components/pageContainer";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from 'axios';
 import { useState, useEffect } from "react";
 // import { TopSection } from "../CustomerHomePage/topSection";
-import accountIcon from "../../images/account.png";
-import calendarIcon from "../../images/calendar.png";
-import chatIcon from "../../images/chat.png";
-import documentsIcon from "../../images/folder.png";
-import videoIcon from "../../images/video.png";
+// import accountIcon from "../../images/account.png";
+// import calendarIcon from "../../images/calendar.png";
+// import chatIcon from "../../images/chat.png";
+// import documentsIcon from "../../images/folder.png";
+// import videoIcon from "../../images/video.png";
 
 
-const Main = styled.div`
-    margin: 2%;
-    height: 684px;
-    
-`;
-
-const PseudoBorder = styled.h1`
-	position: relative;
-	color: black;
-	display: inline-block;
-    &:after {
-        content:'';
-    position: absolute;
-	display: inline-block;
-    left: 0;
-    top: 100%;
-    margin: 10px auto;
-    width: 33%;
-    height: 6px;
-    background: #00f;
-      }
-  
-`;
-
-const Card = styled.div`
-// width: 20%;
-min-width: 250px;
-display: inline-block;
-box-shadow: 2px 2px 20px black;
-background: white; 
-border-radius: 5px; 
-margin: 2%;
-
-`;
-
-const ImageComponent = styled.div`
-   
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-	position: relative;
-	display: inline-block;
-	margin-top: 5%;
-	margin-bottom: 5%;
-  	margin-left: 10%;
-	margin-right: 5%;
-  	width: 50%; 
-    img {
-        width: 190px;
-        height: 190px;
-    }
-`;
-const TitleComponent = styled.div`
-    text-align: center;
-    padding: 10px;  
-    font-size: 20px;
-    
-`;
 
 export function CustomerHomePage(props){
+	let history = useHistory();
+
 	const [email, setEmail] = useState('Not logged in');
 	useEffect(() => {
 		axios.defaults.withCredentials = true;
@@ -82,6 +27,7 @@ export function CustomerHomePage(props){
 		  setEmail(response.data.email)
 		})
 		.catch((err) => {
+			history.goBack()
 			console.log("CHP/index.jsx" +err);
 		})
 	}, [])
@@ -148,3 +94,61 @@ export function CustomerHomePage(props){
     </PageContainer></>
     );
 }
+
+const Main = styled.div`
+    margin: 2%;
+    height: 684px;
+    
+`;
+
+const PseudoBorder = styled.h1`
+	position: relative;
+	color: black;
+	display: inline-block;
+    &:after {
+        content:'';
+    position: absolute;
+	display: inline-block;
+    left: 0;
+    top: 100%;
+    margin: 10px auto;
+    width: 33%;
+    height: 6px;
+    background: #00f;
+      }
+  
+`;
+
+const Card = styled.div`
+// width: 20%;
+min-width: 250px;
+display: inline-block;
+box-shadow: 2px 2px 20px black;
+background: white; 
+border-radius: 5px; 
+margin: 2%;
+
+`;
+
+const ImageComponent = styled.div`
+   
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+	position: relative;
+	display: inline-block;
+	margin-top: 5%;
+	margin-bottom: 5%;
+  	margin-left: 10%;
+	margin-right: 5%;
+  	width: 50%; 
+    img {
+        width: 190px;
+        height: 190px;
+    }
+`;
+const TitleComponent = styled.div`
+    text-align: center;
+    padding: 10px;  
+    font-size: 20px;
+    
+`;
