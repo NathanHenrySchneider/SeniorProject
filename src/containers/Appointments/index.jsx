@@ -8,8 +8,10 @@ import { DateTimePickerComponent } from "@syncfusion/ej2-react-calendars";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export function Appointments(props) {
+  
   const [email, setEmail] = useState("Not logged in");
   const [userID, setUserID] = useState(null);
+  const [userAppointment, setUserAppointment]= useState(null);
   useEffect(() => {
     axios.defaults.withCredentials = true;
 
@@ -19,6 +21,7 @@ export function Appointments(props) {
         console.log(response.data);
         setEmail(response.data.email);
         setUserID(response.data.user_id);
+        setUserAppointment(response.data.userAppointment)
       })
       .catch((err) => {
         console.log("CHP/index.jsx" + err);
@@ -29,14 +32,19 @@ export function Appointments(props) {
   const [err, setError] = useState(false);
   const [message, setMessage] = useState("");
   const [date, setDate] = useState(null);
+  const [reason, setReason] = useState(null);
+  const [doctor, setDoctor] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const appt_date = date.split("T")[0];
     const appt_start = date.split("T")[1];
-    console.log("apptDate: ", appt_date);
-    console.log("apptStart: ", appt_start);
+    // console.log("apptDate: ", appt_date);
+    // console.log("apptStart: ", appt_start);
+    // console.log("reason is:", reason)
+    // console.log("doctor is:", doctor)
+    console.log("appointment is:", userAppointment)
     axios
       .post(
         "http://localhost:3001/appointment",
@@ -44,6 +52,7 @@ export function Appointments(props) {
           appt_date: appt_date,
           appt_start: appt_start,
           appt_end: appt_start, //need to be fix to 30 after appt_start time.
+          reason: reason,
           patient_id: userID,
           provider_id: 2, //manually added.
         },
@@ -64,6 +73,7 @@ export function Appointments(props) {
       });
   };
 
+
   return (
     <>
       <NavBar email={email} />
@@ -73,9 +83,15 @@ export function Appointments(props) {
           onSubmit={(e) => {
             handleSubmit(e);
           }}
+          autoComplete="off"
         >
-          <Title>Reason for appointment:</Title>
-          <ReasonInput name="text" />
+          <Title style={{ marginTop: "30px" }}>Reason for appointment:</Title>
+          <ReasonInput
+            name="text"
+            onChange={(e) => {
+              setReason(e.target.value);
+            }}
+          />
           <Title style={{ marginTop: "20px" }}>Appointment Date:</Title>
           <Input
             type="datetime-local"
@@ -89,7 +105,11 @@ export function Appointments(props) {
             }}
           />
           <Title style={{ marginTop: "20px" }}>Doctor:</Title>
-          <Select>
+          <Select
+            onChange={(e) => {
+              setDoctor(e.target.value);
+            }}
+          >
             <Option disabled selected>
               Doctor Name
             </Option>
@@ -101,6 +121,34 @@ export function Appointments(props) {
           </Select>
           <Submit>Schedule</Submit>
         </FormContainer>
+
+        <UserAppointmentContainer>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col" style={{width: "10vw"}}>Appointments ID</th>
+                <th scope="col" style={{width: "10vw"}}>Date</th>
+                <th scope="col" style={{width: "10vw"}}>Start</th>
+                <th scope="col" style={{width: "10vw"}}>End</th>
+                <th scope="col" style={{width: "10vw"}}>Doctor</th>
+                <th scope="col" style={{width: "10vw"}}>Confirmed</th>
+              </tr>
+            </thead>
+            <tbody>
+            {userAppointment? userAppointment.map((item)=>(
+              <tr>
+                <th scope="row">{item.appt_id}</th>
+                <td>{item.appt_date.split("T")[0]}</td>
+                <td>{item.appt_start}</td>
+                <td>{item.appt_end}</td>
+                <td>Null</td>
+                <td>{item.confirmed ? `True`: `False`}</td>
+              </tr>
+            )) : null}
+            </tbody>
+          </table>
+
+        </UserAppointmentContainer>
       </PageContainer>
     </>
   );
@@ -164,4 +212,10 @@ const Submit = styled.button`
     background-color: #e9f5f5;
     transform: scale(1.02);
   }
+`;
+
+const UserAppointmentContainer = styled.div`
+  display: flex;
+  width: 90vw;
+  margin: 30px;
 `;
