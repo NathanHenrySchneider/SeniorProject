@@ -60,8 +60,8 @@ const ImageComponent = styled.div`
 	margin-right: 5%;
   	width: 50%; 
     img {
-        width: 200px;
-        height: auto;
+        width: 190px;
+        height: 190px;
     }
 `;
 const TitleComponent = styled.div`
@@ -100,8 +100,8 @@ export function CustomerHomePage(props){
 			</div>
 			<Card>
 				<ImageComponent>
-					{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
-					<img src = {accountIcon} alt = "accountIcon"/>
+					 <img src="https://i.stack.imgur.com/34AD2.jpg"/> 
+					{/*<img src = {accountIcon} alt = "accountIcon"/>*/}
 				</ImageComponent>
 				<TitleComponent>
                	 <h4><Link style={NavStyle} to="/customerhomepage/yourprofile">Your Profile</Link></h4>
@@ -109,8 +109,8 @@ export function CustomerHomePage(props){
 			</Card>
         	<Card>
 				<ImageComponent>
-					{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
-					<img src = {calendarIcon} alt = "calendarIcon"/>
+					 <img src="https://www.telestax.com/wp-content/uploads/2018/01/Lumin-header.png"/> 
+					{/*<img src = {calendarIcon} alt = "calendarIcon"/>*/}
 				</ImageComponent>
 				<TitleComponent>
             	<h4><Link style={NavStyle} to="/customerhomepage/appointments">Appointments</Link></h4>
@@ -118,8 +118,8 @@ export function CustomerHomePage(props){
 			</Card>
         	<Card>
 				<ImageComponent>
-					{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
-					<img src = {videoIcon} alt = "videoIcon"/>
+					 <img src="https://www.payetteforward.com/wp-content/uploads/2019/05/what-is-video-calling-828x466.jpg"/> 
+					{/*<img src = {videoIcon} alt = "videoIcon"/>*/}
 				</ImageComponent>
 				<TitleComponent>
             	<h4><Link style={NavStyle} to="/customerhomepage/videocall">Video Call</Link></h4>
@@ -127,8 +127,8 @@ export function CustomerHomePage(props){
 			</Card>
         	<Card>
 				<ImageComponent>
-					{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
-					<img src = {chatIcon} alt = "chatIcon"/>
+					<img src="https://miro.medium.com/max/1400/1*M_PoTEmelbIbw3nLcWHjSg.png"/> 
+					{/*<img src = {chatIcon} alt = "chatIcon"/>*/}
 				</ImageComponent>
 				<TitleComponent>
             	<h4><Link style={NavStyle} to="/customerhomepage/chat">Chat</Link></h4>
@@ -136,8 +136,8 @@ export function CustomerHomePage(props){
 			</Card>
         	<Card>
 				<ImageComponent>
-					{/* <img src="https://cdn.pixabay.com/photo/2018/01/09/03/49/the-natural-scenery-3070808_1280.jpg"/> */}
-					<img src = {documentsIcon} alt = "documentsIcon"/>
+					 <img src="https://grafimedia.eu/wp-content/uploads/2017/12/Document-as-a-Service-DaaS-by-Grafimedia-Health-IT-SaaS-1.jpg"/> 
+					{/*<img src = {documentsIcon} alt = "documentsIcon"/>*/}
 				</ImageComponent>
 				<TitleComponent>
             	<h4><Link style={NavStyle} to="/customerhomepage/documents">Documents</Link></h4>
