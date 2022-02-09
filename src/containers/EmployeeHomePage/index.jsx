@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { EmpNavBar } from "../../components/Empnavbar";
 import { PageContainer } from "../../components/pageContainer";
 import axios from "axios";
-import { TopSection } from "../CustomerHomePage/topSection";
+import { TopSection } from "./topSection";
 import accountIcon from "../../images/account.png";
 import calendarIcon from "../../images/calendar.png";
 import chatIcon from "../../images/chat.png";

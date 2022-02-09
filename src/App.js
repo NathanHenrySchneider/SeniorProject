@@ -28,7 +28,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={AccountBox} />
           <Route path="/EmployeeLogin" exact component={EmployeeBox} />
-          <Route path="/CustomerHomePage" exact component={CustomerHomePage} />
+          <Route path="/customerhomepage" exact component={CustomerHomePage} />
           <Route path="/customerhomepage/yourprofile" exact component={YourProfile} />
           <Route path="/customerhomepage/appointments" exact component={Appointments}/>
           <Route path="/customerhomepage/videocall" exact component={VideoCall}/>
