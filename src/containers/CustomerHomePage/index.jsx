@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useHistory} from 'react-router-dom';
 import { NavBar } from "../../components/navbar";
 import { PageContainer } from "../../components/pageContainer";
 import './style.css';
@@ -12,6 +12,7 @@ import documentsIcon from "../../images/folder_w.png";
 import videoIcon from "../../images/video_w.png";
 
 export function CustomerHomePage(props) {
+	let history = useHistory();
 	const [email, setEmail] = useState('Not logged in');
 	useEffect(() => {
 		axios.defaults.withCredentials = true;
@@ -22,10 +23,10 @@ export function CustomerHomePage(props) {
 				setEmail(response.data.email)
 			})
 			.catch((err) => {
+				history.goBack();
 				console.log("CHP/index.jsx" + err);
 			})
 	}, [])
-
 
 	return (<>
 		<NavBar email={email} />
