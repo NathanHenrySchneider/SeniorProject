@@ -6,12 +6,13 @@ import styled from "styled-components";
 import axios from "axios";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { OverlayTrigger, Button, Tooltip } from "react-bootstrap";
+import * as bootstrap from "bootstrap";
 
 export function Appointments(props) {
-  
+
   const [email, setEmail] = useState("Not logged in");
   const [userID, setUserID] = useState(null);
-  const [userAppointment, setUserAppointment]= useState(null);
+  const [userAppointment, setUserAppointment] = useState(null);
   useEffect(() => {
     axios.defaults.withCredentials = true;
 
@@ -21,7 +22,7 @@ export function Appointments(props) {
         console.log(response.data);
         setEmail(response.data.email);
         setUserID(response.data.user_id);
-        setUserAppointment(response.data.userAppointment)
+        setUserAppointment(response.data.userAppointment);
       })
       .catch((err) => {
         console.log("CHP/index.jsx" + err);
@@ -43,7 +44,7 @@ export function Appointments(props) {
     // console.log("apptStart: ", appt_start);
     // console.log("reason is:", reason)
     // console.log("doctor is:", doctor)
-    console.log("appointment is:", userAppointment)
+    // console.log("appointment is:", userAppointment)
     axios
       .post(
         "http://localhost:3001/appointment",
@@ -63,16 +64,19 @@ export function Appointments(props) {
         }
       )
       .then(function (response) {
-        console.log(response)
+        console.log(response);
+        alert("Appointment Booked")
         // history.push("/CustomerHomePage");
       })
       .catch(function (error) {
         setError(true);
-        console.log(error)
+        console.log(error);
         if (error.response) setMessage(error.response.data);
         else setMessage("Something went wrong.");
       });
   };
+
+
 
 
   return (
@@ -120,43 +124,91 @@ export function Appointments(props) {
             <Option>Doctor 4</Option>
             <Option>Doctor 5</Option>
           </Select>
-          {date == null ? <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Please add appointment time.</Tooltip>}>
-            <span className="d-inline-block">
-              <Button disabled style={{ pointerEvents: 'none', marginTop: "30px" }}>
-                Schedule
-              </Button>
-            </span>
-          </OverlayTrigger> : <Button type = "submit">
-                Schedule
-          </Button>}
+          {date == null ? (
+            <OverlayTrigger
+              overlay={
+                <Tooltip id="tooltip-disabled">
+                  Please add appointment time.
+                </Tooltip>
+              }
+            >
+              <span className="d-inline-block">
+                <Button
+                  disabled
+                  style={{ pointerEvents: "none", marginTop: "30px" }}
+                >
+                  Schedule
+                </Button>
+              </span>
+            </OverlayTrigger>
+          ) : (
+            <Button type="submit">Schedule</Button>
+          )}
         </FormContainer>
 
         <UserAppointmentContainer>
           <table class="table">
             <thead>
               <tr>
-                <th scope="col" style={{width: "10vw"}}>Appointments ID</th>
-                <th scope="col" style={{width: "10vw"}}>Date</th>
-                <th scope="col" style={{width: "10vw"}}>Start</th>
-                <th scope="col" style={{width: "10vw"}}>End</th>
-                <th scope="col" style={{width: "10vw"}}>Doctor</th>
-                <th scope="col" style={{width: "10vw"}}>Confirmed</th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Appointments ID
+                </th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Date
+                </th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Start
+                </th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  End
+                </th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Doctor
+                </th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Confirmed
+                </th>
+                <th scope="col" style={{ width: "10vw" }}></th>
               </tr>
             </thead>
             <tbody>
-            {userAppointment? userAppointment.map((item)=>(
-              <tr>
-                <th scope="row">{item.appt_id}</th>
-                <td>{item.appt_date.split("T")[0]}</td>
-                <td>{item.appt_start.split("+")[0]}</td>
-                <td>{item.appt_end}</td>
-                <td>Null</td>
-                <td>{item.confirmed ? `True`: `False`}</td>
-              </tr>
-            )) : null}
+              {userAppointment
+                ? userAppointment.map((item) => (
+                    <tr>
+                      <th scope="row">{item.appt_id}</th>
+                      <td>{item.appt_date.split("T")[0]}</td>
+                      <td>{item.appt_start.split("+")[0]}</td>
+                      <td>{item.appt_end}</td>
+                      <td>Null</td>
+                      <td>{item.confirmed ? `True` : `False`}</td>
+                      <td>
+                        <div class="dropdown">
+                          <a
+                            class="btn btn-secondary dropdown-toggle"
+                            href="#"
+                            role="button"
+                            id="dropdownMenuLink"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >Action</a>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li>
+                              <a class="dropdown-item" href="#">View</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="#">Update</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="#">Cancel</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                : null}
             </tbody>
           </table>
-
         </UserAppointmentContainer>
       </PageContainer>
     </>
@@ -227,4 +279,7 @@ const UserAppointmentContainer = styled.div`
   display: flex;
   width: 90vw;
   margin: 30px;
+  padding: 10px;
+  border: 2px solid #e4e4e4;
+  border-radius: 10px;
 `;
