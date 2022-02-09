@@ -3,18 +3,18 @@ import React from "react";
 // import { BrandLogo } from "../brandLogo";
 // import { Marginer } from "../marginer";
 import { useHistory } from "react-router-dom";
-import Navbar from 'react-bootstrap/Navbar';
+import EmpNavbar from 'react-bootstrap/Navbar';
 import {Container} from 'react-bootstrap';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 
 //old styles commented at the bottom if you need it 
-export function NavBar(props){
+export function EmpNavBar(props){
     let history = useHistory();
     return (
-        <Navbar bg="light">
+        <EmpNavbar bg="light">
         <Container>
-          <Navbar.Brand href="#home">
+          <EmpNavbar.Brand href="#home">
             <img
               alt=""
               src= {require("./newLogo.png")}
@@ -22,13 +22,13 @@ export function NavBar(props){
               height="40"
               className="d-inline-block align-top"
             />{' '}
-          <strong style = {{color:'#122a8e', size: '33px', margin:'0 0 0 5px'}}><Link style={{ textDecoration: 'none' }} to="/CustomerHomePage">Tele-Medic</Link></strong>
-          </Navbar.Brand>
-          <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text style = {{marginRight: '7px'}}>
+          <strong style = {{color:'#122a8e', size: '33px', margin:'0 0 0 5px'}}><Link style={{ textDecoration: 'none' }} to="/EmployeeHomePage">Tele-Medic</Link></strong>
+          </EmpNavbar.Brand>
+          <EmpNavbar.Collapse className="justify-content-end">
+            <EmpNavbar.Text style = {{marginRight: '7px'}}>
                 <a href="#profile" style = {{fontWeight:'bold'}}>{props.email}</a>
-            </Navbar.Text>{'|'}
-            <Navbar.Text style = {{marginLeft: '7px'}}>
+            </EmpNavbar.Text>{'|'}
+            <EmpNavbar.Text style = {{marginLeft: '7px'}}>
                 <button style = {{border: 'none', background: 'none'}} onClick = {()=>{
                   axios.post('http://localhost:3001/logout')
                   .then((response) => {
@@ -39,10 +39,10 @@ export function NavBar(props){
                     console.log(err.response.data);
                   })
                 }}>Sign Out</button>
-            </Navbar.Text>
-            </Navbar.Collapse>
+            </EmpNavbar.Text>
+            </EmpNavbar.Collapse>
         </Container>
-      </Navbar>
+      </EmpNavbar>
 
     // <NavBarContainer>
     //     <BrandLogo />
