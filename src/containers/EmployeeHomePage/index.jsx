@@ -15,16 +15,19 @@ import styled from "styled-components";
 
 
 export function EmployeeHomePage(props){
-    const [email, setEmail] = useState('Not logged in');
+    let history = useHistory();
+	
+	const [email, setEmail] = useState('Not logged in');
 	useEffect(() => {
 		axios.defaults.withCredentials = true;
 
 		axios.post('http://localhost:3001/me-doctor', {withCredentials: true})
 		.then((response) => {
-		  console.log(response.data)
+			console.log("This is response:",response.data)
 		  setEmail(response.data.email)
 		})
 		.catch((err) => {
+			history.goBack()
 			console.log("CHP/index.jsx" +err);
 		})
 	}, [])
@@ -83,7 +86,7 @@ export function EmployeeHomePage(props){
 				<img src = {documentsIcon} alt = "documentsIcon"/>
 			</ImageComponent>
 			<TitleComponent>
-			<h4><Link style={NavStyle} to="/employeehomepage/documents">Documents</Link></h4>
+			<h4><Link style={NavStyle} to="/employeehomepage/empdocuments">Documents</Link></h4>
 			</TitleComponent>
 			</Card>
 		</Main>
