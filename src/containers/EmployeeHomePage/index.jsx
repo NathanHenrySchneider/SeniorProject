@@ -39,7 +39,7 @@ export function EmployeeHomePage(props){
 	return (<>
 	<EmpNavBar email = {email}/>
 	<PageContainer>
-		<TopSection>
+		{/* <TopSection> */}
 		<Main>
 		<div>
 			<PseudoBorder>Home Page</PseudoBorder>
@@ -90,7 +90,7 @@ export function EmployeeHomePage(props){
 			</TitleComponent>
 			</Card>
 		</Main>
-	</TopSection>
+	{/* </TopSection> */}
 </PageContainer></>
 );
 }
