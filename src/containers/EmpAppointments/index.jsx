@@ -1,6 +1,6 @@
 import React from "react";
 import { PageContainer } from "../../components/pageContainer";
-import { NavBar } from "../../components/navbar";
+import { EmpNavBar } from "../../components/Empnavbar";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
@@ -77,7 +77,7 @@ export function EmpAppointments(props) {
 
   return (
     <>
-      <NavBar email={email} />
+      <EmpNavBar email={email} />
       <PageContainer>
         <PseudoBorder>Make Your Appointment</PseudoBorder>
         <FormContainer

@@ -14,6 +14,7 @@ import { Documents } from './containers/Documents';
 import { EmpAppointments } from './containers/EmpAppointments';
 import { EmpVideoCall } from './containers/EmpVideoCall';
 import { EmpChat } from './containers/EmpChat';
+import { EmpYourProfile } from './containers/EmpYourProfile';
 import { EmpDocuments } from './containers/EmpDocuments';
 
 
@@ -36,8 +37,8 @@ function App() {
           <Route path="/EmployeeHomePage" exact component={EmployeeHomePage} />
           <Route path="/EmployeeHomePage/empvideocall" exact component={EmpVideoCall}/>
           <Route path="/EmployeeHomePage/empchat" exact component={EmpChat}/>
-          <Route path="/EmployeeHomePage/YourProfile" exact component={YourProfile}/>
-          <Route path="/Employeehomepage/EmpDocuments" exact component={Documents}/>
+          <Route path="/EmployeeHomePage/EmpYourProfile" exact component={EmpYourProfile}/>
+          <Route path="/Employeehomepage/EmpDocuments" exact component={EmpDocuments}/>
           <Route path="/Employeehomepage/EmpAppointments" exact component={EmpAppointments}/>
         </Switch>
       </Router>

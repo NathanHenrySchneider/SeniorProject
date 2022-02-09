@@ -3,7 +3,7 @@ import React from "react";
 // import { BrandLogo } from "../brandLogo";
 // import { Marginer } from "../marginer";
 import { useHistory } from "react-router-dom";
-import Navbar from 'react-bootstrap/Navbar';
+import EmpNavbar from 'react-bootstrap/Navbar';
 import {Container} from 'react-bootstrap';
 import axios from 'axios';
 import { Link } from "react-router-dom";

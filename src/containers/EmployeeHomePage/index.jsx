@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavBar } from "../../components/navbar";
+import { EmpNavBar } from "../../components/Empnavbar";
 import { PageContainer } from "../../components/pageContainer";
 import axios from "axios";
 import { TopSection } from "../CustomerHomePage/topSection";
@@ -30,14 +30,14 @@ export function EmployeeHomePage(props){
 			history.goBack()
 			console.log("CHP/index.jsx" +err);
 		})
-	}, [])
+	})
 	
 	const NavStyle ={
 		color:"Black"
 	}
 
 	return (<>
-	<NavBar email = {email}/>
+	<EmpNavBar email = {email}/>
 	<PageContainer>
 		<TopSection>
 		<Main>
@@ -50,7 +50,7 @@ export function EmployeeHomePage(props){
 				<img src = {accountIcon} alt = "accountIcon"/>
 			</ImageComponent>
 			<TitleComponent>
-				<h4><Link style={NavStyle} to="/employeehomepage/yourprofile">Your Profile</Link></h4>
+				<h4><Link style={NavStyle} to="/employeehomepage/empyourprofile">Your Profile</Link></h4>
 			</TitleComponent>
 		</Card>
 		<Card>
