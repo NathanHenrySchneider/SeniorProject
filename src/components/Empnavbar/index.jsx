@@ -33,7 +33,7 @@ export function EmpNavBar(props){
                   axios.post('http://localhost:3001/logout')
                   .then((response) => {
                     if(response.statusText === "OK"){
-                      history.goBack();
+                      history.replace("/");
                     }
                   }).catch((err) => {
                     console.log(err.response.data);
