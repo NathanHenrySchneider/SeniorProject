@@ -32,6 +32,6 @@ export function BrandLogo(props){
         <LogoImage size={logoSize}>
             <img src={LogoImg} alt="Tele-medic logo" />
         </LogoImage>
-        <LogoTitle size={textSize}>Tele-Medic</LogoTitle>
+        <LogoTitle size={textSize}>Dashboard</LogoTitle>
     </BrandLogoContainer>
 }

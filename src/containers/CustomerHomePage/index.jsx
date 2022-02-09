@@ -30,7 +30,7 @@ export function CustomerHomePage(props){
 			history.goBack()
 			console.log("CHP/index.jsx" +err);
 		})
-	}, [])
+	})
 	
 	const NavStyle ={
 		color:"Black"

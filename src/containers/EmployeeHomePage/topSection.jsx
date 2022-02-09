@@ -24,8 +24,9 @@ const TopSectionInnerContainer = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+    // align-items: center;
+    margin-top:20px;
+    // justify-content: space-evenly;
 `;
 
 const LogoContainer = styled.div`
@@ -39,7 +40,7 @@ const SloganText = styled.h3`
     line-height: 1.4;
     color: #fff;
     font-weight: 500;
-    font-size: 30px;
+    font-size: 25px;
 `;
 
 export function TopSection(props){
@@ -49,11 +50,11 @@ export function TopSection(props){
         <BackgroundFilter>
             {children}
             <TopSectionInnerContainer>
-                <LogoContainer>
-                    <BrandLogo logoSize={75} textSize={50}/>
+                <LogoContainer className = "container">
+                    <BrandLogo logoSize={65} textSize={40}/>
                     <Marginer direction="vertical" margin={8} />
-                    <SloganText>Welcome!</SloganText>
-                    <SloganText>Your patients are ready</SloganText>
+                    <SloganText>Welcome {props.email}!</SloganText>
+                    <SloganText>Your appointments:</SloganText>
                 </LogoContainer>
             </TopSectionInnerContainer>
         </BackgroundFilter>

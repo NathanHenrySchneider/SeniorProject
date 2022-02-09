@@ -22,7 +22,7 @@ export function EmployeeHomePage(props){
 
     return (
     <PageContainer>
-        <TopSection>
+        <TopSection email = {email}>
             <NavBar email = {email}/>
         </TopSection>
     </PageContainer>
