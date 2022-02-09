@@ -56,7 +56,7 @@ export function EmployeeHomePage(props){
 				<img src = {calendarIcon} alt = "calendarIcon"/>
 			</ImageComponent>
 			<TitleComponent>
-			<h4><Link style={NavStyle} to="/employeehomepage/appointments">Appointments</Link></h4>
+			<h4><Link style={NavStyle} to="/employeehomepage/empappointments">Appointments</Link></h4>
 			</TitleComponent>
 		</Card>
 		<Card>
@@ -65,7 +65,7 @@ export function EmployeeHomePage(props){
 				<img src = {videoIcon} alt = "videoIcon"/>
 			</ImageComponent>
 			<TitleComponent>
-			<h4><Link style={NavStyle} to="/employeehomepage/videocall">Video Call</Link></h4>
+			<h4><Link style={NavStyle} to="/employeehomepage/empvideocall">Video Call</Link></h4>
 			</TitleComponent>
 		</Card>
 		<Card>
@@ -74,7 +74,7 @@ export function EmployeeHomePage(props){
 				<img src = {chatIcon} alt = "chatIcon"/>
 			</ImageComponent>
 			<TitleComponent>
-			<h4><Link style={NavStyle} to="/employeehomepage/chat">Chat</Link></h4>
+			<h4><Link style={NavStyle} to="/employeehomepage/empchat">Chat</Link></h4>
 			</TitleComponent>
 		</Card>
 		<Card>

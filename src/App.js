@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { CustomerHomePage } from './containers/CustomerHomePage';
 import { EmployeeHomePage } from './containers/EmployeeHomePage';
 import { BrowserRouter as Router, Switch, Route, } from "react-router-dom";
-import {AccountBox} from "./accountBox";
+import { AccountBox } from "./accountBox";
 import { EmployeeBox } from "./employeeBox";
 import { YourProfile } from './containers/YourProfile';
 import { Appointments } from './containers/Appointments';
@@ -37,7 +37,7 @@ function App() {
           <Route path="/EmployeeHomePage/empchat" exact component={EmpChat}/>
           <Route path="/EmployeeHomePage/YourProfile" exact component={YourProfile}/>
           <Route path="/Employeehomepage/documents" exact component={Documents}/>
-          <Route path="/Employeehomepage/empappointments" exact component={EmpAppointments}/>
+          <Route path="/Employeehomepage/EmpAppointments" exact component={EmpAppointments}/>
         </Switch>
       </Router>
     </div>
