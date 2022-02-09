@@ -46,7 +46,7 @@ export function CustomerHomePage(props){
 			</div>
 			<Card>
 				<ImageComponent>
-					 <img src="https://i.stack.imgur.com/34AD2.jpg"/> 
+					 <img src="https://i.stack.imgur.com/34AD2.jpg" alt = "accountIcon"/> 
 					{/*<img src = {accountIcon} alt = "accountIcon"/>*/}
 				</ImageComponent>
 				<TitleComponent>
@@ -55,7 +55,7 @@ export function CustomerHomePage(props){
 			</Card>
         	<Card>
 				<ImageComponent>
-					 <img src="https://www.telestax.com/wp-content/uploads/2018/01/Lumin-header.png"/> 
+					 <img src="https://www.telestax.com/wp-content/uploads/2018/01/Lumin-header.png" alt = "calendarIcon"/> 
 					{/*<img src = {calendarIcon} alt = "calendarIcon"/>*/}
 				</ImageComponent>
 				<TitleComponent>
@@ -64,7 +64,7 @@ export function CustomerHomePage(props){
 			</Card>
         	<Card>
 				<ImageComponent>
-					 <img src="https://www.payetteforward.com/wp-content/uploads/2019/05/what-is-video-calling-828x466.jpg"/> 
+					 <img src="https://www.payetteforward.com/wp-content/uploads/2019/05/what-is-video-calling-828x466.jpg" alt = "videoIcon"/> 
 					{/*<img src = {videoIcon} alt = "videoIcon"/>*/}
 				</ImageComponent>
 				<TitleComponent>
@@ -73,7 +73,7 @@ export function CustomerHomePage(props){
 			</Card>
         	<Card>
 				<ImageComponent>
-					<img src="https://miro.medium.com/max/1400/1*M_PoTEmelbIbw3nLcWHjSg.png"/> 
+					<img src="https://miro.medium.com/max/1400/1*M_PoTEmelbIbw3nLcWHjSg.png" alt = "chatIcon"/> 
 					{/*<img src = {chatIcon} alt = "chatIcon"/>*/}
 				</ImageComponent>
 				<TitleComponent>
@@ -82,7 +82,7 @@ export function CustomerHomePage(props){
 			</Card>
         	<Card>
 				<ImageComponent>
-					 <img src="https://grafimedia.eu/wp-content/uploads/2017/12/Document-as-a-Service-DaaS-by-Grafimedia-Health-IT-SaaS-1.jpg"/> 
+					 <img src="https://grafimedia.eu/wp-content/uploads/2017/12/Document-as-a-Service-DaaS-by-Grafimedia-Health-IT-SaaS-1.jpg" alt = "documentsIcon"/> 
 					{/*<img src = {documentsIcon} alt = "documentsIcon"/>*/}
 				</ImageComponent>
 				<TitleComponent>
