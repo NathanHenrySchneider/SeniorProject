@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { NavBar } from "../../components/navbar";
+import { EmpNavBar } from "../../components/Empnavbar";
 import { PageContainer } from "../../components/pageContainer";
 import './style.css';
 import axios from 'axios';
@@ -22,7 +22,7 @@ export function EmpYourProfile(props) {
     }, [])
 
     return (<>
-        <NavBar email={email} />
+        <EmpNavBar email={email} />
         <PageContainer>
             <div class="page-content page-container" id="page-content">
                 <div class="padding">
