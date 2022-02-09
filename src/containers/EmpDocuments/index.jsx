@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import { NavBar } from "../../components/navbar";
+import { EmpNavBar } from "../../components/Empnavbar";
 import { PageContainer } from "../../components/pageContainer";
 import './style.css';
 import axios from 'axios';
@@ -23,7 +23,7 @@ export function EmpDocuments(props) {
     }, [])
 
     return (<>
-        <NavBar email={email} />
+        <EmpNavBar email={email} />
         <PageContainer>
             <div class="p-5 bg-white rounded shadow mb-5">
                 <Tabs defaultActiveKey="testresults" id="uncontrolled-tab-example" className="nav nav-tabs nav-pills flex-column flex-sm-row text-center bg-light border-0 rounded-nav">
