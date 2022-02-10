@@ -38,13 +38,15 @@ export function Appointments(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    //Check if user alraedy have 3 appointment.
+    if(userAppointment.length>=3){
+      return alert("Max 3 appointment allowed")
+    }
+
     const appt_date = date.split("T")[0];
     const appt_start = date.split("T")[1];
-    // console.log("apptDate: ", appt_date);
-    // console.log("apptStart: ", appt_start);
-    // console.log("reason is:", reason)
-    // console.log("doctor is:", doctor)
-    // console.log("appointment is:", userAppointment)
+
     axios
       .post(
         "http://localhost:3001/appointment",
@@ -75,9 +77,6 @@ export function Appointments(props) {
         else setMessage("Something went wrong.");
       });
   };
-
-
-
 
   return (
     <>
