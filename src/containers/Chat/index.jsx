@@ -5,6 +5,7 @@ import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import { Container } from "react-bootstrap";
+import ComposeEmail from "./ComposeEmail";
 
 export function Chat(props){
 
@@ -27,7 +28,7 @@ export function Chat(props){
         <><h1 className="text-center mb-3 mt-4">Message Portal</h1><>
             <div className="text-center">
                 <Button variant="primary w-25">Refresh</Button>{' '}
-                <Button variant="secondary w-25 mx-3">Compose</Button>{' '}
+                <ComposeEmail></ComposeEmail>
             </div>
         </></>
         <Container fluid="md">
