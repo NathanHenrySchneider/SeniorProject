@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import { Container } from "react-bootstrap";
 import ComposeEmail from "./ComposeEmail";
+import OpenMessage from "./OpenMessage";
+
 
 export function Chat(props){
 
@@ -38,7 +40,7 @@ export function Chat(props){
                         <th>Date/Time</th>
                         <th>Sender</th>
                         <th>Subject</th>
-                        <th className="text-center">  Open  </th>
+                        <th className="text-center"> Open</th>
                         <th className="text-center"> Delete</th>
                     </tr>
                 </thead>
@@ -48,7 +50,7 @@ export function Chat(props){
                         <td>Dr.Snow</td>
                         <td>Consulation</td>
                         <td colSpan={1.5} className="text-center">
-                            <Button variant="primary btn-center">Open</Button>
+                            <OpenMessage></OpenMessage>
                         </td>
                         <td colSpan={1.5} className="text-center">
                         <Button variant="danger">Delete</Button>
@@ -59,7 +61,7 @@ export function Chat(props){
                         <td>Dr.Potter</td>
                         <td>Primary Doctor Visit</td>
                         <td colSpan={1} className="text-center">
-                        <Button variant="primary">Open</Button>
+                        <Button variant="success">Open</Button>
                         </td>
                         <td colSpan={1} className="text-center">
                         <Button variant="danger">Delete</Button>
@@ -70,7 +72,7 @@ export function Chat(props){
                         <td>Nurse Jenkins</td>
                         <td>Physical</td>
                         <td colSpan={1} className="text-center">
-                        <Button variant="primary">Open</Button>
+                        <Button variant="success">Open</Button>
                         </td>
                         <td colSpan={1} className="text-center">
                         <Button variant="danger">Delete</Button>
@@ -81,7 +83,7 @@ export function Chat(props){
                         <td>Nurse Johnson</td>
                         <td>Physical</td>
                         <td colSpan={1} className="text-center">
-                        <Button variant="primary">Open</Button>
+                        <Button variant="success">Open</Button>
                         </td>
                         <td colSpan={1} className="text-center">
                         <Button variant="danger">Delete</Button>
@@ -92,7 +94,7 @@ export function Chat(props){
                         <td>Dr.Kendrick</td>
                         <td>Knee Surgery Consultation</td>
                         <td colSpan={1} className="text-center">
-                        <Button variant="primary">Open</Button>
+                        <Button variant="success">Open</Button>
                         </td>
                         <td colSpan={1} className="text-center">
                         <Button variant="danger">Delete</Button>
