@@ -1,0 +1,28 @@
+.card-block {
+    padding: 1.25rem;
+}
+
+.m-b-25 {
+    margin-bottom: 25px;
+}
+
+.img-radius {
+    border-radius: 5px;
+}
+
+.btn {
+    width: 60% !important;
+    margin-top: 10px !important;
+}
+
+h6 {
+    font-size: 14px;
+}
+
+.m-b-10 {
+    margin-bottom: 10px;
+}
+
+.text-muted {
+    color: #919aa3 !important;
+}
