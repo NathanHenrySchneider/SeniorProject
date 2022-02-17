@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 export function EmpNavBar(props){
     let history = useHistory();
     return (
-        <EmpNavbar bg="light">
+        <EmpNavbar bg="lightgreen" variant="light">
         <Container>
           <EmpNavbar.Brand href="#home">
             <img
