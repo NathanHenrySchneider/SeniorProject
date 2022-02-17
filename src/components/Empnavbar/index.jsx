@@ -1,4 +1,5 @@
 import React from "react";
+import "../Empnavbar/style.css";
 // import styled from "styled-components";
 // import { BrandLogo } from "../brandLogo";
 // import { Marginer } from "../marginer";
