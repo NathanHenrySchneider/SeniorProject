@@ -40,9 +40,9 @@ export function SignUpForm(props){
                 onChange = {e => setName(e.target.value)}/>
             <Input type="email" name="email" placeholder="Email"
                 onChange = {e => setEmail(e.target.value)}/>
-            <Input type ="password" name="password" placeholder="Password"
+            <Input type ="text" name="password" placeholder="Date Of Birth mm/dd/yyyy"
                 onChange = {e => setPassword(e.target.value)}/>
-            <Input type ="password" name="password" placeholder="Confirm Password"/>
+            <Input type ="password" name="password" placeholder="Password"/>
             <Marginer direction="vertical" margin="1.6em" />
             {err ? <Alert variant = "danger">{message}</Alert> : <></>}
             <SubmitButton type="submit">Register</SubmitButton>

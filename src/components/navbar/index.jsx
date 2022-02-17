@@ -1,4 +1,5 @@
 import React from "react";
+import "../navbar/style.css"
 // import styled from "styled-components";
 // import { BrandLogo } from "../brandLogo";
 // import { Marginer } from "../marginer";
@@ -8,11 +9,13 @@ import {Container} from 'react-bootstrap';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 
+
 //old styles commented at the bottom if you need it 
 export function NavBar(props){
+
     let history = useHistory();
     return (
-        <Navbar bg="light">
+        <Navbar bg="lavendar" variant="light">
         <Container>
           <Navbar.Brand href="#home">
             <img
