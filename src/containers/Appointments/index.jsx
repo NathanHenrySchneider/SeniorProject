@@ -72,6 +72,7 @@ export function Appointments(props) {
       .then(function (response) {
         console.log(response);
         alert("Appointment Booked")
+        window.location.reload(false)
         // setDate(null)
         // history.push("/CustomerHomePage");
       })
