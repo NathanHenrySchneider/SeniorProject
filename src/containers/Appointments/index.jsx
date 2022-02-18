@@ -4,15 +4,19 @@ import { NavBar } from "../../components/navbar";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { OverlayTrigger, Button, Tooltip } from "react-bootstrap";
-import * as bootstrap from "bootstrap";
+// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Button, Modal } from "react-bootstrap";
 
 export function Appointments(props) {
 
   const [email, setEmail] = useState("Not logged in");
   const [userID, setUserID] = useState(null);
   const [userAppointment, setUserAppointment] = useState(null);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   useEffect(() => {
     axios.defaults.withCredentials = true;
 
@@ -29,7 +33,7 @@ export function Appointments(props) {
       });
   }, []);
 
-  let history = useHistory();
+  // let history = useHistory();
   const [err, setError] = useState(false);
   const [message, setMessage] = useState("");
   const [date, setDate] = useState(null);
@@ -68,6 +72,7 @@ export function Appointments(props) {
       .then(function (response) {
         console.log(response);
         alert("Appointment Booked")
+        // setDate(null)
         // history.push("/CustomerHomePage");
       })
       .catch(function (error) {
@@ -82,68 +87,7 @@ export function Appointments(props) {
     <>
       <NavBar email={email} />
       <PageContainer>
-        <PseudoBorder>Make Your Appointment</PseudoBorder>
-        <FormContainer
-          onSubmit={(e) => {
-            handleSubmit(e);
-          }}
-          autoComplete="off"
-        >
-          <Title style={{ marginTop: "30px" }}>Reason for appointment:</Title>
-          <ReasonInput
-            name="text"
-            onChange={(e) => {
-              setReason(e.target.value);
-            }}
-          />
-          <Title style={{ marginTop: "20px" }}>Appointment Date:</Title>
-          <Input
-            type="datetime-local"
-            id="appointment-time"
-            name="appointment-time"
-            min="2022-02-07T00:00"
-            max="2022-12-30T00:00"
-            style={{ padding: "5px" }}
-            onChange={(e) => {
-              setDate(e.target.value);
-            }}
-          />
-          <Title style={{ marginTop: "20px" }}>Doctor:</Title>
-          <Select
-            onChange={(e) => {
-              setDoctor(e.target.value);
-            }}
-          >
-            <Option disabled selected>
-              Doctor Name
-            </Option>
-            <Option>Doctor 1</Option>
-            <Option>Doctor 2</Option>
-            <Option>Doctor 3</Option>
-            <Option>Doctor 4</Option>
-            <Option>Doctor 5</Option>
-          </Select>
-          {date == null ? (
-            <OverlayTrigger
-              overlay={
-                <Tooltip id="tooltip-disabled">
-                  Please add appointment time.
-                </Tooltip>
-              }
-            >
-              <span className="d-inline-block">
-                <Button
-                  disabled
-                  style={{ pointerEvents: "none", marginTop: "30px" }}
-                >
-                  Schedule
-                </Button>
-              </span>
-            </OverlayTrigger>
-          ) : (
-            <Button type="submit">Schedule</Button>
-          )}
-        </FormContainer>
+        <PseudoBorder style = {{marginTop:"15px"}}>Appointments</PseudoBorder>
 
         <UserAppointmentContainer>
           <table class="table">
@@ -209,6 +153,71 @@ export function Appointments(props) {
             </tbody>
           </table>
         </UserAppointmentContainer>
+        <Button variant="primary" onClick={handleShow}>
+        Make an Appointment
+      </Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>New Appointment</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <FormContainer
+          onSubmit={(e) => {
+            handleSubmit(e);
+            handleClose()
+          }}
+          autoComplete="off"
+        >
+          <Title style={{ marginTop: "30px" }}>Reason for appointment:</Title>
+          <ReasonInput
+            name="text"
+            onChange={(e) => {
+              setReason(e.target.value);
+            }}
+          />
+          <Title style={{ marginTop: "20px" }}>Date and Time:</Title>
+          <Input
+            type="datetime-local"
+            id="appointment-time"
+            name="appointment-time"
+            min="2022-02-07T00:00"
+            max="2022-12-30T00:00"
+            style={{ padding: "5px" }}
+            onChange={(e) => {
+              setDate(e.target.value);
+            }}
+          />
+          <Title style={{ marginTop: "20px" }}>Doctor:</Title>
+          <Select
+            onChange={(e) => {
+              setDoctor(e.target.value);
+            }}
+          >
+            <Option disabled selected>
+              Doctor Name
+            </Option>
+            <Option>Doctor 1</Option>
+            <Option>Doctor 2</Option>
+            <Option>Doctor 3</Option>
+            <Option>Doctor 4</Option>
+            <Option>Doctor 5</Option>
+          </Select>
+          {date == null ? (
+              <span className="d-inline-block">
+                <Button
+                  disabled
+                  style={{ pointerEvents: "none", width: "auto", marginTop: "30px" }}
+                >
+                  Schedule
+                </Button>
+              </span>
+          ) : (
+            <Button type="submit"  style={{ width: "fit-content" }}>Schedule</Button>
+          )}
+        </FormContainer>
+        </Modal.Body>
+      </Modal>
       </PageContainer>
     </>
   );
@@ -258,21 +267,6 @@ const Select = styled.select`
 `;
 
 const Option = styled.option``;
-
-const Submit = styled.button`
-  display: flex;
-  justify-content: center;
-  width: 100px;
-  border-radius: 5px;
-  margin-top: 30px;
-  background-color: white;
-  transition: all 0.5s ease;
-
-  &:hover {
-    background-color: #e9f5f5;
-    transform: scale(1.02);
-  }
-`;
 
 const UserAppointmentContainer = styled.div`
   display: flex;
