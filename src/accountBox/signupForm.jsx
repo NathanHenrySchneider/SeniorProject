@@ -13,6 +13,7 @@ export function SignUpForm(props){
     const[password, setPassword] = useState('');
     const[err, setError] = useState(false);
     const[message, setMessage] = useState('');
+    const[selects,setSelects] = useState();
     const history = useHistory();
 
     const handleSubmit = (e) => {
@@ -35,6 +36,16 @@ export function SignUpForm(props){
     }
 
     return <BoxContainer>
+        <div>
+            <h1>{selects}</h1>
+            <select value={selects}>
+                <option selected value="Select">Select</option>
+                <option value = "Patient">Patient</option>
+                <option value = "Doctor">Doctor</option>
+                <option value = "Nurse">Nurse</option>
+            </select>
+        </div>
+        <Marginer direction="vertical" margin="0.4em" />
         <FormContainer onSubmit = {e => {handleSubmit(e)}}>
             <Input type ="text" name= "txt" placeholder="Full Name" 
                 onChange = {e => setName(e.target.value)}/>
@@ -50,5 +61,6 @@ export function SignUpForm(props){
         </FormContainer>
         
         <small>Already have an account?<BoldLink href ="#" onClick={switchToLogin}>Login</BoldLink></small>
+        <Marginer direction="vertical" margin="1em" />
     </BoxContainer>
 }

@@ -5,7 +5,7 @@ export const BoxContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 10px;
+    margin-top: -1em;
 `;
 
 export const FormContainer = styled.form`
