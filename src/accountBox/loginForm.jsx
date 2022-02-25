@@ -29,8 +29,13 @@ export function LoginForm(props){
             withCredentials: true
           })
           .then(function (response) {
-              // console.log("login page response is:", response)
-              history.push("/CustomerHomePage")
+              console.log("login page response is:", response.data)
+              if (response.data === "doctor") {
+                history.push("/EmployeeHomePage")
+              } else {
+                history.push("/CustomerHomePage") 
+              }
+              // nurse page wip
           })
           .catch(function (error) {
             setError(true);
