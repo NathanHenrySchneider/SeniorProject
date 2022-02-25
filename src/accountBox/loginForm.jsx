@@ -55,6 +55,5 @@ export function LoginForm(props){
         <Marginer direction="vertical" margin="0.8em" />
         <small>Don't have an account?<BoldLink href="#" onClick={switchToSignup}>Sign Up</BoldLink></small>
         <Marginer direction="vertical" margin={5} />
-        <Link to="/EmployeeLogin">Employee Login</Link>
     </BoxContainer>
 }
