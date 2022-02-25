@@ -12,13 +12,16 @@ import OpenMessage from "./OpenMessage";
 export function Chat(props){
 
 	const [email, setEmail] = useState('Not logged in');
+	const [userId, setUserId] = useState('');
+
 	useEffect(() => {
 		axios.defaults.withCredentials = true;
 
 		axios.post('http://localhost:3001/me', { withCredentials: true })
 			.then((response) => {
-				console.log("This is response:", response.data)
+				console.log("/me response:", response.data)
 				setEmail(response.data.email)
+                setUserId(response.data.user_id)
 			})
 			.catch((err) => {
 				console.log("CHP/index.jsx" + err);
