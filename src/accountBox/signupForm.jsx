@@ -21,7 +21,8 @@ export function SignUpForm(props){
         axios.post('http://localhost:3001/register', {
             full_name: name,
             email : email,
-            password: password
+            password: password,
+            user_type: selects
           })
           .then(function (response) {
             console.log(response);
@@ -40,9 +41,9 @@ export function SignUpForm(props){
             <h1>{selects}</h1>
             <select value={selects}>
                 <option selected value="Select">Select</option>
-                <option value = "Patient">Patient</option>
-                <option value = "Doctor">Doctor</option>
-                <option value = "Nurse">Nurse</option>
+                <option value = "patient">Patient</option>
+                <option value = "doctor">Doctor</option>
+                <option value = "nurse">Nurse</option>
             </select>
         </div>
         <Marginer direction="vertical" margin="0.4em" />
@@ -52,8 +53,10 @@ export function SignUpForm(props){
             <Input type="email" name="email" placeholder="Email"
                 onChange = {e => setEmail(e.target.value)}/>
             <Input type ="date" name="DOB" placeholder="Date Of Birth mm/dd/yyyy"
+                onChange = {e => setDateOfBirth(e.target.value)}/>
+            <Input type ="password" name="password" placeholder="Password"
                 onChange = {e => setPassword(e.target.value)}/>
-            <Input type ="password" name="password" placeholder="Password"/>
+                
             <Marginer direction="vertical" margin="1.6em" />
             {err ? <Alert variant = "danger">{message}</Alert> : <></>}
             <SubmitButton type="submit">Register</SubmitButton>
