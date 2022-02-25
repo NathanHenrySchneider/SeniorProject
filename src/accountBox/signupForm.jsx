@@ -39,7 +39,7 @@ export function SignUpForm(props){
     return <BoxContainer>
         <div>
             <h1>{selects}</h1>
-            <select value={selects}>
+            <select value={selects} onChange = {(e) => setSelects(e.target.value)}>
                 <option selected value="Select">Select</option>
                 <option value = "patient">Patient</option>
                 <option value = "doctor">Doctor</option>
@@ -52,11 +52,16 @@ export function SignUpForm(props){
                 onChange = {e => setName(e.target.value)}/>
             <Input type="email" name="email" placeholder="Email"
                 onChange = {e => setEmail(e.target.value)}/>
+<<<<<<< HEAD
             <Input type ="date" name="DOB" placeholder="Date Of Birth mm/dd/yyyy"
                 onChange = {e => setDateOfBirth(e.target.value)}/>
             <Input type ="password" name="password" placeholder="Password"
                 onChange = {e => setPassword(e.target.value)}/>
                 
+=======
+            <Input type ="date" name="DOB" placeholder="Date Of Birth mm/dd/yyyy"/>
+            <Input type ="password" name="password" placeholder="Password" onChange = {e => setPassword(e.target.value)}/>
+>>>>>>> 47d267f3dc6e229efb56a23dd1af4b7858818c90
             <Marginer direction="vertical" margin="1.6em" />
             {err ? <Alert variant = "danger">{message}</Alert> : <></>}
             <SubmitButton type="submit">Register</SubmitButton>
