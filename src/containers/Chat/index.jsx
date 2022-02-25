@@ -12,7 +12,6 @@ import OpenMessage from "./OpenMessage";
 export function Chat(props){
 
 	const [email, setEmail] = useState('Not logged in');
-	const [userId, setUserId] = useState('');
 
 	useEffect(() => {
 		axios.defaults.withCredentials = true;
@@ -21,7 +20,10 @@ export function Chat(props){
 			.then((response) => {
 				console.log("/me response:", response.data)
 				setEmail(response.data.email)
-                setUserId(response.data.user_id)
+                // response.data.user_id
+                axios.get('http://localhost:3001/messaging').then((response) => {
+                    console.log(response.data);
+                }).catch(err => console.log("message err" + err));
 			})
 			.catch((err) => {
 				console.log("CHP/index.jsx" + err);
