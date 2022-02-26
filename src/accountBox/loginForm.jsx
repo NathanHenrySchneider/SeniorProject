@@ -32,8 +32,10 @@ export function LoginForm(props){
               console.log("login page response is:", response.data)
               if (response.data === "doctor") {
                 history.push("/EmployeeHomePage")
+              } else if (response.data === "nurse" ) {
+                history.push("/NurseHomePage") 
               } else {
-                history.push("/CustomerHomePage") 
+                history.push("/CustomerHomePage")
               }
               // nurse page wip
           })

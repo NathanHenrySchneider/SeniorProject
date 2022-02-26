@@ -25,14 +25,8 @@ export function SignUpForm(props){
             user_type: selects
           })
           .then(function (response) {
-            // console.log("RESPOsNSE YUUUU");
             console.log(response);
-            if (response[2] === "doctor"){
-                // history.push("/EmployeeHomePage");
-            } else {
-                // history.push("/CustomerHomePage")
-            }
-            // history.push("/CustomerHomePage")
+            
           })
           .catch(function (error) {
             setError(true);
