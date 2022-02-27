@@ -26,7 +26,7 @@ export function SignUpForm(props){
           })
           .then(function (response) {
             console.log(response);
-            history.push("/CustomerHomePage")
+            
           })
           .catch(function (error) {
             setError(true);

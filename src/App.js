@@ -16,6 +16,8 @@ import { EmpVideoCall } from './containers/EmpVideoCall';
 import { EmpChat } from './containers/EmpChat';
 import { EmpYourProfile } from './containers/EmpYourProfile';
 import { EmpDocuments } from './containers/EmpDocuments';
+import { NurseHomePage } from './containers/NurseHomePage';
+import { NurseAppointments } from './containers/NurseAppointments';
 
 
 
@@ -34,12 +36,20 @@ function App() {
           <Route path="/customerhomepage/videocall" exact component={VideoCall}/>
           <Route path="/customerhomepage/chat" exact component={Chat}/>
           <Route path="/customerhomepage/documents" exact component={Documents}/>
+
           <Route path="/EmployeeHomePage" exact component={EmployeeHomePage} />
           <Route path="/EmployeeHomePage/empvideocall" exact component={EmpVideoCall}/>
           <Route path="/EmployeeHomePage/empchat" exact component={EmpChat}/>
           <Route path="/EmployeeHomePage/EmpYourProfile" exact component={EmpYourProfile}/>
           <Route path="/Employeehomepage/EmpDocuments" exact component={EmpDocuments}/>
           <Route path="/Employeehomepage/EmpAppointments" exact component={EmpAppointments}/>
+
+          <Route path="/NurseHomePage" exact component={NurseHomePage} />
+          <Route path="/Nursehomepage/NurseAppointments" exact component={NurseAppointments}/>
+          <Route path="/NurseHomePage/empvideocall" exact component={EmpVideoCall}/>
+          <Route path="/NurseHomePage/empchat" exact component={EmpChat}/>
+          <Route path="/NurseHomePage/EmpYourProfile" exact component={EmpYourProfile}/>
+          <Route path="/Nursehomepage/EmpDocuments" exact component={EmpDocuments}/>
         </Switch>
       </Router>
     </div>

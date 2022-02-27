@@ -11,7 +11,7 @@ import chatIcon from "../../images/chat_w.png";
 import documentsIcon from "../../images/folder_w.png";
 import videoIcon from "../../images/video_w.png";
 
-export function EmployeeHomePage(props) {
+export function NurseHomePage(props) {
 	let history = useHistory();
 	const [email, setEmail] = useState('Not logged in');
 	useEffect(() => {
@@ -41,7 +41,7 @@ export function EmployeeHomePage(props) {
 							<div class="icon">
 								<img src={accountIcon} alt="account icon" />
 							</div>
-							<Link to="/EmployeeHomePage/EmpYourProfile"><div class="card-box-footer">View More</div></Link>
+							<Link to="/NurseHomePage/EmpYourProfile"><div class="card-box-footer">View More</div></Link>
 						</div>
 					</div>
 
@@ -53,7 +53,7 @@ export function EmployeeHomePage(props) {
 							<div class="icon">
 								<img src={calendarIcon} alt="calendar icon" />
 							</div>
-							<Link to="/Employeehomepage/EmpAppointments"><div class="card-box-footer">View More</div></Link>
+							<Link to="/Nursehomepage/NurseAppointments"><div class="card-box-footer">View More</div></Link>
 						</div>
 					</div>
 					<div class="col-lg-4 col-sm-6">
@@ -64,7 +64,7 @@ export function EmployeeHomePage(props) {
 							<div class="icon">
 								<img src={videoIcon} alt="video icon" />
 							</div>
-							<Link to="/EmployeeHomePage/empvideocall"><div class="card-box-footer">View More</div></Link>
+							<Link to="/NurseHomePage/empvideocall"><div class="card-box-footer">View More</div></Link>
 						</div>
 					</div>
 					<div class="col-lg-4 col-sm-6">
@@ -75,7 +75,7 @@ export function EmployeeHomePage(props) {
 							<div class="icon">
 								<img src={chatIcon} alt="chat icon" />
 							</div>
-							<Link to="/EmployeeHomePage/empchat"><div class="card-box-footer">View More</div></Link>
+							<Link to="/NurseHomePage/empchat"><div class="card-box-footer">View More</div></Link>
 						</div>
 					</div>
 					<div class="col-lg-4 col-sm-6">
@@ -86,7 +86,7 @@ export function EmployeeHomePage(props) {
 							<div class="icon">
 								<img src={documentsIcon} alt="documents icon" />
 							</div>
-							<Link to="/Employeehomepage/EmpDocuments"><div class="card-box-footer">View More</div></Link>
+							<Link to="/Nursehomepage/EmpDocuments"><div class="card-box-footer">View More</div></Link>
 						</div>
 					</div>
 				</div>

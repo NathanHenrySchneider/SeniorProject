@@ -8,7 +8,7 @@ import { ButtonGroup, Form, Row, Col} from "react-bootstrap";
 //currently hardcoded for demo
 
 
-const OpenMessage = ({message_id, subject, sender_id}) => {
+const OpenMessage = ({message_id, subject, sender_id, message}) => {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -38,7 +38,7 @@ const OpenMessage = ({message_id, subject, sender_id}) => {
                     <Form.Group as={Row} className="mb-3" controlId="sender">
                         <Form.Label column sm="2"> From: </Form.Label>
                         <Col sm="10">
-                            <Form.Control plaintext readOnly defaultValue="Dr.Snow" />
+                            <Form.Control plaintext readOnly value={sender_id} />
                         </Col>
                     </Form.Group>
                     
@@ -46,8 +46,7 @@ const OpenMessage = ({message_id, subject, sender_id}) => {
                         <Form.Label column sm="2"> Message: </Form.Label>
                         <Col sm="10">
                             <Form.Control 
-                            plaintext readOnly as="textarea" rows={8} 
-                            defaultValue="It was lovely to meet you yesterday. I hope you will consider us for your healthcare needs." />
+                            plaintext readOnly as="textarea" rows={8} value={message} />
                         </Col>
                     </Form.Group>
                  </Form>

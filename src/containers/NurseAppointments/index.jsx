@@ -8,7 +8,7 @@ import SchedulerCalendar from 'scheduler-calendar'
 import 'scheduler-calendar/dist/index.css'
 
 
-export function EmpAppointments(props) {
+export function NurseAppointments(props) {
   
   const [email, setEmail] = useState("Not logged in");
   const [userID, setUserID] = useState(null);
