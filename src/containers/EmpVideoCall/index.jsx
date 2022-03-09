@@ -6,6 +6,27 @@ import './style.css';
 import zoomIcon from "../../images/zoom_logo.png";
 import axios from 'axios';
 
+// zoom
+// import jwt from jwt;
+// import requests from jwt;
+// import time from time;
+
+// API_KEY = 'mrvk446IRhyc6dFFxOoOfQ'
+// API_SEC = 'cvaBfMFpQDOT9TfFOq6TeW6xGOS7TZGyslLl'
+// API_CHT = 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJVQmxkVklRNlNUV1lHQ1JRdjV3cExRIn0.u4k2eoi6_JgtuNfOO8N8VgXluJIMP_bKOBNuKnkwvks'
+// JWT_TOK = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOm51bGwsImlzcyI6Im1ydms0NDZJUmh5YzZkRkZ4T29PZlEiLCJleHAiOjE2NDY3OTgyNTMsImlhdCI6MTY0Njc5Mjg1M30.V6fpiEXIlAiNRWzK5n0CA1a2rhKtZvQbkQdZQ6RSyBo'
+
+// function generateToken() {
+//     const payload = {
+//         iss: config.APIKey,
+//         exp: (new Date()).getTime() + 5000
+//     };
+    
+//     const token = jwt.sign(payload, config.APISecret);
+//     return token;
+// }
+
+
 export function EmpVideoCall(props) {
     const [email, setEmail] = useState('Not logged in');
     useEffect(() => {
