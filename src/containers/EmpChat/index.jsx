@@ -1,8 +1,43 @@
 import React from "react";
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import axios from 'axios';
+import { useState, useEffect } from "react";
 
+let messageArr = [];
 export function EmpChat(props){
+    const [email, setEmail] = useState("Not logged in");
+    const [userID, setUserID] = useState(-1);
+
+    useEffect(() => {
+        axios.defaults.withCredentials = true;
+
+        axios
+        .post("http://localhost:3001/me", { withCredentials: true })
+        .then((response) => {
+            console.log(response.data);
+            setEmail(response.data.email);
+            setUserID(response.data.user_id);
+        })
+        .then(
+            axios
+            .get("http://localhost:3001/messaging")
+            .then((response) =>{
+                messageArr = response.data.filter((item) => {
+                    return item.recipient_id === userID
+                })
+            }).then(() =>{
+                console.log(messageArr)
+                console.log('array done')
+            })
+            .catch((err) => console.log(err))
+        )
+        .catch((err) => {
+            console.log("CHP/index.jsx" + err);
+        });
+    }, [userID]);
+
+    
     return (
         <><><h1 className="text-center mb-3 mt-4">Message Portal</h1><>
             <div className="text-center">
