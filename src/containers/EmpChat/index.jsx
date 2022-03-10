@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useState, useEffect } from "react";
 
 let messageArr = [];
+let map = {};
+
 export function EmpChat(props){
     const [email, setEmail] = useState("Not logged in");
     const [userID, setUserID] = useState(-1);
@@ -28,7 +30,16 @@ export function EmpChat(props){
                 })
             }).then(() =>{
                 console.log(messageArr)
-                console.log('array done')
+                console.log('prints messages recieved by logged in user')
+                if(messageArr.length > 0){
+                    messageArr.forEach((item) => {
+                        map[item.sender_id] = map[item.sender_id] || [];
+                        // Adds a value to the end of the Array
+                        map[item.sender_id].push(item);
+                    })
+                }
+                console.log("sorted by sender_id")
+                console.log(map);
             })
             .catch((err) => console.log(err))
         )
@@ -39,21 +50,21 @@ export function EmpChat(props){
 
     
     return (
-        <><><h1 className="text-center mb-3 mt-4">Message Portal</h1><>
+        <><><h1 className="text-center mb-3 mt-4">{email}'s Message Portal</h1><>
             <div className="text-center">
                 <Button variant="primary w-25">Refresh</Button>{' '}
                 <Button variant="secondary w-25 mx-3">Compose</Button>{' '}
             </div>
         </></><Table striped bordered hover className="mt-4">
-                <thead>
+                {/* <thead>
                     <tr>
                         <th>Date/Time</th>
-                        <th>Sender</th>
+                        <th>Message</th>
                         <th>Subject</th>
                         <th>Read</th>
                         <th>Delete</th>
                     </tr>
-                </thead>
+                </thead> */}
                 <tbody>
                     <tr>
                         <td>11/15/21</td>
