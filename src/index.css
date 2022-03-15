@@ -5,7 +5,9 @@ body {
   width: 100%;
   height: 100%;
 }
-
+.ScheduleSelector__Wrapper-sc-1ke4ka2-0{
+  padding: 3% 5%;
+}
 * {
   box-sizing: border-box;
 }

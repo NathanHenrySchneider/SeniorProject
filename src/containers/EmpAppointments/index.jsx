@@ -4,8 +4,8 @@ import { EmpNavBar } from "../../components/Empnavbar";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import SchedulerCalendar from 'scheduler-calendar'
-import 'scheduler-calendar/dist/index.css'
+import ScheduleSelector from 'react-schedule-selector'
+
 
 
 export function EmpAppointments(props) {
@@ -28,35 +28,20 @@ export function EmpAppointments(props) {
         console.log("CHP/index.jsx" + err);
       });
   }, []);
-
-
+  
+  //to be read from the database
+  let availability = ["2022-03-17T18:00:00.000Z"]
+  function handleChange(){
+    //change the schedule
+  }
   return (
     <>
       <EmpNavBar email={email} />
       <PageContainer>
         <PseudoBorder>Your Availability:</PseudoBorder>
-        <SchedulerCalendar
-        availabilities={[
-          {
-            day: "mon",
-            slots: [
-              {from: '09:00', to: '10:30'},
-              {from: '11:30', to: '13:00'},
-              {from: '14:30', to: '17:00'},
-            ]
-          },
-          {
-            day: "2021-01-26",
-            slots: [
-              {from: '09:00', to: '10:30'},
-              {from: '11:30', to: '19:00'},
-            ]
-          },
-        ]}
-        availabilityType={'infinity'}
-        duration={10}
-        onIntervalChange={() => {}}
-      />
+      
+        <ScheduleSelector onChange = {handleChange} selection = {availability}/>
+
         <PseudoBorder>Upcoming Appointments</PseudoBorder>
         <UserAppointmentContainer>
           <table class="table">
