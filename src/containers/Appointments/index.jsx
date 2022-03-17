@@ -13,9 +13,14 @@ export function Appointments(props) {
   const [userID, setUserID] = useState(null);
   const [userAppointment, setUserAppointment] = useState(null);
   const [show, setShow] = useState(false);
+  const [doctorList, setDoctorList] = useState();
+  let doctors = [];
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    console.log(doctorList)
+    setShow(true);
+  }
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
@@ -29,7 +34,21 @@ export function Appointments(props) {
         setUserAppointment(response.data.userAppointment);
       })
       .catch((err) => {
-        console.log("CHP/index.jsx" + err);
+        console.log("customer homepage index.jsx" + err);
+      });
+      axios
+      .get("http://localhost:3001/user/findAll")
+      .then((response) => {
+        // console.log(response.data);
+        response.data.forEach(element => {
+          if(element.user_type === "doctor") {
+            doctors.push({id: element.user_id, name: element.full_name})
+          }
+        });
+        setDoctorList(doctors);
+      })
+      .catch((err) => {
+        console.log("customer homepage index.jsx" + err);
       });
   }, []);
 
@@ -95,7 +114,7 @@ export function Appointments(props) {
             <thead>
               <tr>
                 <th scope="col" style={{ width: "10vw" }}>
-                  Appointments ID
+                  Appointment ID
                 </th>
                 <th scope="col" style={{ width: "10vw" }}>
                   Date
@@ -108,6 +127,9 @@ export function Appointments(props) {
                 </th>
                 <th scope="col" style={{ width: "10vw" }}>
                   Doctor
+                </th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Reason
                 </th>
                 <th scope="col" style={{ width: "10vw" }}>
                   Confirmed
@@ -123,10 +145,11 @@ export function Appointments(props) {
                       <td>{item.appt_date.split("T")[0]}</td>
                       <td>{item.appt_start.split("+")[0]}</td>
                       <td>{item.appt_end}</td>
-                      <td>Null</td>
+                      <td>todo</td>
+                      <td>{item.reason ? item.reason : 'not specified'}</td>
                       <td>{item.confirmed ? `True` : `False`}</td>
                       <td>
-                        <div class="dropdown">
+                        {/* <div class="dropdown">
                           <a
                             class="btn btn-secondary dropdown-toggle"
                             href="#"
@@ -146,7 +169,7 @@ export function Appointments(props) {
                               <a class="dropdown-item" href="#">Cancel</a>
                             </li>
                           </ul>
-                        </div>
+                        </div> */}
                       </td>
                     </tr>
                   ))

@@ -127,48 +127,48 @@ const PseudoBorder = styled.h1`
   }
 `;
 
-const FormContainer = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 90vw;
-  margin-left: 40px;
-`;
-const Title = styled.h1`
-  font-size: 16px;
-  width: 200px;
-`;
+// const FormContainer = styled.form`
+//   display: flex;
+//   flex-direction: column;
+//   width: 90vw;
+//   margin-left: 40px;
+// `;
+// const Title = styled.h1`
+//   font-size: 16px;
+//   width: 200px;
+// `;
 
-const Input = styled.input`
-  width: 220px;
-  margin-bottom: 5px;
-`;
-const ReasonInput = styled.textarea`
-  width: 300px;
-  height: 100px;
-  margin-bottom: 5px;
-`;
+// const Input = styled.input`
+//   width: 220px;
+//   margin-bottom: 5px;
+// `;
+// const ReasonInput = styled.textarea`
+//   width: 300px;
+//   height: 100px;
+//   margin-bottom: 5px;
+// `;
 
-const Select = styled.select`
-  padding: 5px;
-  width: 150px;
-`;
+// const Select = styled.select`
+//   padding: 5px;
+//   width: 150px;
+// `;
 
-const Option = styled.option``;
+// const Option = styled.option``;
 
-const Submit = styled.button`
-  display: flex;
-  justify-content: center;
-  width: 100px;
-  border-radius: 5px;
-  margin-top: 30px;
-  background-color: white;
-  transition: all 0.5s ease;
+// const Submit = styled.button`
+//   display: flex;
+//   justify-content: center;
+//   width: 100px;
+//   border-radius: 5px;
+//   margin-top: 30px;
+//   background-color: white;
+//   transition: all 0.5s ease;
 
-  &:hover {
-    background-color: #e9f5f5;
-    transform: scale(1.02);
-  }
-`;
+//   &:hover {
+//     background-color: #e9f5f5;
+//     transform: scale(1.02);
+//   }
+// `;
 
 const UserAppointmentContainer = styled.div`
   display: flex;
