@@ -1,4 +1,5 @@
 import React from "react";
+import Button from 'react-bootstrap/Button';
 import { PageContainer } from "../../components/pageContainer";
 import { EmpNavBar } from "../../components/Empnavbar";
 import { useState, useEffect } from "react";
@@ -12,6 +13,8 @@ export function EmpAppointments(props) {
   
   const [email, setEmail] = useState("Not logged in");
   const [userID, setUserID] = useState(null);
+  const [schedule, setSchedule] = useState([]);
+  const[updated, setUpdated] = useState(false);
   const [allAppointment, setAllAppointment]= useState(null);
   useEffect(() => {
     axios.defaults.withCredentials = true;
@@ -29,10 +32,15 @@ export function EmpAppointments(props) {
       });
   }, []);
   
-  //to be read from the database
-  let availability = ["2022-03-17T18:00:00.000Z"]
-  function handleChange(){
+  function handleChange(newSchedule){
     //change the schedule
+    setSchedule(newSchedule)
+    setUpdated(true)
+    console.log(newSchedule);
+  }
+  function updateChanges(){
+    //actually change in the database
+    setUpdated(false);
   }
   return (
     <>
@@ -40,8 +48,9 @@ export function EmpAppointments(props) {
       <PageContainer>
         <PseudoBorder>Your Availability:</PseudoBorder>
       
-        <ScheduleSelector onChange = {handleChange} selection = {availability}/>
-
+        <ScheduleSelector onChange = {handleChange} selection = {schedule}/>
+        {updated ? <Button variant="primary" onClick = {updateChanges}>Update Changes</Button>
+        : <Button disabled variant="primary">Schedule Updated</Button>}
         <PseudoBorder>Upcoming Appointments</PseudoBorder>
         <UserAppointmentContainer>
           <table class="table">
