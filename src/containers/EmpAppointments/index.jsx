@@ -40,6 +40,7 @@ export function EmpAppointments(props) {
   }
   function updateChanges(){
     //actually change in the database
+    
     setUpdated(false);
   }
   return (

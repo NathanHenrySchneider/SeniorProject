@@ -8,17 +8,15 @@ import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
 
 export function Appointments(props) {
-
   const [email, setEmail] = useState("Not logged in");
   const [userID, setUserID] = useState(null);
   const [userAppointment, setUserAppointment] = useState(null);
   const [show, setShow] = useState(false);
-  const [doctorList, setDoctorList] = useState();
+  const [doctorList, setDoctorList] = useState(null);
   let doctors = [];
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
-    console.log(doctorList)
     setShow(true);
   }
 
@@ -39,7 +37,6 @@ export function Appointments(props) {
       axios
       .get("http://localhost:3001/user/findAll")
       .then((response) => {
-        // console.log(response.data);
         response.data.forEach(element => {
           if(element.user_type === "doctor") {
             doctors.push({id: element.user_id, name: element.full_name})
@@ -79,7 +76,7 @@ export function Appointments(props) {
           appt_end: appt_start, //need to be fix to 30 after appt_start time.
           reason: reason,
           patient_id: userID,
-          provider_id: 2, //manually added.
+          provider_id: doctor
         },
         {
           headers: {
@@ -145,7 +142,7 @@ export function Appointments(props) {
                       <td>{item.appt_date.split("T")[0]}</td>
                       <td>{item.appt_start.split("+")[0]}</td>
                       <td>{item.appt_end}</td>
-                      <td>todo</td>
+                      <td>{item.provider_id}</td>
                       <td>{item.reason ? item.reason : 'not specified'}</td>
                       <td>{item.confirmed ? `True` : `False`}</td>
                       <td>
@@ -215,17 +212,17 @@ export function Appointments(props) {
           <Title style={{ marginTop: "20px" }}>Doctor:</Title>
           <Select
             onChange={(e) => {
-              setDoctor(e.target.value);
+              console.log(e.target.value.split(" ")[0].substr(1))
+              setDoctor(e.target.value.split(" ")[0].substr(1))
             }}
           >
-            <Option disabled selected>
-              Doctor Name
-            </Option>
-            <Option>Doctor 1</Option>
-            <Option>Doctor 2</Option>
-            <Option>Doctor 3</Option>
-            <Option>Doctor 4</Option>
-            <Option>Doctor 5</Option>
+           { (doctorList === null) ? <></> : <>
+            <Option defaultValue>Select a doctor</Option>
+            {
+            doctorList.map((item) => {
+              return <Option>#{item.id} {item.name}</Option>
+            })}
+            </>}
           </Select>
           {date == null ? (
               <span className="d-inline-block">
