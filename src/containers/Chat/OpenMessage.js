@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
 import { ButtonGroup, Form, Row, Col} from "react-bootstrap";
-
+import axios from "axios";
 
 //fetch messages where recipient_id == user_id
 //currently hardcoded for demo
@@ -14,6 +14,13 @@ const OpenMessage = ({message_id, subject, sender_id, message}) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
       
+    //Handle Deleting message from database.
+    const handleDelete= ()=>{
+        try{
+            // axios.
+        }catch(e){
+        }
+    }
     return (
         <>
         <Button variant="success" onClick={handleShow}>
@@ -56,7 +63,7 @@ const OpenMessage = ({message_id, subject, sender_id, message}) => {
                     <Button className="mr-3" variant="success" size="md">
                     Reply
                     </Button>
-                    <Button variant="danger" onClick={handleClose} size="md">
+                    <Button variant="danger" onClick={handleClose} size="md" onClick={handleDelete}>
                     Delete
                     </Button>
                     </ButtonGroup>

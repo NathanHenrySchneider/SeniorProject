@@ -6,6 +6,7 @@ import styled from "styled-components";
 import axios from "axios";
 // import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Button, Modal } from "react-bootstrap";
+import ScheduleSelector from 'react-schedule-selector'
 
 export function Appointments(props) {
   const [email, setEmail] = useState("Not logged in");
@@ -100,6 +101,23 @@ export function Appointments(props) {
       });
   };
 
+  const [timeslot, setTimeslot] = useState();
+  const getSchedule=()=>{
+    try{
+      axios
+      .get("http://localhost:3001/doctorAppTime/allTime")
+      .then((response) => {
+        setTimeslot(response.data);
+        console.log("getSchedule: ", response.data);
+      })
+      .catch((err) => {
+        console.log("CHP/index.jsx" + err);
+      });
+    }catch(err){
+      console.log("Something wrong in User Appointment-get Schedule: ", err);
+    }
+  }
+
   return (
     <>
       <NavBar email={email} />
@@ -177,6 +195,7 @@ export function Appointments(props) {
         <Button variant="primary" onClick={handleShow}>
         Make an Appointment
       </Button>
+      <Button onClick={getSchedule}>Get timeslot</Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

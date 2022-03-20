@@ -1,21 +1,19 @@
 import React from "react";
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 import { PageContainer } from "../../components/pageContainer";
 import { EmpNavBar } from "../../components/Empnavbar";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import ScheduleSelector from 'react-schedule-selector'
-
-
+import ScheduleSelector from "react-schedule-selector";
 
 export function EmpAppointments(props) {
-  
   const [email, setEmail] = useState("Not logged in");
   const [userID, setUserID] = useState(null);
   const [schedule, setSchedule] = useState([]);
-  const[updated, setUpdated] = useState(false);
-  const [allAppointment, setAllAppointment]= useState(null);
+  const [updated, setUpdated] = useState(false);
+  const [allAppointment, setAllAppointment] = useState(null);
+
   useEffect(() => {
     axios.defaults.withCredentials = true;
 
@@ -25,59 +23,132 @@ export function EmpAppointments(props) {
         console.log(response.data);
         setEmail(response.data.email);
         setUserID(response.data.user_id);
-        setAllAppointment(response.data.allAppointment)
+        setAllAppointment(response.data.allAppointment);
       })
       .catch((err) => {
         console.log("CHP/index.jsx" + err);
       });
   }, []);
-  
-  function handleChange(newSchedule){
+
+  function handleChange(newSchedule) {
     //change the schedule
-    setSchedule(newSchedule)
-    setUpdated(true)
+    setSchedule(newSchedule);
+    setUpdated(true);
     console.log(newSchedule);
   }
-  function updateChanges(){
+
+  function updateChanges(e) {
+    e.preventDefault();
     //actually change in the database
-    
-    setUpdated(false);
+    if (schedule.length == 0) {
+      alert("No Timeslot Selected.");
+    } else {
+      try {
+        axios
+          .post("http://localhost:3001/doctorAppTime/setAvailability", {
+            avaiableSchedule: schedule,
+            id: userID,
+          })
+          .then((response) => {
+            // console.log("update schedule posted");
+            alert("Update Success.");
+            // window.location.reload();
+          })
+          .catch((err) => {
+            console.log("CHP/index.jsx" + err);
+          });
+
+        setUpdated(false);
+      } catch (err) {
+        console.log(
+          "Something wrong in Doctor Appointment-Update Changes: ",
+          err
+        );
+      }
+    }
   }
+
+  const [timeslot, setTimeslot] = useState();
+
+  const getSchedule = () => {
+    try {
+      axios
+        .get("http://localhost:3001/doctorAppTime/allTime")
+        .then((response) => {
+          setTimeslot(response.data);
+          console.log("getSchedule: ", response.data);
+        })
+        .catch((err) => {
+          console.log("CHP/index.jsx" + err);
+        });
+    } catch (err) {
+      console.log("Something wrong in Doctor Appointment-get Schedule: ", err);
+    }
+  };
   return (
     <>
       <EmpNavBar email={email} />
       <PageContainer>
         <PseudoBorder>Your Availability:</PseudoBorder>
-      
-        <ScheduleSelector onChange = {handleChange} selection = {schedule}/>
-        {updated ? <Button variant="primary" onClick = {updateChanges}>Update Changes</Button>
-        : <Button disabled variant="primary">Schedule Updated</Button>}
+
+        <ScheduleSelector
+          onChange={handleChange}
+          selection={schedule}
+          numDays={5}
+          minTime={9}
+          maxTime={18}
+        />
+        {updated ? (
+          <Button variant="primary" onClick={updateChanges}>
+            Update Changes
+          </Button>
+        ) : (
+          <Button disabled variant="primary">
+            Schedule Updated
+          </Button>
+        )}
+        <Button onClick={getSchedule}>Get Schedule</Button>
         <PseudoBorder>Upcoming Appointments</PseudoBorder>
         <UserAppointmentContainer>
           <table class="table">
             <thead>
               <tr>
-                <th scope="col" style={{width: "10vw"}}>Appointments ID</th>
-                <th scope="col" style={{width: "10vw"}}>Patient ID</th>
-                <th scope="col" style={{width: "10vw"}}>Date</th>
-                <th scope="col" style={{width: "10vw"}}>Start</th>
-                <th scope="col" style={{width: "10vw"}}>End</th>
-                <th scope="col" style={{width: "10vw"}}>Doctor</th>
-                <th scope="col" style={{width: "10vw"}}>Confirmed</th>
-                <th scope="col" style={{width: "10vw" }}></th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Appointments ID
+                </th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Patient ID
+                </th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Date
+                </th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Start
+                </th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  End
+                </th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Doctor
+                </th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Confirmed
+                </th>
+                <th scope="col" style={{ width: "10vw" }}></th>
               </tr>
             </thead>
             <tbody>
-            {allAppointment? allAppointment.map((item)=>(
-              <tr>
-                <th scope="row">{item.appt_id}</th>
-                <th scope="row">{item.patient_id}</th>
-                <td>{item.appt_date.split("T")[0]}</td>
-                <td>{item.appt_start.split("+")[0]}</td>
-                <td>{item.appt_end}</td>
-                <td>Null</td>
-                <td>{item.confirmed ? `True`: `False`}</td>
-                <td>
+              {allAppointment
+                ? allAppointment.map((item) => (
+                    <tr>
+                      <th scope="row">{item.appt_id}</th>
+                      <th scope="row">{item.patient_id}</th>
+                      <td>{item.appt_date.split("T")[0]}</td>
+                      <td>{item.appt_start.split("+")[0]}</td>
+                      <td>{item.appt_end}</td>
+                      <td>Null</td>
+                      <td>{item.confirmed ? `True` : `False`}</td>
+                      <td>
                         <div class="dropdown">
                           <a
                             class="btn btn-secondary dropdown-toggle"
@@ -86,25 +157,36 @@ export function EmpAppointments(props) {
                             id="dropdownMenuLink"
                             data-bs-toggle="dropdown"
                             aria-expanded="false"
-                          >Action</a>
-                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                          >
+                            Action
+                          </a>
+                          <ul
+                            class="dropdown-menu"
+                            aria-labelledby="dropdownMenuLink"
+                          >
                             <li>
-                              <a class="dropdown-item" href="#">View</a>
+                              <a class="dropdown-item" href="#">
+                                View
+                              </a>
                             </li>
                             <li>
-                              <a class="dropdown-item" href="#">Update</a>
+                              <a class="dropdown-item" href="#">
+                                Update
+                              </a>
                             </li>
                             <li>
-                              <a class="dropdown-item" href="#">Cancel</a>
+                              <a class="dropdown-item" href="#">
+                                Cancel
+                              </a>
                             </li>
                           </ul>
                         </div>
                       </td>
-              </tr>
-            )) : null}
+                    </tr>
+                  ))
+                : null}
             </tbody>
           </table>
-
         </UserAppointmentContainer>
       </PageContainer>
     </>
