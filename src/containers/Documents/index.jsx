@@ -71,16 +71,91 @@ export function Documents(props) {
                             </div>
                         </div>
                     </Tab>
+                    
                     <Tab class="nav-item flex-sm-fill" eventKey="medicalhistory" title="Medical History">
-                        <div role="tabpanel" aria-labelledby="medicalhistory-tab" class="tab-pane px-4 py-5">
-                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                                irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <div class="container">
+                            <div class="row item-test-results">
+                                <div class="col-md-4">
+                                    <div class="card bg-c-blue order-card">
+                                        <div class="card-block">
+                                            <h1 class="m-b-20">Cardiovascular</h1>
+                                            <p class="m-b-0">High blood pressure:<span class="f-right">Yes</span></p>
+                                            <p class="m-b-0">Chronic congestive heart failure:<span class="f-right">Yes</span></p>
+                                            <p class="m-b-0">Heart attack:<span class="f-right">Yes</span></p>
+                                            <p class="m-b-0">Seizures:<span class="f-right">No</span></p>
+                                            <p class="m-b-0">Dizziness:<span class="f-right">Yes</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="card bg-c-green order-card">
+                                        <div class="card-block">
+                                            <h1 class="m-b-20">Respiratory</h1>
+                                            <p class="m-b-0">Asthma:<span class="f-right">Yes</span></p>
+                                            <p class="m-b-0">Bronchitis:<span class="f-right">No</span></p>
+                                            <p class="m-b-0">Chronic cough:<span class="f-right">Yes</span></p>
+                                            <p class="m-b-0">Shortness of Breath:<span class="f-right">Yes</span></p>
+                                            <p class="m-b-0">Pneumonia:<span class="f-right">No</span></p>
+                                            <p class="m-b-0">Emphysema:<span class="f-right">No</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="card bg-c-yellow order-card">
+                                        <div class="card-block">
+                                            <h1 class="m-b-20">Digestive</h1>
+                                            <p class="m-b-0">Constipation:<span class="f-right">No</span></p>
+                                            <p class="m-b-0">Chrones Disease:<span class="f-right">No</span></p>
+                                            <p class="m-b-0">Irritable bowel syndrome:<span class="f-right">No</span></p>
+                                            <p class="m-b-0">Inflammatory bowel disease:<span class="f-right">No</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </Tab>
                     <Tab class="nav-item flex-sm-fill" eventKey="insurance" title="Insurance">
-                        <div role="tabpanel" aria-labelledby="insurance-tab" class="tab-pane px-4 py-5">
-                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                                irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <div class="container">
+                            <div class="row item-test-results">
+                                <div class="col-md-4">
+                                    <div class="card bg-c-blue order-card">
+                                        <div class="card-block">
+                                            <h1 class="m-b-20">Health Insurance Companies</h1>
+                                            <p class="m-b-0">BlueCross BlueShield</p>
+                                            <p class="m-b-0">Anthem</p>
+                                            <p class="m-b-0">Humana</p>
+                                            <p class="m-b-0">Kaiser Permanente</p>
+                                            <p class="m-b-0">Cigna</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="card bg-c-green order-card">
+                                        <div class="card-block">
+                                            <h1 class="m-b-20">What is Covered</h1>
+                                            <p class="m-b-0">Doctor and Hospital visits</p>
+                                            <p class="m-b-0">Prescription Drugs</p>
+                                            <p class="m-b-0">Wellness Care</p>
+                                            <p class="m-b-0">Medical Devices</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="card bg-c-yellow order-card">
+                                        <div class="card-block">
+                                            <h1 class="m-b-20">What is not Covered</h1>
+                                            <p class="m-b-0">Cosmetic procedures</p>
+                                            <p class="m-b-0">Beauty treatments</p>
+                                            <p class="m-b-0">Fertility treatments</p>
+                                            <p class="m-b-0">Off-label prescriptions</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </Tab>
                 </Tabs>
