@@ -38,7 +38,8 @@ export function VideoCall(props) {
                     <p class="m-b-10 f-w-600">Date</p>
                     <h6 class="text-muted f-w-400">mm/dd/yyyy</h6>
                 </div>
-                <button class="btn btn-primary" type="submit">Launch Meeting</button>
+                {/* <button class="btn btn-primary" type="submit">Launch Meeting</button> */}
+                <a id="Join meeting" href="https://us05web.zoom.us/j/82352549824?pwd=eGNyL1NwQXgzYWgxNHVVcXRmVlF0QT09">Join Call</a>
             </div>
         </PageContainer>
     </>

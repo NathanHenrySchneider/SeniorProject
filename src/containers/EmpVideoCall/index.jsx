@@ -5,6 +5,9 @@ import { PageContainer } from "../../components/pageContainer";
 import './style.css';
 import zoomIcon from "../../images/zoom_logo.png";
 import axios from 'axios';
+import Zoom from "./Zoom";
+// import 
+// import zoomus from '@zoomus/websdk';
 
 // zoom
 // import jwt from jwt;
@@ -16,19 +19,13 @@ import axios from 'axios';
 // API_CHT = 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJVQmxkVklRNlNUV1lHQ1JRdjV3cExRIn0.u4k2eoi6_JgtuNfOO8N8VgXluJIMP_bKOBNuKnkwvks'
 // JWT_TOK = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOm51bGwsImlzcyI6Im1ydms0NDZJUmh5YzZkRkZ4T29PZlEiLCJleHAiOjE2NDY3OTgyNTMsImlhdCI6MTY0Njc5Mjg1M30.V6fpiEXIlAiNRWzK5n0CA1a2rhKtZvQbkQdZQ6RSyBo'
 
-// function generateToken() {
-//     const payload = {
-//         iss: config.APIKey,
-//         exp: (new Date()).getTime() + 5000
-//     };
-    
-//     const token = jwt.sign(payload, config.APISecret);
-//     return token;
-// }
+
+
 
 
 export function EmpVideoCall(props) {
     const [email, setEmail] = useState('Not logged in');
+    const [joinMeeting, setJoinMeeting] = useState(false);
     useEffect(() => {
         axios.defaults.withCredentials = true;
 
@@ -41,6 +38,7 @@ export function EmpVideoCall(props) {
                 console.log("CHP/index.jsx" + err);
             })
     }, [])
+    
 
     return (<>
         <EmpNavBar email={email} />
@@ -59,7 +57,17 @@ export function EmpVideoCall(props) {
                     <p class="m-b-10 f-w-600">Date</p>
                     <h6 class="text-muted f-w-400">mm/dd/yyyy</h6>
                 </div>
-                <button class="btn btn-primary" type="submit">Launch Meeting</button>
+                
+                <div className="zoomDiv" >
+                    {joinMeeting ? (
+                        <Zoom />
+                    ) : (
+                        // <button style = {{border: '2px solid #abc'}} onClick={() => setJoinMeeting(true)}>Join Meeting</button>
+                        <a id="Join meeting" href="https://us05web.zoom.us/j/82352549824?pwd=eGNyL1NwQXgzYWgxNHVVcXRmVlF0QT09">Join Call</a>
+                    )}
+                </div>
+               
+                {/* <button class="btn btn-primary" type="submit">Launch Meeting</button> */}
             </div>
         </PageContainer>
     </>

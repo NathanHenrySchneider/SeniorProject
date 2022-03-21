@@ -21,3 +21,7 @@ h6 {
 .text-muted {
     color: #919aa3 !important;
 }
+
+#zmmtg-root {
+    display: none;
+}
