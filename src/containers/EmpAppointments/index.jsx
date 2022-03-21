@@ -24,67 +24,71 @@ export function EmpAppointments(props) {
         setEmail(response.data.email);
         setUserID(response.data.user_id);
         setAllAppointment(response.data.allAppointment);
+        getSchedule();
       })
       .catch((err) => {
         console.log("CHP/index.jsx" + err);
       });
   }, []);
 
+ /**
+  * ScheduleSelector onChange intake.
+  */
   function handleChange(newSchedule) {
     //change the schedule
     setSchedule(newSchedule);
     setUpdated(true);
-    console.log(newSchedule);
+    console.log("New schedule from handleChange method: ",newSchedule);
   }
 
+  /**
+   * Takes in selected timeslot from doctor.
+   */
   function updateChanges(e) {
-    e.preventDefault();
+    // e.preventDefault();
     //actually change in the database
     if (schedule.length == 0) {
       alert("No Timeslot Selected.");
     } else {
-      try {
         axios
           .post("http://localhost:3001/doctorAppTime/setAvailability", {
             avaiableSchedule: schedule,
             id: userID,
           })
           .then((response) => {
-            // console.log("update schedule posted");
             alert("Update Success.");
-            // window.location.reload();
+            window.location.reload();
           })
           .catch((err) => {
             console.log("CHP/index.jsx" + err);
           });
-
         setUpdated(false);
-      } catch (err) {
-        console.log(
-          "Something wrong in Doctor Appointment-Update Changes: ",
-          err
-        );
-      }
     }
   }
 
-  const [timeslot, setTimeslot] = useState();
-
+  /**
+   * Get the selected schedule from database after
+   * updated change button is executed.
+   */
   const getSchedule = () => {
-    try {
       axios
-        .get("http://localhost:3001/doctorAppTime/allTime")
+        .get("http://localhost:3001/doctorAppTime/mostRecent")
         .then((response) => {
-          setTimeslot(response.data);
-          console.log("getSchedule: ", response.data);
+          //Retrive timeslot from db.
+          const result = [...new Set([].concat(...response.data.map((o) => o.times)))]
+          // console.log("result is: ", result)
+          //Set the current schedule to the schedule from db.
+          setSchedule(result);
         })
         .catch((err) => {
           console.log("CHP/index.jsx" + err);
         });
-    } catch (err) {
-      console.log("Something wrong in Doctor Appointment-get Schedule: ", err);
-    }
   };
+
+  const showSchedule = () =>{
+    console.log("Show Schedule: ", schedule)
+  }
+
   return (
     <>
       <EmpNavBar email={email} />
@@ -107,7 +111,7 @@ export function EmpAppointments(props) {
             Schedule Updated
           </Button>
         )}
-        <Button onClick={getSchedule}>Get Schedule</Button>
+        <Button onClick={showSchedule}>Show Schedule</Button>
         <PseudoBorder>Upcoming Appointments</PseudoBorder>
         <UserAppointmentContainer>
           <table class="table">
