@@ -6,7 +6,7 @@ import styled from "styled-components";
 import axios from "axios";
 // import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Button, Modal } from "react-bootstrap";
-import ScheduleSelector from 'react-schedule-selector'
+import ScheduleSelector from "react-schedule-selector";
 
 export function Appointments(props) {
   const [email, setEmail] = useState("Not logged in");
@@ -16,10 +16,12 @@ export function Appointments(props) {
   const [doctorList, setDoctorList] = useState(null);
   let doctors = [];
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+  }
   const handleShow = () => {
     setShow(true);
-  }
+  };
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
@@ -31,16 +33,17 @@ export function Appointments(props) {
         setEmail(response.data.email);
         setUserID(response.data.user_id);
         setUserAppointment(response.data.userAppointment);
+        getSchedule();
       })
       .catch((err) => {
         console.log("customer homepage index.jsx" + err);
       });
-      axios
+    axios
       .get("http://localhost:3001/user/findAll")
       .then((response) => {
-        response.data.forEach(element => {
-          if(element.user_type === "doctor") {
-            doctors.push({id: element.user_id, name: element.full_name})
+        response.data.forEach((element) => {
+          if (element.user_type === "doctor") {
+            doctors.push({ id: element.user_id, name: element.full_name });
           }
         });
         setDoctorList(doctors);
@@ -61,8 +64,8 @@ export function Appointments(props) {
     e.preventDefault();
 
     //Check if user alraedy have 3 appointment.
-    if(userAppointment.length>=3){
-      return alert("Max 3 appointment allowed")
+    if (userAppointment.length >= 3) {
+      return alert("Max 3 appointment allowed");
     }
 
     const appt_date = date.split("T")[0];
@@ -77,7 +80,7 @@ export function Appointments(props) {
           appt_end: appt_start, //need to be fix to 30 after appt_start time.
           reason: reason,
           patient_id: userID,
-          provider_id: doctor
+          provider_id: doctor,
         },
         {
           headers: {
@@ -88,8 +91,8 @@ export function Appointments(props) {
       )
       .then(function (response) {
         console.log(response);
-        alert("Appointment Booked")
-        window.location.reload(false)
+        alert("Appointment Booked");
+        window.location.reload(false);
         // setDate(null)
         // history.push("/CustomerHomePage");
       })
@@ -101,28 +104,71 @@ export function Appointments(props) {
       });
   };
 
-  const [timeslot, setTimeslot] = useState();
-  const getSchedule=()=>{
-    try{
-      axios
-      .get("http://localhost:3001/doctorAppTime/allTime")
+  /**
+   * Schedule operation below.
+   */
+  const [schedule, setSchedule] = useState([]);
+  const [datetime, setDatetime ] = useState(null);
+
+  //Get the selected schedule from database after
+  const getSchedule = () => {
+    axios
+      .get("http://localhost:3001/doctorAppTime/mostRecent")
       .then((response) => {
-        setTimeslot(response.data);
-        console.log("getSchedule: ", response.data);
+        //Retrive timeslot from db.
+        const result = [
+          ...new Set([].concat(...response.data.map((o) => o.times))),
+        ];
+        //Set the current schedule to the schedule from db.
+        setSchedule(result);
+
+        // console.log("timeslot is: ", result);
       })
       .catch((err) => {
         console.log("CHP/index.jsx" + err);
       });
-    }catch(err){
-      console.log("Something wrong in User Appointment-get Schedule: ", err);
-    }
-  }
+  };
 
+  //Display avaiable time for the date selected in Modal.
+  let timeToShow= [];
+  var timestamp;
+
+  const dateValid = () => {
+    const result = schedule.filter((item) => item.includes(date));
+    // console.log("result is: ", result)
+    if(result.length === 0)
+      return false;
+    else{
+      for(let i=0; i<result.length; i++){
+        timestamp= new Date(result[i]);
+        timestamp.setHours(timestamp.getHours()-4)
+        var timeToString = JSON.stringify(timestamp);
+        timeToShow.push(timeToString.substring(12,20)); 
+      }
+      // console.log("timetoshow: ", timeToShow)
+      return true;
+    }
+  };
+
+  // console.log("datetiem,:", datetime)
   return (
     <>
       <NavBar email={email} />
       <PageContainer>
-        <PseudoBorder style = {{marginTop:"15px"}}>Appointments</PseudoBorder>
+        <PseudoBorder> Avaiable Timeslot:</PseudoBorder>
+
+        <ScheduleSelector
+          // onChange={handleScheduleSelector}
+          selection={schedule}
+          numDays={5}
+          minTime={9}
+          maxTime={18}
+        />
+
+        <Button variant="primary" onClick={handleShow}>
+          Make an Appointment
+        </Button>
+        <PseudoBorder style={{ marginTop: "15px" }}>Appointments</PseudoBorder>
 
         <UserAppointmentContainer>
           <table class="table">
@@ -161,7 +207,7 @@ export function Appointments(props) {
                       <td>{item.appt_start.split("+")[0]}</td>
                       <td>{item.appt_end}</td>
                       <td>{item.provider_id}</td>
-                      <td>{item.reason ? item.reason : 'not specified'}</td>
+                      <td>{item.reason ? item.reason : "not specified"}</td>
                       <td>{item.confirmed ? `True` : `False`}</td>
                       <td>
                         {/* <div class="dropdown">
@@ -192,72 +238,95 @@ export function Appointments(props) {
             </tbody>
           </table>
         </UserAppointmentContainer>
-        <Button variant="primary" onClick={handleShow}>
-        Make an Appointment
-      </Button>
-      <Button onClick={getSchedule}>Get timeslot</Button>
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>New Appointment</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <FormContainer
-          onSubmit={(e) => {
-            handleSubmit(e);
-            handleClose()
-          }}
-          autoComplete="off"
-        >
-          <Title style={{ marginTop: "30px" }}>Reason for appointment:</Title>
-          <ReasonInput
-            name="text"
-            onChange={(e) => {
-              setReason(e.target.value);
-            }}
-          />
-          <Title style={{ marginTop: "20px" }}>Date and Time:</Title>
-          <Input
-            type="datetime-local"
-            id="appointment-time"
-            name="appointment-time"
-            min="2022-02-07T00:00"
-            max="2022-12-30T00:00"
-            style={{ padding: "5px" }}
-            onChange={(e) => {
-              setDate(e.target.value);
-            }}
-          />
-          <Title style={{ marginTop: "20px" }}>Doctor:</Title>
-          <Select
-            onChange={(e) => {
-              console.log(e.target.value.split(" ")[0].substr(1))
-              setDoctor(e.target.value.split(" ")[0].substr(1))
-            }}
-          >
-           { (doctorList === null) ? <></> : <>
-            <Option defaultValue>Select a doctor</Option>
-            {
-            doctorList.map((item) => {
-              return <Option>#{item.id} {item.name}</Option>
-            })}
-            </>}
-          </Select>
-          {date == null ? (
-              <span className="d-inline-block">
-                <Button
-                  disabled
-                  style={{ pointerEvents: "none", width: "auto", marginTop: "30px" }}
-                >
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>New Appointment</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <FormContainer
+              onSubmit={(e) => {
+                handleSubmit(e);
+                handleClose();
+              }}
+              autoComplete="off"
+            >
+              <Title style={{ marginTop: "30px" }}>
+                Reason for appointment:
+              </Title>
+              <ReasonInput
+                name="text"
+                onChange={(e) => {
+                  setReason(e.target.value);
+                }}
+              />
+              <Title style={{ marginTop: "20px" }}>Date and Time:</Title>
+
+              <Input
+                type="date"
+                id="appointment-time"
+                name="appointment-time"
+                min="2022-02-07T00:00"
+                max="2022-12-30T00:00"
+                style={{ padding: "5px" }}
+                onChange={(e) => {
+                  setDate(e.target.value);
+                }}
+              />
+              {date && dateValid() ? 
+              <Select onChange={(e)=>{setDatetime(e.target.value)}}>
+              <Option value="">Select A Timeslot</Option>
+              {timeToShow.map((item)=>(
+                <Option key={item}>{item}</Option>
+              ))}
+              </Select>
+              : <Select>
+                <Option></Option>
+              </Select>}
+
+              <Title style={{ marginTop: "20px" }}>Doctor:</Title>
+              <Select
+                onChange={(e) => {
+                  console.log(e.target.value.split(" ")[0].substr(1));
+                  setDoctor(e.target.value.split(" ")[0].substr(1));
+                }}
+              >
+                {doctorList === null ? (
+                  <></>
+                ) : (
+                  <>
+                    <Option defaultValue>Select a doctor</Option>
+                    {doctorList.map((item) => {
+                      return (
+                        <Option key={item.id}>
+                          #{item.id} {item.name}
+                        </Option>
+                      );
+                    })}
+                  </>
+                )}
+              </Select>
+              {date == null ? (
+                <span className="d-inline-block">
+                  <Button
+                    disabled
+                    style={{
+                      pointerEvents: "none",
+                      width: "auto",
+                      marginTop: "30px",
+                    }}
+                  >
+                    Schedule
+                  </Button>
+                </span>
+              ) : (
+                <Button type="submit" style={{ width: "fit-content" }}>
                   Schedule
                 </Button>
-              </span>
-          ) : (
-            <Button type="submit"  style={{ width: "fit-content" }}>Schedule</Button>
-          )}
-        </FormContainer>
-        </Modal.Body>
-      </Modal>
+              )}
+            </FormContainer>
+          </Modal.Body>
+        </Modal>
       </PageContainer>
     </>
   );
@@ -306,7 +375,8 @@ const Select = styled.select`
   width: 150px;
 `;
 
-const Option = styled.option``;
+const Option = styled.option`
+`;
 
 const UserAppointmentContainer = styled.div`
   display: flex;
