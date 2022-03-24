@@ -60,7 +60,7 @@ export function EmpChat(props){
         <>
         <NavBar email={email} />
 
-        <h1 className="text-center mb-3 mt-4">{email}'s Message Portal</h1>
+        <h1 className="text-center mb-3 mt-4">{fullName}'s Message Portal</h1>
             <div className="text-center">
                 <Button variant="primary w-25">Refresh</Button>{' '}
                 <ComposeEmail></ComposeEmail>
