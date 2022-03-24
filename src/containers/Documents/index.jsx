@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { useState, useEffect } from "react";
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
@@ -7,8 +7,25 @@ import { PageContainer } from "../../components/pageContainer";
 import './style.css';
 import axios from 'axios';
 
+let user_id; 
+
+function formatDate(date) {
+ 
+    let year = date.substring(0,4);
+    let month = date.substring(5,7);
+    let day = date.substring(8,10);
+    let time = date.substring(11,16);
+
+    let formattedDate = (month + "-" + day + "-" + year + "  at  " + time)
+    return (formattedDate)
+}
+
+
 export function Documents(props) {
     const [email, setEmail] = useState('Not logged in');
+    const [reports, setReports] = useState([]);
+    const [user_id, setID] = useState("");
+
     useEffect(() => {
         axios.defaults.withCredentials = true;
 
@@ -16,15 +33,56 @@ export function Documents(props) {
             .then((response) => {
                 console.log(response.data)
                 setEmail(response.data.email)
+                setID(parseInt(response.data.user_id));
+                console.log(user_id);
             })
             .catch((err) => {
                 console.log("CHP/index.jsx" + err);
             })
+
+
+        axios.get(`http://localhost:3001/documents/${user_id}`, { withCredentials: true })
+            .then((response) => {
+                setReports(response.data)
+    
+            }) 
+            .catch((err) => {
+                console.log(err.message)
+            })
+        
     }, [])
 
-    return (<>
-        <NavBar email={email} />
-        <PageContainer>
+
+        return (<>
+            <NavBar email={email} />
+
+            <div>
+                <h3 className="text-center mb-3 mt-4">Your Reports</h3>
+            </div>
+
+            <Fragment>
+
+            <table className="table mt-5 text-center">
+                <thead>
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>Description</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {reports.map((report) => (
+                        <tr key={report.user_id}>
+                            <td>{formatDate(report.date_time)}</td>
+                            <td>{report.description}</td>
+                            <td>{report.link}</td>
+                        </tr>
+                    ))}    
+                </tbody>
+            </table>
+        </Fragment>
+
+        {/* <PageContainer>
             <div class="p-5 bg-white rounded shadow mb-5">
                 <Tabs defaultActiveKey="testresults" id="uncontrolled-tab-example" className="nav nav-tabs nav-pills flex-column flex-sm-row text-center bg-light border-0 rounded-nav">
                     <Tab class="nav-item flex-sm-fill" eventKey="testresults" title="Test Results">
@@ -160,7 +218,6 @@ export function Documents(props) {
                     </Tab>
                 </Tabs>
             </div>
-        </PageContainer>
+        </PageContainer> */}
     </>
-    );
-}
+    )};
