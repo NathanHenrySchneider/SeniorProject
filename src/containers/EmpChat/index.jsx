@@ -3,6 +3,9 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import axios from 'axios';
 import { useState, useEffect } from "react";
+import { NavBar } from "../../components/navbar";
+import { Container } from "react-bootstrap";
+import ComposeEmail from "../Chat/ComposeEmail";
 
 let messageArr = [];
 let map = {};
@@ -11,6 +14,7 @@ export function EmpChat(props){
     const [email, setEmail] = useState("Not logged in");
     const [userID, setUserID] = useState(-1);
     const [loading, setLoading] = useState(true);
+    const [fullName, setFullName] = useState();
 
     useEffect(() => {
         axios.defaults.withCredentials = true;
@@ -21,6 +25,7 @@ export function EmpChat(props){
             console.log(response.data);
             setEmail(response.data.email);
             setUserID(response.data.user_id);
+            setFullName(response.data.full_name);
         })
         .then(
             axios
@@ -53,12 +58,17 @@ export function EmpChat(props){
     
     return (
         <>
+        <NavBar email={email} />
+
         <h1 className="text-center mb-3 mt-4">{email}'s Message Portal</h1>
             <div className="text-center">
                 <Button variant="primary w-25">Refresh</Button>{' '}
-                <Button variant="secondary w-25 mx-3">Compose</Button>{' '}
+                <ComposeEmail></ComposeEmail>
             </div>
-        <Table striped bordered hover className="mt-4">
+        
+        <Container fluid="md">
+        
+        <Table striped bordered hover className="mt-4 ml-3 mr-3">
                 {/* <thead>
                     <tr>
                         <th>Date/Time</th>
@@ -126,6 +136,8 @@ export function EmpChat(props){
                     </tr>
                 </tbody>
             </Table>
+            
+            </Container>
         </>
         
     );
