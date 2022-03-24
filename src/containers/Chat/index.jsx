@@ -52,7 +52,8 @@ export function Chat(props) {
         <h1 className="text-center mb-3 mt-4">Message Portal</h1>
         <>
           <div className="text-center">
-            <Button variant="primary w-25">Refresh</Button>{" "}
+            <Button href="javascript:location.reload(true)" variant="primary w-25">Refresh</Button>{" "}
+            {/* <a href="javascript:location.reload(true)">Refresh this page</a> */}
             <ComposeEmail></ComposeEmail>
           </div>
         </>
