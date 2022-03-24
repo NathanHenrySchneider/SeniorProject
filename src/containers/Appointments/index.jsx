@@ -155,7 +155,7 @@ export function Appointments(props) {
     <>
       <NavBar email={email} />
       <PageContainer>
-        <PseudoBorder> Avaiable Timeslot:</PseudoBorder>
+        <PseudoBorder> Available Timeslot:</PseudoBorder>
 
         <ScheduleSelector
           // onChange={handleScheduleSelector}
