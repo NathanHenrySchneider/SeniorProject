@@ -38,12 +38,11 @@ export function SignUpForm(props){
 
     return <BoxContainer>
         <div>
-            <h1>{selects}</h1>
-            <select value={selects} onChange = {(e) => setSelects(e.target.value)}>
+            <select value={selects} onChange = {e => setSelects(e.target.value)}>
                 <option selected value="Select">Select</option>
-                <option value = "patient">Patient</option>
-                <option value = "doctor">Doctor</option>
-                <option value = "nurse">Nurse</option>
+                <option value = "patient" >Patient</option>
+                <option value = "doctor" >Doctor</option>
+                <option value = "nurse" >Nurse</option>
             </select>
         </div>
         <Marginer direction="vertical" margin="0.4em" />
