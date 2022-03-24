@@ -73,7 +73,7 @@ export function Chat(props) {
               <tr key={msg.message_id}>
                 <td>{formatDateTime(msg.date_time)}</td>
                 <td>{msg.sender_id}</td>
-                <td>Null</td>
+                <td>{msg.subject}</td>
                 <td colSpan={1.5} className="text-center">
                   <OpenMessage message_id={msg.message_id} subject="Null" sender_id={msg.sender_id} message={msg.message}></OpenMessage>
                 </td>
