@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment } from "react";
 import { useState, useEffect } from "react";
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
@@ -6,9 +6,28 @@ import { EmpNavBar } from "../../components/Empnavbar";
 import { PageContainer } from "../../components/pageContainer";
 import './style.css';
 import axios from 'axios';
+import { ButtonGroup, ButtonToolbar, Form, Row, Col,  Button, Modal } from "react-bootstrap";
+
+function formatDate(date) {
+ 
+    let year = date.substring(0,4);
+    let month = date.substring(5,7);
+    let day = date.substring(8,10);
+    let time = date.substring(11,16);
+
+    let formattedDate = (month + "-" + day + "-" + year + "  at  " + time)
+    return (formattedDate)
+}
 
 export function EmpDocuments(props) {
     const [email, setEmail] = useState('Not logged in');
+    const [reports, setReports] = useState([]);
+    const [user_id, setID] = useState("");
+
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     useEffect(() => {
         axios.defaults.withCredentials = true;
 
@@ -20,11 +39,139 @@ export function EmpDocuments(props) {
             .catch((err) => {
                 console.log("CHP/index.jsx" + err);
             })
+
+        axios.get(`http://localhost:3001/documents/${user_id}`, { withCredentials: true })
+            .then((response) => {
+                setReports(response.data)
+    
+            }) 
+            .catch((err) => {
+                console.log(err.message)
+            })
+
     }, [])
 
     return (<>
         <EmpNavBar email={email} />
-        <PageContainer>
+
+        <div>
+            <h1 className="text-center mb-3 mt-4">Document Portal</h1>
+        </div>
+
+        <div>
+            <h3 className="text-center mb-3 mt-4">Upload Files</h3>
+        </div>
+
+        <div className="mx-5 px-5">
+
+            <Form className="ml-4">
+                <Form.Group as={Row} className="mb-3" controlId="selectPatient">
+                    <Form.Label column sm={2}>
+                        Select Patient: 
+                    </Form.Label>
+                    <Col sm={10}>
+                        <Form.Select aria-label="Default select example">
+                            <option>Current Patients</option>
+                            <option value="1">John Doe</option>
+                        </Form.Select>  
+                    </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} className="mb-3" controlId="selectFile">
+                    <Form.Label column sm={2}>
+                        Select File: 
+                    </Form.Label>
+                    <Col sm={10}>
+                    <Form.Control type="file" />
+                    </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} className="mb-3" controlId="createDescription">
+                    <Form.Label column sm={2}>
+                        Enter Description 
+                    </Form.Label>
+                    <Col sm={10}>
+                    <Form.Control type="text" />
+                    </Col>
+                </Form.Group>
+
+                <Button type="submit" variant="success">Submit</Button>{' '}
+            </Form>
+
+        <div>
+            <h3 className="text-center mb-3 mt-4">View Reports for Patient</h3>
+        </div>
+
+        <Form.Group as={Row} className="mb-3" controlId="selectPatient">
+            <Form.Label column sm={2}>
+                Select Patient: 
+            </Form.Label>
+            <Col sm={10}>
+                <Form.Select aria-label="Default select example">
+                    <option>Current Patients</option>
+                    <option value="1">John Doe</option>
+                </Form.Select>  
+            </Col>
+        </Form.Group>
+
+        <Button variant="success" onClick={handleShow}>Search</Button>
+
+        <Modal 
+        show={show} 
+        onHide={handleClose}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered>
+                
+        <Modal.Header closeButton>
+          <Modal.Title>Patient Reports for John Doe</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <Fragment>
+
+            <table className="table mt-5 text-center">
+                <thead>
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>Description</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {reports.map((report) => (
+                        <tr key={report.user_id}>
+                            <td>{formatDate(report.date_time)}</td>
+                            <td>{report.description}</td>
+                            <td>{report.link}</td>
+                        </tr>
+                    ))}    
+                </tbody>
+            </table>
+            </Fragment>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          
+        </Modal.Footer>
+      </Modal>
+
+
+
+
+
+        </div>
+
+
+
+        
+
+
+
+
+
+        {/* <PageContainer>
             <div class="p-5 bg-white rounded shadow mb-5">
                 <Tabs defaultActiveKey="testresults" id="uncontrolled-tab-example" className="nav nav-tabs nav-pills flex-column flex-sm-row text-center bg-light border-0 rounded-nav">
                     <Tab class="nav-item flex-sm-fill" eventKey="testresults" title="Test Results">
@@ -85,7 +232,7 @@ export function EmpDocuments(props) {
                     </Tab>
                 </Tabs>
             </div>
-        </PageContainer>
-    </>
+        </PageContainer> */}
+     </>
     );
 }
