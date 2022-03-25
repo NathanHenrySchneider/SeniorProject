@@ -50,6 +50,7 @@ export function EmpChat(props){
                     }
                 })
                 setAllMessages(messageArr)
+                
                 setLoading(false)
             })
             .catch((err) => console.log(err))
@@ -58,7 +59,16 @@ export function EmpChat(props){
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        window.alert('dd')
+        axios
+        .post("http://localhost:3001/messaging", 
+        { 
+            sender_id: userID,
+            recipient_id: e.target.parentElement.id,
+            message: e.target[0].value
+         }).then(e.target[0].value = "")
+         .catch(err => console.log(err))
+        // console.log(e.target[0].value)
+        // console.log(e.target.parentElement.id)
     }
     if(loading) return <h1>loading</h1>
     return (
@@ -66,15 +76,17 @@ export function EmpChat(props){
         <NavBar email={email} />
         <h1 className="text-center mb-3 mt-4">{fullName}'s Message Portal</h1>
         {activeUsers.map((id) => (
-            <Card className = "message-box">
+            <Card key = {id} id = {id} className = "message-box">
             <h3 style = {{'textAlign' : 'center'}}>User #{id}</h3>
             <div className = "message-containter">
                 {allMessages.map((item) => {
                     if(item.sender_id === id && item.recipient_id === userID) {
-                        return (<p className = "left-bubble">{item.message}</p>)
+                        return (<div style = {{'display':'contents'}} key = {"d" + item.date_time}><p key = {"p" + item.date_time} className = "left-bubble">{item.message}</p>
+                        <small key = {item.date_time}>{item.date_time.split("T")[0]+" " + item.date_time.split("T")[1].substring(0,5)}</small></div>)
                     }
                     if(item.sender_id === userID && item.recipient_id === id) {
-                        return <p className = "right-bubble">{item.message}</p>
+                        return (<div style = {{'display':'contents'}} key = {"d" + item.date_time}><p key = { "p" + item.date_time} className = "right-bubble">{item.message}</p>
+                        <small key = {item.date_time} className = "right">{item.date_time.split("T")[0]+" " + item.date_time.split("T")[1].substring(0,5)}</small></div>)
                     }
                     return null;
                 })}

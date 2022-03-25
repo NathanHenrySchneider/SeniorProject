@@ -41,6 +41,15 @@
     position: relative;
     word-wrap: break-word;
 }
+.message-containter small{
+    font-size: small;
+    top: -16px;
+    position: relative;
+}
+.message-containter small.right{
+    align-self: end;
+}
+
 .message-containter p::before,
 .message-containter p::after {
   bottom: -0.1rem;
@@ -74,7 +83,7 @@ p.right-bubble {
     width: fit-content;
   }
   
-  p.right-bubble ~ p.right-bubble {
+  /* p.right-bubble ~ p.right-bubble {
     margin: 0.25rem 0 0;
   }
   
@@ -84,7 +93,7 @@ p.right-bubble {
   
   p.right-bubble ~ p.right-bubble:last-child {
     margin-bottom: 0.5rem;
-  }
+  } */
   
   p.left-bubble {
     align-items: flex-start;
