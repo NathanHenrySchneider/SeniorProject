@@ -8,6 +8,18 @@ import axios from 'axios';
 
 export function YourProfile(props) {
     const [email, setEmail] = useState('Not logged in');
+    const [fullName, setFullName] = useState();
+    const [dob, setDoB] = useState();
+    const [height, setHeight] = useState(); 
+    const [weight, setWeight] = useState(); 
+    const [doc, setDoc] = useState(); 
+    const [meds, setMeds] = useState(); 
+    const [allergy, setAllergy] = useState();
+    const [insurance, setIns] = useState(); 
+    const [groupNo, setGroupNo] = useState(); 
+    const [policyHolder, setPolicyHolder] = useState(); 
+    
+
     useEffect(() => {
         axios.defaults.withCredentials = true;
 
@@ -15,6 +27,18 @@ export function YourProfile(props) {
             .then((response) => {
                 console.log(response.data)
                 setEmail(response.data.email)
+                setFullName(response.data.full_name);
+                setDoB(response.data.birthdate);
+                setHeight(response.data.height);
+                setWeight(response.data.weight);
+                setDoc(response.data.preferred_doc);
+                setMeds(response.data.meds);
+                setAllergy(response.data.allergy);
+                setIns(response.data.insurance);
+                setGroupNo(response.data.groupId);
+                setPolicyHolder(response.data.insurance_policy_holder);
+    
+
             })
             .catch((err) => {
                 console.log("CHP/index.jsx" + err);
@@ -22,7 +46,7 @@ export function YourProfile(props) {
     }, [])
 
     return (<>
-        <NavBar email={email} />
+        <NavBar email={fullName + "   :    " + email} />
         <PageContainer>
             <div class="page-content page-container" id="page-content">
                 <div class="padding">
@@ -42,56 +66,56 @@ export function YourProfile(props) {
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <p class="m-b-10 f-w-600">Name</p>
-                                                    <h6 class="text-muted f-w-400">FirstName Last Name</h6>
+                                                    <h6 class="text-muted f-w-400">{fullName}</h6>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <p class="m-b-10 f-w-600">DoB</p>
-                                                    <h6 class="text-muted f-w-400">mm/dd/yyyy</h6>
+                                                    <h6 class="text-muted f-w-400">{dob}</h6>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <p class="m-b-10 f-w-600">Height</p>
-                                                    <h6 class="text-muted f-w-400">10'6''</h6>
+                                                    <h6 class="text-muted f-w-400">{height}</h6>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <p class="m-b-10 f-w-600">Weight</p>
-                                                    <h6 class="text-muted f-w-400">??? lbs</h6>
+                                                    <h6 class="text-muted f-w-400">{weight}</h6>
                                                 </div>
                                             </div>
                                             <h1 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Doctors</h1>
                                             <div class="row">
                                                 <div class="col-sm-6">
-                                                    <p class="m-b-10 f-w-600">General Practitioner</p>
-                                                    <h6 class="text-muted f-w-400">Dr. FirstName LastName</h6>
+                                                    <p class="m-b-10 f-w-600">Preferred Provider</p>
+                                                    <h6 class="text-muted f-w-400">{doc}</h6>
                                                 </div>
-                                                <div class="col-sm-6">
+                                                {/* <div class="col-sm-6">
                                                     <p class="m-b-10 f-w-600">Specialist</p>
                                                     <h6 class="text-muted f-w-400">Dr. FirstName LastName</h6>
-                                                </div>
+                                                </div> */}
                                             </div>
                                             <h1 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Medications</h1>
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <p class="m-b-10 f-w-600">Medication</p>
-                                                    <h6 class="text-muted f-w-400">Water</h6>
+                                                    <h6 class="text-muted f-w-400">{meds}</h6>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <p class="m-b-10 f-w-600">Medication</p>
-                                                    <h6 class="text-muted f-w-400">Advil</h6>
+                                                    <p class="m-b-10 f-w-600">Allergies</p>
+                                                    <h6 class="text-muted f-w-400">{allergy}</h6>
                                                 </div>
                                             </div>
                                             <h1 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Insurance</h1>
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <p class="m-b-10 f-w-600">Provider</p>
-                                                    <h6 class="text-muted f-w-400">Company</h6>
+                                                    <h6 class="text-muted f-w-400">{insurance}</h6>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <p class="m-b-10 f-w-600">Policy Holder</p>
-                                                    <h6 class="text-muted f-w-400">FirstName LastName</h6>
+                                                    <h6 class="text-muted f-w-400">{policyHolder}</h6>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <p class="m-b-10 f-w-600">Coverage</p>
-                                                    <h6 class="text-muted f-w-400">$100 copay</h6>
+                                                    <p class="m-b-10 f-w-600">Group ID</p>
+                                                    <h6 class="text-muted f-w-400">{groupNo}</h6>
                                                 </div>
                                             </div>
                                         </div>
