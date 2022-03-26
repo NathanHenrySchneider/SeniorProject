@@ -6,13 +6,23 @@ import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import { NavBar } from "../../components/navbar";
-
+import { io } from "socket.io-client";
+import ScrollableFeed from 'react-scrollable-feed'
 
 let messageArr = [];
 let set = new Set();
 let activeUsers = [];
 
+let socket = io("ws://localhost:3002", { transports : ['websocket'] });
+
 export function EmpChat(props){
+
+    socket.on("new", (arg) => {
+        console.log(arg)
+        setFetched(true);
+        setFetched(false)
+    })
+    const [fetched, setFetched] = useState(false);
     const [email, setEmail] = useState("Not logged in");
     const [userID, setUserID] = useState(-1);
     const [allMessages, setAllMessages] = useState([])
@@ -52,13 +62,16 @@ export function EmpChat(props){
                 setAllMessages(messageArr)
                 
                 setLoading(false)
+                setFetched(true)
+
             })
             .catch((err) => console.log(err))
-        
-    }, [userID]);
+            
+    }, [userID, fetched]);
 
     const handleSubmit = (e) =>{
         e.preventDefault();
+        setFetched(false);
         axios
         .post("http://localhost:3001/messaging", 
         { 
@@ -79,6 +92,8 @@ export function EmpChat(props){
             <Card key = {id} id = {id} className = "message-box">
             <h3 style = {{'textAlign' : 'center'}}>User #{id}</h3>
             <div className = "message-containter">
+                <ScrollableFeed>
+                    
                 {allMessages.map((item) => {
                     if(item.sender_id === id && item.recipient_id === userID) {
                         return (<div style = {{'display':'contents'}} key = {"d" + item.date_time}><p key = {"p" + item.date_time} className = "left-bubble">{item.message}</p>
@@ -90,6 +105,7 @@ export function EmpChat(props){
                     }
                     return null;
                 })}
+            </ScrollableFeed>
             </div>
             <form onSubmit = {(e) => handleSubmit(e)}>
             <InputGroup style = {{'bottom': '-17px', 'position':'absolute'}} className="mb-3">

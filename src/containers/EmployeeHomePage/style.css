@@ -47,7 +47,8 @@
     position: relative;
 }
 .message-containter small.right{
-    align-self: end;
+    /* align-self: end; */
+    float: right;
 }
 
 .message-containter p::before,
@@ -58,7 +59,9 @@
   position: absolute;
 }
 p.right-bubble {
-    align-self: flex-end;
+    /* align-self: flex-end; */
+    width: fit-content;
+    margin-left: auto;
     background-color: #248bf5;
     color: #fff; 
   }
@@ -96,7 +99,9 @@ p.right-bubble {
   } */
   
   p.left-bubble {
-    align-items: flex-start;
+    /* align-self: baseline; */
+    /* align-items: flex-start; */
+    width: fit-content;
     background-color: #e5e5ea;
     color: #000;
   }
