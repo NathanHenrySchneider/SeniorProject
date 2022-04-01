@@ -12,22 +12,22 @@ import ScrollableFeed from 'react-scrollable-feed'
 let messageArr = [];
 let set = new Set();
 let activeUsers = [];
-
-let socket = io("ws://localhost:3002", { transports : ['websocket'] });
+let user;
+let socket = io("ws://localhost:4000", { transports : ['websocket'] });
 
 export function EmpChat(props){
 
-    socket.on("new", (arg) => {
-        console.log(arg)
-        setFetched(true);
-        setFetched(false)
-    })
     const [fetched, setFetched] = useState(false);
     const [email, setEmail] = useState("Not logged in");
     const [userID, setUserID] = useState(-1);
     const [allMessages, setAllMessages] = useState([])
     const [loading, setLoading] = useState(true);
     const [fullName, setFullName] = useState();
+    socket.on("new", (arg) => {
+        console.log(arg)
+        setFetched(true);
+        setFetched(false)
+    })
 
     useEffect(() => {
         axios.defaults.withCredentials = true;
@@ -51,11 +51,11 @@ export function EmpChat(props){
             }).then(() => {
                 messageArr.forEach((item) => {
                     if(!set.has(item.sender_id) && item.sender_id !== userID){
-                        activeUsers.push(item.sender_id)
+                        activeUsers.push([item.sender_name, item.sender_id])
                         set.add(item.sender_id)
                     }
                     if(!set.has(item.recipient_id) && item.recipient_id !== userID){
-                        activeUsers.push(item.recipient_id)
+                        activeUsers.push([item.sender_name, item.sender_id])
                         set.add(item.recipient_id)
                     }
                 })
@@ -72,12 +72,14 @@ export function EmpChat(props){
     const handleSubmit = (e) =>{
         e.preventDefault();
         setFetched(false);
+        console.log(fullName)
         axios
         .post("http://localhost:3001/messaging", 
         { 
             sender_id: userID,
             recipient_id: e.target.parentElement.id,
-            message: e.target[0].value
+            message: e.target[0].value,
+            sender_name: fullName
          }).then(e.target[0].value = "")
          .catch(err => console.log(err))
         // console.log(e.target[0].value)
@@ -88,18 +90,23 @@ export function EmpChat(props){
         <>
         <NavBar email={email} />
         <h1 className="text-center mb-3 mt-4">{fullName}'s Message Portal</h1>
-        {activeUsers.map((id) => (
-            <Card key = {id} id = {id} className = "message-box">
-            <h3 style = {{'textAlign' : 'center'}}>User #{id}</h3>
+        {activeUsers.map((id) => {
+            (id[0] === null) ? user = 'user' : user = id[0]
+            return(
+            <Card key = {id[1]} id = {id[1]} className = "message-box">
+           
+            <h3 style = {{'textAlign' : 'center'}}>
+                {(id[0]===null) ? 'Name not found' : id[0]}
+                </h3>
             <div className = "message-containter">
                 <ScrollableFeed>
                     
                 {allMessages.map((item) => {
-                    if(item.sender_id === id && item.recipient_id === userID) {
+                    if(item.sender_id === id[1] && item.recipient_id === userID) {
                         return (<div style = {{'display':'contents'}} key = {"d" + item.date_time}><p key = {"p" + item.date_time} className = "left-bubble">{item.message}</p>
                         <small key = {item.date_time}>{item.date_time.split("T")[0]+" " + item.date_time.split("T")[1].substring(0,5)}</small></div>)
                     }
-                    if(item.sender_id === userID && item.recipient_id === id) {
+                    if(item.sender_id === userID && item.recipient_id === id[1]) {
                         return (<div style = {{'display':'contents'}} key = {"d" + item.date_time}><p key = { "p" + item.date_time} className = "right-bubble">{item.message}</p>
                         <small key = {item.date_time} className = "right">{item.date_time.split("T")[0]+" " + item.date_time.split("T")[1].substring(0,5)}</small></div>)
                     }
@@ -110,15 +117,16 @@ export function EmpChat(props){
             <form onSubmit = {(e) => handleSubmit(e)}>
             <InputGroup style = {{'bottom': '-17px', 'position':'absolute'}} className="mb-3">
                 <FormControl
-                placeholder="Reply to username.."
+                placeholder={'Reply to ' + user}
                 />
                 <Button type = "submit" variant="outline-secondary" id="button-addon2">
                 Send
                 </Button>
             </InputGroup>
             </form>
-        </Card>
-        ))}
-        </>
-    );
+        </Card>)
+        }
+            )
+            }
+        </>)
 }

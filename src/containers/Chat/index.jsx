@@ -14,7 +14,7 @@ let messageArr = [];
 let set = new Set();
 let activeUsers = [];
 
-let socket = io("ws://localhost:3002", { transports : ['websocket'] });
+let socket = io("ws://localhost:4000", { transports : ['websocket'] });
 
 export function Chat(props){
     socket.on("new", (arg) => {
@@ -76,7 +76,8 @@ export function Chat(props){
         { 
             sender_id: userID,
             recipient_id: e.target.parentElement.id,
-            message: e.target[0].value
+            message: e.target[0].value,
+            sender_name: fullName
          }).then(e.target[0].value = "")
          .catch(err => console.log(err))
         // console.log(e.target[0].value)
