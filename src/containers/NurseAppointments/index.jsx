@@ -5,14 +5,13 @@ import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import ScheduleSelector from "react-schedule-selector";
-
+import Button from "react-bootstrap/Button";
 
 export function NurseAppointments(props) {
-  
   const [email, setEmail] = useState("Not logged in");
   const [userID, setUserID] = useState(null);
-  const [allAppointment, setAllAppointment]= useState(null);
-  const [doctorList, setDoctorList]= useState(null);
+  const [allAppointment, setAllAppointment] = useState(null);
+  const [doctorList, setDoctorList] = useState(null);
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
@@ -23,7 +22,7 @@ export function NurseAppointments(props) {
         console.log("Nurse appt page me: ", response.data);
         setEmail(response.data.email);
         setUserID(response.data.user_id);
-        setAllAppointment(response.data.userAppointment)
+        setAllAppointment(response.data.userAppointment);
         setDoctorList(response.data.allDoctor);
       })
       .catch((err) => {
@@ -33,30 +32,35 @@ export function NurseAppointments(props) {
 
   /*********************************************************************************
    * Below are operation related to ScheduleSelector
-   * 
+   *
    *********************************************************************************/
   const [schedule, setSchedule] = useState([]);
   const [updated, setUpdated] = useState(false);
-  const [selectedDoctorID, setSelectedDoctorID] = useState(null);
 
   /* ScheduleSelector onChange intake.*/
-   function handleChange(newSchedule) {
+  function handleChange(newSchedule) {
     //change the schedule
     setSchedule(newSchedule);
     setUpdated(true);
     // console.log("New schedule from handleChange method: ",newSchedule);
   }
 
-   //Get the selected schedule from database after
-   const firstUpdate = useRef(true); 
-   
-   useEffect(() => {
+  /**
+   * Get the doctor schedule from DB based on doctor selected.
+   * Will not run on first render, only make axios call when a doctor is selected.
+   */
+  const [selectedDoctorID, setSelectedDoctorID] = useState(null);
+  const firstUpdate = useRef(true);
+
+  useEffect(() => {
     if (firstUpdate.current) {
       firstUpdate.current = false;
       return;
     }
     axios
-      .post("http://localhost:3001/doctorAppTime/mostRecent", {doctorID: selectedDoctorID})
+      .post("http://localhost:3001/doctorAppTime/mostRecent", {
+        doctorID: selectedDoctorID,
+      })
       .then((response) => {
         //Retrive timeslot from db.
         const result = [
@@ -69,84 +73,174 @@ export function NurseAppointments(props) {
       .catch((err) => {
         console.log("CHP/index.jsx" + err);
       });
-  },[selectedDoctorID]);
+  }, [selectedDoctorID]);
 
+  /**
+   * Update the selected doctor availability .
+   */
+  function updateDoctorSchedule(e) {
+    //actually change in the database
+    if (schedule.length == 0) {
+      alert("No Timeslot Selected.");
+    } else {
+      axios
+        .post("http://localhost:3001/doctorAppTime/setAvailability", {
+          avaiableSchedule: schedule,
+          id: selectedDoctorID,
+        })
+        .then((response) => {
+          getNewestAvailability();
+          alert("Update Success.");
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log("CHP/index.jsx" + err);
+        });
+      setUpdated(false);
+    }
+  }
+
+  /**
+   * After a doctor availability is updated, call to DB to get the newest schedule.
+   */
+  const getNewestAvailability = () => {
+    axios
+      .post("http://localhost:3001/doctorAppTime/mostRecent", {
+        doctorID: selectedDoctorID,
+      })
+      .then((response) => {
+        //Retrive timeslot from db.
+        const result = [
+          ...new Set([].concat(...response.data.map((o) => o.times))),
+        ];
+        // console.log("result is: ", result)
+        //Set the current schedule to the schedule from DB.
+        setSchedule(result);
+      })
+      .catch((err) => {
+        console.log("CHP/index.jsx" + err);
+      });
+  };
+
+  const todayDate = new Date().toISOString().split("T")[0];
   return (
     <>
       <EmpNavBar email={email} />
       <PageContainer>
         <PseudoBorder>Set Doctor Availability:</PseudoBorder>
 
-        <Select defaultValue style={{marginTop: "15px"}} onChange={(e) => setSelectedDoctorID(e.target.value)}>
+        <Select
+          defaultValue
+          style={{ marginTop: "15px" }}
+          onChange={(e) => setSelectedDoctorID(e.target.value)}
+        >
           <Option value="">Select A Doctor</Option>
-            {doctorList ? doctorList.map((doctor)=>(
-              <Option key={doctor.user_id} value={doctor.user_id}>{doctor.full_name}</Option>
-            )): null}
+          {doctorList
+            ? doctorList.map((doctor) => (
+                <Option key={doctor.user_id} value={doctor.user_id}>
+                  {doctor.full_name}
+                </Option>
+              ))
+            : null}
         </Select>
-        
-        {selectedDoctorID ? 
-          <ScheduleSelector
-            onChange={handleChange}
-            selection={schedule}
-            numDays={5}
-            minTime={9}
-            maxTime={18}
-          /> : null}
-        
+
+        {selectedDoctorID ? (
+          <>
+            <ScheduleSelector
+              onChange={handleChange}
+              selection={schedule}
+              numDays={5}
+              minTime={9}
+              maxTime={18}
+            />
+            <Button variant="primary" onClick={updateDoctorSchedule}>
+              {" "}
+              Update Changes{" "}
+            </Button>
+          </>
+        ) : null}
 
         <PseudoBorder>Upcoming Appointments</PseudoBorder>
         <UserAppointmentContainer>
           <table class="table">
             <thead>
               <tr>
-                <th scope="col" style={{width: "10vw"}}>Appointments ID</th>
-                <th scope="col" style={{width: "10vw"}}>Patient ID</th>
-                <th scope="col" style={{width: "10vw"}}>Date</th>
-                <th scope="col" style={{width: "10vw"}}>Start</th>
-                <th scope="col" style={{width: "10vw"}}>End</th>
-                <th scope="col" style={{width: "10vw"}}>Doctor</th>
-                <th scope="col" style={{width: "10vw"}}>Confirmed</th>
-                <th scope="col" style={{width: "10vw" }}></th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Appointments ID
+                </th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Patient ID
+                </th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Date
+                </th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Start
+                </th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  End
+                </th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Doctor
+                </th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Confirmed
+                </th>
+                <th scope="col" style={{ width: "10vw" }}></th>
               </tr>
             </thead>
             <tbody>
-            {allAppointment? allAppointment.map((item)=>(
-              <tr key={item.appt_id}>
-                <th scope="row">{item.appt_id}</th>
-                <th scope="row">{item.patient_id}</th>
-                <td>{item.appt_date.split("T")[0]}</td>
-                <td>{item.appt_start.split("+")[0]}</td>
-                <td>{item.appt_end}</td>
-                <td>Null</td>
-                <td>{item.confirmed ? `True`: `False`}</td>
-                <td>
-                        <div class="dropdown">
-                          <a
-                            class="btn btn-secondary dropdown-toggle"
-                            href="#"
-                            role="button"
-                            id="dropdownMenuLink"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                          >Action</a>
-                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li>
-                              <a class="dropdown-item" href="#">View</a>
-                            </li>
-                            <li>
-                              <a class="dropdown-item" href="#">Update</a>
-                            </li>
-                            <li>
-                              <a class="dropdown-item" href="#">Cancel</a>
-                            </li>
-                          </ul>
-                        </div>
-                      </td>
-              </tr>
-            )) : null}
+              {allAppointment
+                ? allAppointment.map((item) =>
+                    item.appt_date.includes(todayDate) ? (
+                      <tr key={item.appt_id}>
+                        <th scope="row">{item.appt_id}</th>
+                        <th scope="row">{item.patient_id}</th>
+                        <td>{item.appt_date.split("T")[0]}</td>
+                        <td>{item.appt_start.split("+")[0]}</td>
+                        <td>{item.appt_end}</td>
+                        <td>Null</td>
+                        <td>{item.confirmed ? `True` : `False`}</td>
+                        <td>
+                          <div class="dropdown">
+                            <a
+                              class="btn btn-secondary dropdown-toggle"
+                              href="#"
+                              role="button"
+                              id="dropdownMenuLink"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              Action
+                            </a>
+                            <ul
+                              class="dropdown-menu"
+                              aria-labelledby="dropdownMenuLink"
+                            >
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  View
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  Update
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  Cancel
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
+                      </tr>
+                    ) : null
+                  )
+                : null}
             </tbody>
           </table>
-
         </UserAppointmentContainer>
       </PageContainer>
     </>

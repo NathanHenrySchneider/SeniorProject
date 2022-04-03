@@ -1,7 +1,7 @@
 import React from "react";
 import { PageContainer } from "../../components/pageContainer";
 import { NavBar } from "../../components/navbar";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import axios from "axios";
 // import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -19,7 +19,7 @@ export function Appointments(props) {
 
   const handleClose = () => {
     setShow(false);
-  }
+  };
   const handleShow = () => {
     setShow(true);
   };
@@ -65,13 +65,13 @@ export function Appointments(props) {
     e.preventDefault();
 
     //Check if user alraedy have 3 appointment.
-    if (userAppointment.length >= 3) {
-      return alert("Max 3 appointment allowed");
-    }
+    // if (userAppointment.length > 10) {
+    //   return alert("Max 3 appointment allowed");
+    // }
 
     // const appt_date = date.split("T")[0];
-    console.log("date is: ", date);
-    console.log("datetime is: ", datetime);
+    // console.log("date is: ", date);
+    // console.log("datetime is: ", datetime);
 
     axios
       .post(
@@ -81,7 +81,7 @@ export function Appointments(props) {
           appt_start: datetime,
           reason: reason,
           patient_id: userID,
-          provider_id: doctor,
+          provider_id: selectedDoctorID,
         },
         {
           headers: {
@@ -109,12 +109,14 @@ export function Appointments(props) {
    * Schedule operation below.
    */
   const [schedule, setSchedule] = useState([]);
-  const [datetime, setDatetime ] = useState(null);
+  const [datetime, setDatetime] = useState(null);
 
   //Get the selected schedule from database after
   const getSchedule = () => {
     axios
-      .get("http://localhost:3001/doctorAppTime/mostRecent")
+      .post("http://localhost:3001/doctorAppTime/mostRecent", {
+        doctorID: selectedDoctorID,
+      })
       .then((response) => {
         //Retrive timeslot from db.
         const result = [
@@ -131,8 +133,8 @@ export function Appointments(props) {
   };
 
   //Display avaiable time for the date selected in Modal.
-  let avaiableDate =[]; //date not modify, ahead by 4 hour.
-  let timeToShow= [];   //date modify, shows the correspond time.
+  let avaiableDate = []; //date not modify, ahead by 4 hour.
+  let timeToShow = []; //date modify, shows the correspond time.
   var timestamp;
 
   //When user choose a specific date, extract only the selected date from the whole timeslot.
@@ -140,25 +142,68 @@ export function Appointments(props) {
   const dateValid = () => {
     avaiableDate = schedule.filter((item) => item.includes(date));
     // console.log("result is: ", result)
-    if(avaiableDate.length === 0)
-      return false;
-    else{
-      for(let i=0; i<avaiableDate.length; i++){
-        timestamp= new Date(avaiableDate[i]);
-        timestamp.setHours(timestamp.getHours()-4);
+    if (avaiableDate.length === 0) return false;
+    else {
+      for (let i = 0; i < avaiableDate.length; i++) {
+        timestamp = new Date(avaiableDate[i]);
+        timestamp.setHours(timestamp.getHours() - 4);
         var timeToString = JSON.stringify(timestamp);
-        timeToShow.push(timeToString.substring(12,20)); 
+        timeToShow.push(timeToString.substring(12, 20));
       }
       // console.log("timetoshow: ", timeToShow)
       return true;
     }
   };
 
+  /**
+   * Get the doctor schedule from DB based on doctor selected.
+   * Will not run on first render, only make axios call when a doctor is selected.
+   */
+  const [selectedDoctorID, setSelectedDoctorID] = useState(null);
+  const firstUpdate = useRef(true);
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    axios
+      .post("http://localhost:3001/doctorAppTime/mostRecent", {
+        doctorID: selectedDoctorID,
+      })
+      .then((response) => {
+        //Retrive timeslot from db.
+        const result = [
+          ...new Set([].concat(...response.data.map((o) => o.times))),
+        ];
+        //Set the current schedule to the schedule from db.
+        setSchedule(result);
+        // console.log("timeslot is: ", result);
+      })
+      .catch((err) => {
+        console.log("CHP/index.jsx" + err);
+      });
+  }, [selectedDoctorID]);
+
   return (
     <>
       <NavBar email={email} />
       <PageContainer>
         <PseudoBorder> Available Timeslot:</PseudoBorder>
+
+        <Select
+          defaultValue
+          style={{ marginTop: "15px" }}
+          onChange={(e) => setSelectedDoctorID(e.target.value)}
+        >
+          <Option value="">Select A Doctor</Option>
+          {doctorList
+            ? doctorList.map((doctor) => (
+                <Option key={doctor.id} value={doctor.id}>
+                  {doctor.name}
+                </Option>
+              ))
+            : null}
+        </Select>
 
         <ScheduleSelector
           // onChange={handleScheduleSelector}
@@ -200,18 +245,18 @@ export function Appointments(props) {
             </thead>
             <tbody>
               {userAppointment
-                ? userAppointment.map((item) => (
-                  /*Shows appointment only today and onward */
-                  item.appt_date.includes(todayDate) ?
-                    (<tr>
-                      <th scope="row">{item.appt_id}</th>
-                      <td>{item.appt_date.split("T")[0]}</td>
-                      <td>{item.appt_start.split("+")[0]}</td>
-                      <td>{item.provider_id}</td>
-                      <td>{item.reason ? item.reason : "Not Specified"}</td>
-                      <td>{item.confirmed ? `True` : `False`}</td>
-                      <td>
-                        {/* <div class="dropdown">
+                ? userAppointment.map((item) =>
+                    /*Shows appointment only today and onward */
+                    item.appt_date.includes(todayDate) ? (
+                      <tr>
+                        <th scope="row">{item.appt_id}</th>
+                        <td>{item.appt_date.split("T")[0]}</td>
+                        <td>{item.appt_start.split("+")[0]}</td>
+                        <td>{item.provider_id}</td>
+                        <td>{item.reason ? item.reason : "Not Specified"}</td>
+                        <td>{item.confirmed ? `True` : `False`}</td>
+                        <td>
+                          {/* <div class="dropdown">
                           <a
                             class="btn btn-secondary dropdown-toggle"
                             href="#"
@@ -232,9 +277,10 @@ export function Appointments(props) {
                             </li>
                           </ul>
                         </div> */}
-                      </td>
-                    </tr>) : null
-                  ))
+                        </td>
+                      </tr>
+                    ) : null
+                  )
                 : null}
             </tbody>
           </table>
@@ -274,39 +320,22 @@ export function Appointments(props) {
                   setDate(e.target.value);
                 }}
               />
-              {date && dateValid() ? 
-              <Select onChange={(e)=>{setDatetime(e.target.value)}}>
-              <Option value="">Select A Timeslot</Option>
-              {timeToShow.map((item)=>(
-                <Option key={item}>{item}</Option>
-              ))}
-              </Select>
-              : <Select>
-                <Option></Option>
-              </Select>}
-
-              <Title style={{ marginTop: "20px" }}>Doctor:</Title>
-              <Select
-                onChange={(e) => {
-                  console.log(e.target.value.split(" ")[0].substr(1));
-                  setDoctor(e.target.value.split(" ")[0].substr(1));
-                }}
-              >
-                {doctorList === null ? (
-                  <></>
-                ) : (
-                  <>
-                    <Option defaultValue>Select a doctor</Option>
-                    {doctorList.map((item) => {
-                      return (
-                        <Option key={item.id}>
-                          #{item.id} {item.name}
-                        </Option>
-                      );
-                    })}
-                  </>
-                )}
-              </Select>
+              {date && dateValid() ? (
+                <Select
+                  onChange={(e) => {
+                    setDatetime(e.target.value);
+                  }}
+                >
+                  <Option value="">Select A Timeslot</Option>
+                  {timeToShow.map((item) => (
+                    <Option key={item}>{item}</Option>
+                  ))}
+                </Select>
+              ) : (
+                <Select>
+                  <Option></Option>
+                </Select>
+              )}
               {date == null ? (
                 <span className="d-inline-block">
                   <Button
@@ -376,8 +405,7 @@ const Select = styled.select`
   width: 150px;
 `;
 
-const Option = styled.option`
-`;
+const Option = styled.option``;
 
 const UserAppointmentContainer = styled.div`
   display: flex;
