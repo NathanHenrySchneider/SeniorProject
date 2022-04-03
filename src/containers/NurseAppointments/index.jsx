@@ -1,9 +1,10 @@
 import React from "react";
 import { PageContainer } from "../../components/pageContainer";
 import { EmpNavBar } from "../../components/Empnavbar";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import ScheduleSelector from "react-schedule-selector";
 
 
 export function NurseAppointments(props) {
@@ -11,29 +12,88 @@ export function NurseAppointments(props) {
   const [email, setEmail] = useState("Not logged in");
   const [userID, setUserID] = useState(null);
   const [allAppointment, setAllAppointment]= useState(null);
+  const [doctorList, setDoctorList]= useState(null);
+
   useEffect(() => {
     axios.defaults.withCredentials = true;
 
     axios
       .post("http://localhost:3001/me", { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
+        console.log("Nurse appt page me: ", response.data);
         setEmail(response.data.email);
         setUserID(response.data.user_id);
-        setAllAppointment(response.data.allAppointment)
+        setAllAppointment(response.data.userAppointment)
+        setDoctorList(response.data.allDoctor);
       })
       .catch((err) => {
         console.log("CHP/index.jsx" + err);
       });
   }, []);
 
+  /*********************************************************************************
+   * Below are operation related to ScheduleSelector
+   * 
+   *********************************************************************************/
+  const [schedule, setSchedule] = useState([]);
+  const [updated, setUpdated] = useState(false);
+  const [selectedDoctorID, setSelectedDoctorID] = useState(null);
+
+  /* ScheduleSelector onChange intake.*/
+   function handleChange(newSchedule) {
+    //change the schedule
+    setSchedule(newSchedule);
+    setUpdated(true);
+    // console.log("New schedule from handleChange method: ",newSchedule);
+  }
+
+   //Get the selected schedule from database after
+   const firstUpdate = useRef(true); 
+   
+   useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    axios
+      .post("http://localhost:3001/doctorAppTime/mostRecent", {doctorID: selectedDoctorID})
+      .then((response) => {
+        //Retrive timeslot from db.
+        const result = [
+          ...new Set([].concat(...response.data.map((o) => o.times))),
+        ];
+        //Set the current schedule to the schedule from db.
+        setSchedule(result);
+        // console.log("timeslot is: ", result);
+      })
+      .catch((err) => {
+        console.log("CHP/index.jsx" + err);
+      });
+  },[selectedDoctorID]);
 
   return (
     <>
       <EmpNavBar email={email} />
       <PageContainer>
-        <PseudoBorder>Your Availability:</PseudoBorder>
-      
+        <PseudoBorder>Set Doctor Availability:</PseudoBorder>
+
+        <Select defaultValue style={{marginTop: "15px"}} onChange={(e) => setSelectedDoctorID(e.target.value)}>
+          <Option value="">Select A Doctor</Option>
+            {doctorList ? doctorList.map((doctor)=>(
+              <Option key={doctor.user_id} value={doctor.user_id}>{doctor.full_name}</Option>
+            )): null}
+        </Select>
+        
+        {selectedDoctorID ? 
+          <ScheduleSelector
+            onChange={handleChange}
+            selection={schedule}
+            numDays={5}
+            minTime={9}
+            maxTime={18}
+          /> : null}
+        
+
         <PseudoBorder>Upcoming Appointments</PseudoBorder>
         <UserAppointmentContainer>
           <table class="table">
@@ -51,7 +111,7 @@ export function NurseAppointments(props) {
             </thead>
             <tbody>
             {allAppointment? allAppointment.map((item)=>(
-              <tr>
+              <tr key={item.appt_id}>
                 <th scope="row">{item.appt_id}</th>
                 <th scope="row">{item.patient_id}</th>
                 <td>{item.appt_date.split("T")[0]}</td>

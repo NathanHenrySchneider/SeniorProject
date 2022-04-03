@@ -13,6 +13,7 @@ export function EmpAppointments(props) {
   const [schedule, setSchedule] = useState([]);
   const [updated, setUpdated] = useState(false);
   const [allAppointment, setAllAppointment] = useState(null);
+  const todayDate = new Date().toISOString().split("T")[0];
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
@@ -20,10 +21,10 @@ export function EmpAppointments(props) {
     axios
       .post("http://localhost:3001/me", { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
+        console.log("Doctor appt page me: ", response.data);
         setEmail(response.data.email);
         setUserID(response.data.user_id);
-        setAllAppointment(response.data.allAppointment);
+        setAllAppointment(response.data.userAppointment);
         getSchedule();
       })
       .catch((err) => {
@@ -38,7 +39,7 @@ export function EmpAppointments(props) {
     //change the schedule
     setSchedule(newSchedule);
     setUpdated(true);
-    console.log("New schedule from handleChange method: ",newSchedule);
+    // console.log("New schedule from handleChange method: ",newSchedule);
   }
 
   /**
@@ -130,12 +131,6 @@ export function EmpAppointments(props) {
                   Start
                 </th>
                 <th scope="col" style={{ width: "10vw" }}>
-                  End
-                </th>
-                <th scope="col" style={{ width: "10vw" }}>
-                  Doctor
-                </th>
-                <th scope="col" style={{ width: "10vw" }}>
                   Confirmed
                 </th>
                 <th scope="col" style={{ width: "10vw" }}></th>
@@ -144,49 +139,15 @@ export function EmpAppointments(props) {
             <tbody>
               {allAppointment
                 ? allAppointment.map((item) => (
-                    <tr>
+                  item.appt_date.includes(todayDate) ?
+                    (<tr>
                       <th scope="row">{item.appt_id}</th>
                       <th scope="row">{item.patient_id}</th>
                       <td>{item.appt_date.split("T")[0]}</td>
                       <td>{item.appt_start.split("+")[0]}</td>
-                      <td>{item.appt_end}</td>
-                      <td>Null</td>
                       <td>{item.confirmed ? `True` : `False`}</td>
-                      <td>
-                        <div class="dropdown">
-                          <a
-                            class="btn btn-secondary dropdown-toggle"
-                            href="#"
-                            role="button"
-                            id="dropdownMenuLink"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                          >
-                            Action
-                          </a>
-                          <ul
-                            class="dropdown-menu"
-                            aria-labelledby="dropdownMenuLink"
-                          >
-                            <li>
-                              <a class="dropdown-item" href="#">
-                                View
-                              </a>
-                            </li>
-                            <li>
-                              <a class="dropdown-item" href="#">
-                                Update
-                              </a>
-                            </li>
-                            <li>
-                              <a class="dropdown-item" href="#">
-                                Cancel
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                      </td>
-                    </tr>
+
+                    </tr>): null
                   ))
                 : null}
             </tbody>

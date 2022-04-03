@@ -53,7 +53,6 @@ export function EmpChat(props){
                 setLoading(false)
             })
             .catch((err) => console.log(err))
-        
     }, [userID]);
 
     const handleSubmit = (e) =>{

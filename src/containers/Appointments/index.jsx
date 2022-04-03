@@ -15,6 +15,7 @@ export function Appointments(props) {
   const [show, setShow] = useState(false);
   const [doctorList, setDoctorList] = useState(null);
   let doctors = [];
+  const todayDate = new Date().toISOString().split("T")[0];
 
   const handleClose = () => {
     setShow(false);
@@ -68,16 +69,16 @@ export function Appointments(props) {
       return alert("Max 3 appointment allowed");
     }
 
-    const appt_date = date.split("T")[0];
-    const appt_start = date.split("T")[1];
+    // const appt_date = date.split("T")[0];
+    console.log("date is: ", date);
+    console.log("datetime is: ", datetime);
 
     axios
       .post(
         "http://localhost:3001/appointment",
         {
-          appt_date: appt_date,
-          appt_start: appt_start,
-          appt_end: appt_start, //need to be fix to 30 after appt_start time.
+          appt_date: date,
+          appt_start: datetime,
           reason: reason,
           patient_id: userID,
           provider_id: doctor,
@@ -130,18 +131,21 @@ export function Appointments(props) {
   };
 
   //Display avaiable time for the date selected in Modal.
-  let timeToShow= [];
+  let avaiableDate =[]; //date not modify, ahead by 4 hour.
+  let timeToShow= [];   //date modify, shows the correspond time.
   var timestamp;
 
+  //When user choose a specific date, extract only the selected date from the whole timeslot.
+  //And modify the time to display correctly instead of ahead by 4 hours.
   const dateValid = () => {
-    const result = schedule.filter((item) => item.includes(date));
+    avaiableDate = schedule.filter((item) => item.includes(date));
     // console.log("result is: ", result)
-    if(result.length === 0)
+    if(avaiableDate.length === 0)
       return false;
     else{
-      for(let i=0; i<result.length; i++){
-        timestamp= new Date(result[i]);
-        timestamp.setHours(timestamp.getHours()-4)
+      for(let i=0; i<avaiableDate.length; i++){
+        timestamp= new Date(avaiableDate[i]);
+        timestamp.setHours(timestamp.getHours()-4);
         var timeToString = JSON.stringify(timestamp);
         timeToShow.push(timeToString.substring(12,20)); 
       }
@@ -150,7 +154,6 @@ export function Appointments(props) {
     }
   };
 
-  // console.log("datetiem,:", datetime)
   return (
     <>
       <NavBar email={email} />
@@ -184,9 +187,6 @@ export function Appointments(props) {
                   Start
                 </th>
                 <th scope="col" style={{ width: "10vw" }}>
-                  End
-                </th>
-                <th scope="col" style={{ width: "10vw" }}>
                   Doctor
                 </th>
                 <th scope="col" style={{ width: "10vw" }}>
@@ -201,13 +201,14 @@ export function Appointments(props) {
             <tbody>
               {userAppointment
                 ? userAppointment.map((item) => (
-                    <tr>
+                  /*Shows appointment only today and onward */
+                  item.appt_date.includes(todayDate) ?
+                    (<tr>
                       <th scope="row">{item.appt_id}</th>
                       <td>{item.appt_date.split("T")[0]}</td>
                       <td>{item.appt_start.split("+")[0]}</td>
-                      <td>{item.appt_end}</td>
                       <td>{item.provider_id}</td>
-                      <td>{item.reason ? item.reason : "not specified"}</td>
+                      <td>{item.reason ? item.reason : "Not Specified"}</td>
                       <td>{item.confirmed ? `True` : `False`}</td>
                       <td>
                         {/* <div class="dropdown">
@@ -232,7 +233,7 @@ export function Appointments(props) {
                           </ul>
                         </div> */}
                       </td>
-                    </tr>
+                    </tr>) : null
                   ))
                 : null}
             </tbody>
