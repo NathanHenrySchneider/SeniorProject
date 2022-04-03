@@ -1,91 +1,124 @@
 import React from "react";
+import Card from 'react-bootstrap/Card'
+import InputGroup from 'react-bootstrap/InputGroup'
+import FormControl from 'react-bootstrap/FormControl'
+import Button from 'react-bootstrap/Button'
+import axios from 'axios';
 import { useState, useEffect } from "react";
 import { NavBar } from "../../components/navbar";
-import axios from "axios";
-import Button from "react-bootstrap/Button";
-import Table from "react-bootstrap/Table";
-import { Container } from "react-bootstrap";
-import ComposeEmail from "./ComposeEmail";
-import OpenMessage from "./OpenMessage";
+import { io } from "socket.io-client";
+import ScrollableFeed from 'react-scrollable-feed'
 
-export function Chat(props) {
-  const [email, setEmail] = useState("Not logged in");
-  const [chat, setChat] = useState([]);
 
-  useEffect(() => {
-    axios.defaults.withCredentials = true;
+let messageArr = [];
+let set = new Set();
+let activeUsers = [];
 
-    axios
-      .post("http://localhost:3001/me", { withCredentials: true })
-      .then((response) => {
-        console.log("/me response:", response.data);
-        setEmail(response.data.email);
-        // response.data.user_id
+let socket = io("ws://localhost:4000", { transports : ['websocket'] });
+
+export function Chat(props){
+    socket.on("new", (arg) => {
+        console.log(arg)
+        setFetched(true);
+        setFetched(false)
+    })
+    const [fetched, setFetched] = useState(false);
+    const [email, setEmail] = useState("Not logged in");
+    const [userID, setUserID] = useState(-1);
+    const [allMessages, setAllMessages] = useState([])
+    const [loading, setLoading] = useState(true);
+    const [fullName, setFullName] = useState();
+
+    useEffect(() => {
+        axios.defaults.withCredentials = true;
+
         axios
-          .get("http://localhost:3001/messaging")
-          .then((response) => {
-            console.log(response.data);
-            setChat(response.data);
-          })
-          .catch((err) => console.log("message err" + err));
-      })
-      .catch((err) => {
-        console.log("CHP/index.jsx" + err);
-      });
-  }, []);
+        .post("http://localhost:3001/me", { withCredentials: true })
+        .then((response) => {
+            setEmail(response.data.email);
+            setUserID(response.data.user_id);
+            setFullName(response.data.full_name);
+        }).catch((err) => {
+            console.log("CHP/index.jsx" + err);
+        });
+        axios
+            .get("http://localhost:3001/messaging")
+            .then((response) =>{
+                messageArr = response.data.filter((item) => {
+                    return item.recipient_id === userID || item.sender_id === userID
+                })
 
-  const formatDateTime = (date_time) => {
-    const date = date_time.split("T")[0];
-    const time = date_time.split("T")[1];
-    return date + " " + time.split(".")[0];
-  };
+            }).then(() => {
+                messageArr.forEach((item) => {
+                    if(!set.has(item.sender_id) && item.sender_id !== userID){
+                        activeUsers.push(item.sender_id)
+                        set.add(item.sender_id)
+                    }
+                    if(!set.has(item.recipient_id) && item.recipient_id !== userID){
+                        activeUsers.push(item.recipient_id)
+                        set.add(item.recipient_id)
+                    }
+                })
+                setAllMessages(messageArr)
+                
+                setLoading(false)
+                setFetched(true)
+            })
+            .catch((err) => console.log(err))
+            
+    }, [userID, fetched]);
 
-  //Did not delete from DB.
-  const handleDelete = (id)=>{
-      setChat(chat.filter(msg => msg.message_id !== id))
-  }
-  
-  return (
-    <>
-      <NavBar email={email} />
-      <>
-        <h1 className="text-center mb-3 mt-4">Message Portal</h1>
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+        setFetched(false);
+        axios
+        .post("http://localhost:3001/messaging", 
+        { 
+            sender_id: userID,
+            recipient_id: e.target.parentElement.id,
+            message: e.target[0].value,
+            sender_name: fullName
+         }).then(e.target[0].value = "")
+         .catch(err => console.log(err))
+        // console.log(e.target[0].value)
+        // console.log(e.target.parentElement.id)
+    }
+    if(loading) return <h1>loading</h1>
+    return (
         <>
-          <div className="text-center">
-            <Button href="javascript:location.reload(true)" variant="primary w-25">Refresh</Button>{" "}
-            {/* <a href="javascript:location.reload(true)">Refresh this page</a> */}
-            <ComposeEmail></ComposeEmail>
-          </div>
+        <NavBar email={email} />
+        <h1 className="text-center mb-3 mt-4">{fullName}'s Message Portal</h1>
+        {activeUsers.map((id) => (
+            <Card key = {id} id = {id} className = "message-box">
+            <h3 style = {{'textAlign' : 'center'}}>User #{id}</h3>
+            <div className = "message-containter">
+            <ScrollableFeed>
+                {allMessages.map((item) => {
+                    if(item.sender_id === id && item.recipient_id === userID) {
+                        return (<div style = {{'display':'contents'}} key = {"d" + item.date_time}><p key = {"p" + item.date_time} className = "left-bubble">{item.message}</p>
+                        <small key = {item.date_time}>{item.date_time.split("T")[0]+" " + item.date_time.split("T")[1].substring(0,5)}</small></div>)
+                    }
+                    if(item.sender_id === userID && item.recipient_id === id) {
+                        return (<div style = {{'display':'contents'}} key = {"d" + item.date_time}><p key = { "p" + item.date_time} className = "right-bubble">{item.message}</p>
+                        <small key = {item.date_time} className = "right">{item.date_time.split("T")[0]+" " + item.date_time.split("T")[1].substring(0,5)}</small></div>)
+                    }
+                    return null;
+                })}
+            </ScrollableFeed>
+
+            </div>
+            <form onSubmit = {(e) => handleSubmit(e)}>
+            <InputGroup style = {{'bottom': '-17px', 'position':'absolute'}} className="mb-3">
+                <FormControl
+                placeholder="Reply to username.."
+                />
+                <Button type = "submit" variant="outline-secondary" id="button-addon2">
+                Send
+                </Button>
+            </InputGroup>
+            </form>
+        </Card>
+        ))}
         </>
-      </>
-      <Container fluid="md">
-        <Table striped bordered hover className="mt-4">
-          <thead>
-            <tr>
-              <th>Date/Time</th>
-              <th>Sender</th>
-              <th>Subject</th>
-              <th className="text-center"> Open</th>
-              <th className="text-center"> Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {chat.map((msg) => (
-              <tr key={msg.message_id}>
-                <td>{formatDateTime(msg.date_time)}</td>
-                <td>{msg.sender_id}</td>
-                <td>{msg.subject}</td>
-                <td colSpan={1.5} className="text-center">
-                  <OpenMessage message_id={msg.message_id} subject="Null" sender_id={msg.sender_id} message={msg.message}></OpenMessage>
-                </td>
-                <td colSpan={1.5} className="text-center">
-                  <Button variant="danger" onClick={handleDelete.bind(this, msg.message_id)}>Delete</Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </Container>
-    </>
-  );
+    );
 }
