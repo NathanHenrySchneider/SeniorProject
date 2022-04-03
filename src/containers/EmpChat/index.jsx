@@ -5,7 +5,7 @@ import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 import { useState, useEffect } from "react";
-import { NavBar } from "../../components/navbar";
+import { EmpNavBar } from "../../components/Empnavbar";
 import { io } from "socket.io-client";
 import ScrollableFeed from 'react-scrollable-feed'
 
@@ -88,7 +88,7 @@ export function EmpChat(props){
     if(loading) return <h1>loading</h1>
     return (
         <>
-        <NavBar email={email} />
+        <EmpNavBar email={email} />
         <h1 className="text-center mb-3 mt-4">{fullName}'s Message Portal</h1>
         {activeUsers.map((id) => {
             (id[0] === null) ? user = 'user' : user = id[0]
