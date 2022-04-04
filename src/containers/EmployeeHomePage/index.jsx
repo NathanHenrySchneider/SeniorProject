@@ -24,7 +24,7 @@ export function EmployeeHomePage(props) {
 			})
 			.catch((err) => {
 				history.goBack();
-				console.log("CHP/index.jsx" + err);
+				console.log("CHP/index.jsx- From DoctorHomePage" + err);
 			})
 	}, [])
 
