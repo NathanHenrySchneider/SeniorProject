@@ -113,7 +113,7 @@ export function NurseAppointments(props) {
         const result = [
           ...new Set([].concat(...response.data.map((o) => o.times))),
         ];
-        // console.log("result is: ", result)
+        console.log("result is: ", result)
         //Set the current schedule to the schedule from DB.
         setSchedule(result);
       })
@@ -122,7 +122,13 @@ export function NurseAppointments(props) {
       });
   };
 
-  const todayDate = new Date().toISOString().split("T")[0];
+  /**
+   * todatDate: display appointment only today and onward.
+   * Convert date from m/d/yyyy to yyyy/mm//dd
+   */
+  let todayDate = new Date().toLocaleDateString();
+  todayDate = todayDate.slice(4,8) + "-0" + todayDate.slice(0,1) + "-0" + todayDate.slice(2,3);
+
   return (
     <>
       <EmpNavBar email={email} />
@@ -144,21 +150,17 @@ export function NurseAppointments(props) {
             : null}
         </Select>
 
-        {selectedDoctorID ? (
-          <>
-            <ScheduleSelector
+        <ScheduleSelector
               onChange={handleChange}
               selection={schedule}
               numDays={5}
               minTime={9}
               maxTime={18}
             />
+        {selectedDoctorID ? 
             <Button variant="primary" onClick={updateDoctorSchedule}>
-              {" "}
-              Update Changes{" "}
-            </Button>
-          </>
-        ) : null}
+              Update Changes
+            </Button> : null}
 
         <PseudoBorder>Upcoming Appointments</PseudoBorder>
         <UserAppointmentContainer>
@@ -178,9 +180,6 @@ export function NurseAppointments(props) {
                   Start
                 </th>
                 <th scope="col" style={{ width: "10vw" }}>
-                  End
-                </th>
-                <th scope="col" style={{ width: "10vw" }}>
                   Doctor
                 </th>
                 <th scope="col" style={{ width: "10vw" }}>
@@ -192,7 +191,7 @@ export function NurseAppointments(props) {
             <tbody>
               {allAppointment
                 ? allAppointment.map((item) =>
-                    item.appt_date.includes(todayDate) ? (
+                    item.appt_date >= todayDate ? (
                       <tr key={item.appt_id}>
                         <th scope="row">{item.appt_id}</th>
                         <th scope="row">{item.patient_id}</th>

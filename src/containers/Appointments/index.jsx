@@ -11,11 +11,11 @@ import ScheduleSelector from "react-schedule-selector";
 export function Appointments(props) {
   const [email, setEmail] = useState("Not logged in");
   const [userID, setUserID] = useState(null);
+  const [userFullName, setUserFullName] = useState(null);
   const [userAppointment, setUserAppointment] = useState(null);
   const [show, setShow] = useState(false);
   const [doctorList, setDoctorList] = useState(null);
   let doctors = [];
-  const todayDate = new Date().toISOString().split("T")[0];
 
   const handleClose = () => {
     setShow(false);
@@ -33,6 +33,7 @@ export function Appointments(props) {
         console.log(response.data);
         setEmail(response.data.email);
         setUserID(response.data.user_id);
+        setUserFullName(response.data.full_name);
         setUserAppointment(response.data.userAppointment);
         getSchedule();
       })
@@ -61,17 +62,21 @@ export function Appointments(props) {
   const [reason, setReason] = useState(null);
   const [doctor, setDoctor] = useState(null);
 
+
+  /**
+   * Handles user submitting an appointment.
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    //Check if user alraedy have 3 appointment.
-    // if (userAppointment.length > 10) {
-    //   return alert("Max 3 appointment allowed");
-    // }
-
-    // const appt_date = date.split("T")[0];
-    // console.log("date is: ", date);
-    // console.log("datetime is: ", datetime);
+    // Return if use try to make appointment without a doctor choosed.
+    if(selectedDoctorID === null){
+      alert("Please Select A Doctor.");
+      return;
+    }
+    //Current date time.
+    let dateTime = new Date().toLocaleString();
+    console.log("dateTime: ", dateTime);
 
     axios
       .post(
@@ -81,7 +86,10 @@ export function Appointments(props) {
           appt_start: datetime,
           reason: reason,
           patient_id: userID,
-          provider_id: selectedDoctorID,
+          doctor_id: selectedDoctorID,
+          date_time: dateTime,
+          patient_name: userFullName,
+          doctor_name: selectedDoctorName,
         },
         {
           headers: {
@@ -91,11 +99,10 @@ export function Appointments(props) {
         }
       )
       .then(function (response) {
-        console.log(response);
+        console.log("book appointment func: ",response);
         alert("Appointment Booked");
-        window.location.reload(false);
-        // setDate(null)
-        // history.push("/CustomerHomePage");
+        updateSchedule(response.data);
+        // return false; //prevent refreshing page
       })
       .catch(function (error) {
         setError(true);
@@ -104,6 +111,24 @@ export function Appointments(props) {
         else setMessage("Something went wrong.");
       });
   };
+
+  /**
+   * Update doctor schedule after a appointment is made- disable the timeslot.
+   */
+  const updateSchedule=(data)=>{
+    console.log("inside updateschedule data is: ", data)
+    axios
+    .put("http://localhost:3001/doctorAppTime/updateSchedule", {
+      data,
+    })
+    .then((response) => {
+      console.log("updateScheudle then ")
+    })
+    .catch((err) => {
+      console.log("CHP/index.jsx" + err);
+    });
+  }
+
 
   /**
    * Schedule operation below.
@@ -160,6 +185,7 @@ export function Appointments(props) {
    * Will not run on first render, only make axios call when a doctor is selected.
    */
   const [selectedDoctorID, setSelectedDoctorID] = useState(null);
+  const [selectedDoctorName, setSelectedDoctorName] = useState(null);
   const firstUpdate = useRef(true);
   useEffect(() => {
     if (firstUpdate.current) {
@@ -184,6 +210,13 @@ export function Appointments(props) {
       });
   }, [selectedDoctorID]);
 
+  /**
+   * todatDate: display appointment only today and onward.
+   * Convert date from m/d/yyyy to yyyy/mm//dd
+   */
+  let todayDate = new Date().toLocaleString();
+  todayDate = todayDate.slice(4,8) + "-0" + todayDate.slice(0,1) + "-0" + todayDate.slice(2,3);
+
   return (
     <>
       <NavBar email={email} />
@@ -193,12 +226,12 @@ export function Appointments(props) {
         <Select
           defaultValue
           style={{ marginTop: "15px" }}
-          onChange={(e) => setSelectedDoctorID(e.target.value)}
+          onChange={(e) => {setSelectedDoctorID(e.target.value.split("-")[0]); setSelectedDoctorName(e.target.value.split("-")[1])}}
         >
           <Option value="">Select A Doctor</Option>
           {doctorList
             ? doctorList.map((doctor) => (
-                <Option key={doctor.id} value={doctor.id}>
+                <Option key={doctor.id} value={doctor.id +"-"+ doctor.name}>
                   {doctor.name}
                 </Option>
               ))
@@ -212,10 +245,10 @@ export function Appointments(props) {
           minTime={9}
           maxTime={18}
         />
-
+        {selectedDoctorID ? 
         <Button variant="primary" onClick={handleShow}>
           Make an Appointment
-        </Button>
+        </Button> : null}
         <PseudoBorder style={{ marginTop: "15px" }}>Appointments</PseudoBorder>
 
         <UserAppointmentContainer>
@@ -247,12 +280,12 @@ export function Appointments(props) {
               {userAppointment
                 ? userAppointment.map((item) =>
                     /*Shows appointment only today and onward */
-                    item.appt_date.includes(todayDate) ? (
+                    item.appt_date >= todayDate ? (
                       <tr>
                         <th scope="row">{item.appt_id}</th>
                         <td>{item.appt_date.split("T")[0]}</td>
                         <td>{item.appt_start.split("+")[0]}</td>
-                        <td>{item.provider_id}</td>
+                        <td>{item.doctor_name}</td>
                         <td>{item.reason ? item.reason : "Not Specified"}</td>
                         <td>{item.confirmed ? `True` : `False`}</td>
                         <td>
