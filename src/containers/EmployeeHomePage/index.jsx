@@ -26,7 +26,7 @@ export function EmployeeHomePage(props) {
 				history.goBack();
 				console.log("CHP/index.jsx- From DoctorHomePage" + err);
 			})
-	}, [])
+	})
 
 	return (<>
 		<EmpNavBar email={email} />

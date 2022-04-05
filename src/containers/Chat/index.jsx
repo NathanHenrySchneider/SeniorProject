@@ -84,6 +84,7 @@ export function Chat(props){
         // console.log(e.target.parentElement.id)
     }
     if(loading) return <h1>loading</h1>
+
     return (
         <>
         <NavBar email={email} />
