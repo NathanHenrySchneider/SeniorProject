@@ -279,7 +279,7 @@ export function Appointments(props) {
             </thead>
             <tbody>
               {userAppointment
-                ? userAppointment.map((item) =>
+                ? userAppointment.sort((a, b) => b.appt_date < a.appt_date ? 1: -1).sort((a, b) => b.appt_start < a.appt_start ? 1: -1).map((item) =>
                     /*Shows appointment only today and onward */
                     item.appt_date >= todayDate ? (
                       <tr>

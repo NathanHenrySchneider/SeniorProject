@@ -31,12 +31,10 @@ export function EmpAppointments(props) {
       });
   }, []);
 
-
   return (
     <>
       <EmpNavBar email={email} />
       <PageContainer>
-        
         <PseudoBorder>Upcoming Appointments</PseudoBorder>
         <UserAppointmentContainer>
           <table class="table">
@@ -62,16 +60,15 @@ export function EmpAppointments(props) {
             </thead>
             <tbody>
               {allAppointment
-                ? allAppointment.map((item) => (
-                  item.appt_date.includes(todayDate) ?
-                    (<tr>
+                ?
+                allAppointment.sort((a, b) => b.appt_date < a.appt_date ? 1: -1).sort((a, b) => b.appt_start < a.appt_start ? 1: -1).map((item) => (
+                    <tr key={item.appt_id}>
                       <th scope="row">{item.appt_id}</th>
                       <th scope="row">{item.patient_id}</th>
                       <td>{item.appt_date.split("T")[0]}</td>
                       <td>{item.appt_start.split("+")[0]}</td>
                       <td>{item.confirmed ? `True` : `False`}</td>
-
-                    </tr>): null
+                    </tr>
                   ))
                 : null}
             </tbody>

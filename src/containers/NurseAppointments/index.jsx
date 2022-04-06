@@ -226,7 +226,7 @@ export function NurseAppointments(props) {
               <>
                 <tbody>
                   {allAppointment
-                    ? allAppointment.map((item) =>
+                    ? allAppointment.sort((a, b) => b.appt_start > a.appt_start ? 1: -1).sort((a, b) => b.appt_date < a.appt_date ? 1: -1).map((item) =>
                         item.appt_date >= todayDate ? (
                           <tr key={item.appt_id}>
                             <th scope="row">{item.appt_id}</th>
@@ -262,7 +262,7 @@ export function NurseAppointments(props) {
               <>
                 <tbody>
                   {allAppointment
-                    ? allAppointment.map((item) =>
+                    ? allAppointment.sort((a, b) => b.appt_date < a.appt_date ? 1: -1).sort((a, b) => b.appt_start < a.appt_start ? 1: -1).map((item) =>
                         (item.appt_date >= todayDate) &&
                         (item.doctor_id == selectedDoctorForAppt) ? (
                           <tr key={item.appt_id}>
