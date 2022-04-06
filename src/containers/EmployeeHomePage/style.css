@@ -14,16 +14,6 @@
 #collapse > ol > li:hover{
   cursor: pointer;
 }
-.nav-item{
-  width: 100%!important;
-  text-align: center;
-}
-.nav-item:hover{
-  cursor: pointer;
-}
-.col-sm-3, .col-sm-9{
-  padding:0!important;
-}
 .card-box:hover {
     text-decoration: none;
     color: #f1f1f1;
