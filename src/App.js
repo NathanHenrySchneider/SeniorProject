@@ -18,6 +18,7 @@ import { EmpYourProfile } from './containers/EmpYourProfile';
 import { EmpDocuments } from './containers/EmpDocuments';
 import { NurseHomePage } from './containers/NurseHomePage';
 import { NurseAppointments } from './containers/NurseAppointments';
+import { EditProfile } from './containers/EditProfile';
 
 
 
@@ -32,6 +33,7 @@ function App() {
           <Route path="/EmployeeLogin" exact component={EmployeeBox} />
           <Route path="/customerhomepage" exact component={CustomerHomePage} />
           <Route path="/customerhomepage/yourprofile" exact component={YourProfile} />
+          <Route path="/customerhomepage/yourprofile/editprofile" exact component={EditProfile}/>
           <Route path="/customerhomepage/appointments" exact component={Appointments}/>
           <Route path="/customerhomepage/videocall" exact component={VideoCall}/>
           <Route path="/customerhomepage/chat" exact component={Chat}/>
