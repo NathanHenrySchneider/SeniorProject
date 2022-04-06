@@ -99,9 +99,10 @@ export function Appointments(props) {
         }
       )
       .then(function (response) {
-        console.log("book appointment func: ",response);
+        // console.log("book appointment func: ",response);
         alert("Appointment Booked");
         updateSchedule(response.data);
+        window.location.reload(true);
         // return false; //prevent refreshing page
       })
       .catch(function (error) {

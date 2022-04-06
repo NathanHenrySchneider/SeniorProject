@@ -25,94 +25,18 @@ export function EmpAppointments(props) {
         setEmail(response.data.email);
         setUserID(response.data.user_id);
         setAllAppointment(response.data.userAppointment);
-        getSchedule();
       })
       .catch((err) => {
         console.log("CHP/index.jsx" + err);
       });
   }, []);
 
- /**
-  * ScheduleSelector onChange intake.
-  */
-  function handleChange(newSchedule) {
-    //change the schedule
-    setSchedule(newSchedule);
-    setUpdated(true);
-    // console.log("New schedule from handleChange method: ",newSchedule);
-  }
-
-  /**
-   * Takes in selected timeslot from doctor.
-   */
-  function updateChanges(e) {
-    // e.preventDefault();
-    //actually change in the database
-    if (schedule.length == 0) {
-      alert("No Timeslot Selected.");
-    } else {
-        axios
-          .post("http://localhost:3001/doctorAppTime/setAvailability", {
-            avaiableSchedule: schedule,
-            id: userID,
-          })
-          .then((response) => {
-            alert("Update Success.");
-            window.location.reload();
-          })
-          .catch((err) => {
-            console.log("CHP/index.jsx" + err);
-          });
-        setUpdated(false);
-    }
-  }
-
-  /**
-   * Get the selected schedule from database after
-   * updated change button is executed.
-   */
-  const getSchedule = () => {
-      axios
-        .get("http://localhost:3001/doctorAppTime/mostRecent")
-        .then((response) => {
-          //Retrive timeslot from db.
-          const result = [...new Set([].concat(...response.data.map((o) => o.times)))]
-          // console.log("result is: ", result)
-          //Set the current schedule to the schedule from db.
-          setSchedule(result);
-        })
-        .catch((err) => {
-          console.log("CHP/index.jsx" + err);
-        });
-  };
-
-  const showSchedule = () =>{
-    console.log("Show Schedule: ", schedule)
-  }
 
   return (
     <>
       <EmpNavBar email={email} />
       <PageContainer>
-        <PseudoBorder>Your Availability:</PseudoBorder>
-
-        <ScheduleSelector
-          onChange={handleChange}
-          selection={schedule}
-          numDays={5}
-          minTime={9}
-          maxTime={18}
-        />
-        {updated ? (
-          <Button variant="primary" onClick={updateChanges}>
-            Update Changes
-          </Button>
-        ) : (
-          <Button disabled variant="primary">
-            Schedule Updated
-          </Button>
-        )}
-        <Button onClick={showSchedule}>Show Schedule</Button>
+        
         <PseudoBorder>Upcoming Appointments</PseudoBorder>
         <UserAppointmentContainer>
           <table class="table">

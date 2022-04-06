@@ -6,13 +6,14 @@ import styled from "styled-components";
 import axios from "axios";
 import ScheduleSelector from "react-schedule-selector";
 import Button from "react-bootstrap/Button";
+import { Appointments } from "./../Appointments/index";
 
 export function NurseAppointments(props) {
   const [email, setEmail] = useState("Not logged in");
   const [userID, setUserID] = useState(null);
   const [allAppointment, setAllAppointment] = useState(null);
   const [doctorList, setDoctorList] = useState(null);
-  const [actions,setActions] = useState();
+  const [actions, setActions] = useState();
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
@@ -92,7 +93,7 @@ export function NurseAppointments(props) {
         .then((response) => {
           getNewestAvailability();
           alert("Update Success.");
-          window.location.reload();
+          window.location.reload(true);
         })
         .catch((err) => {
           console.log("CHP/index.jsx" + err);
@@ -114,7 +115,7 @@ export function NurseAppointments(props) {
         const result = [
           ...new Set([].concat(...response.data.map((o) => o.times))),
         ];
-        console.log("result is: ", result)
+        console.log("result is: ", result);
         //Set the current schedule to the schedule from DB.
         setSchedule(result);
       })
@@ -128,7 +129,18 @@ export function NurseAppointments(props) {
    * Convert date from m/d/yyyy to yyyy/mm//dd
    */
   let todayDate = new Date().toLocaleDateString();
-  todayDate = todayDate.slice(4,8) + "-0" + todayDate.slice(0,1) + "-0" + todayDate.slice(2,3);
+  todayDate =
+    todayDate.slice(4, 8) +
+    "-0" +
+    todayDate.slice(0, 1) +
+    "-0" +
+    todayDate.slice(2, 3);
+
+  /**
+   * Display selected doctor schedule.
+   */
+  const [selectedDoctorForAppt, setSelectedDoctorForAppt] = useState("viewAll");
+  // console.log("selectedDoctorForAppt: ", selectedDoctorForAppt);
 
   return (
     <>
@@ -152,18 +164,38 @@ export function NurseAppointments(props) {
         </Select>
 
         <ScheduleSelector
-              onChange={handleChange}
-              selection={schedule}
-              numDays={5}
-              minTime={9}
-              maxTime={18}
-            />
-        {selectedDoctorID ? 
-            <Button variant="primary" onClick={updateDoctorSchedule}>
-              Update Changes
-            </Button> : null}
+          onChange={handleChange}
+          selection={schedule}
+          numDays={5}
+          minTime={9}
+          maxTime={18}
+        />
+        {selectedDoctorID ? (
+          <Button variant="primary" onClick={updateDoctorSchedule}>
+            Update Changes
+          </Button>
+        ) : null}
 
         <PseudoBorder>Upcoming Appointments</PseudoBorder>
+
+        <Select
+          defaultValue={"DEFAULT"}
+          style={{ marginTop: "15px", width: "220px" }}
+          onChange={(e) => setSelectedDoctorForAppt(e.target.value)}
+        >
+          <Option value="DEFAULT" disabled>
+            View Specific
+          </Option>
+          <Option value="viewAll">View All Appointments</Option>
+          {doctorList
+            ? doctorList.map((doctor) => (
+                <Option key={doctor.user_id} value={doctor.user_id}>
+                  {doctor.full_name}
+                </Option>
+              ))
+            : null}
+        </Select>
+
         <UserAppointmentContainer>
           <table class="table">
             <thead>
@@ -172,7 +204,7 @@ export function NurseAppointments(props) {
                   Appointments ID
                 </th>
                 <th scope="col" style={{ width: "10vw" }}>
-                  Patient ID
+                  Patient Name
                 </th>
                 <th scope="col" style={{ width: "10vw" }}>
                   Date
@@ -189,73 +221,81 @@ export function NurseAppointments(props) {
                 <th scope="col" style={{ width: "10vw" }}></th>
               </tr>
             </thead>
-            <tbody>
-              {allAppointment
-                ? allAppointment.map((item) =>
-                    item.appt_date >= todayDate ? (
-                      <tr key={item.appt_id}>
-                        <th scope="row">{item.appt_id}</th>
-                        <th scope="row">{item.patient_id}</th>
-                        <td>{item.appt_date.split("T")[0]}</td>
-                        <td>{item.appt_start.split("+")[0]}</td>
-                        <td>{item.appt_end}</td>
-                        <td>Null</td>
-                        <td>{item.confirmed ? `True` : `False`}</td>
-                        <td>
-                        {/* <div>
-                          <select value={actions} onChange = {e => setActions(e.target.value)}>
-                          <option selected value="Action">Select</option>
-                          <option value = "approve" >Approve</option>
-                          <option value = "update" >Update</option>
-                          <option value = "view" >View</option>
-                          </select>
-                        </div> */}
-                          <div class="dropdown">
-                            {/* <a
-                              class="btn btn-secondary dropdown-toggle"
-                              href="#"
-                              role="button"
-                              id="dropdownMenuLink"
-                              data-bs-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              Action
-                            </a> */}
-                            {/* <ul
-                              class="dropdown-menu"
-                              aria-labelledby="dropdownMenuLink"
-                            >
-                              <li>
-                                <a class="dropdown-item" href="#">
-                                  View
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item" href="#">
-                                  Update
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item" href="#">
-                                  Cancel
-                                </a>
-                              </li>
-                            </ul> */}
-                            <div>
-                          <select value={actions} onChange = {e => setActions(e.target.value)}>
-                          <option selected value="Action">Select</option>
-                          <option value = "approve" >Approve</option>
-                          <option value = "update" >Update</option>
-                          <option value = "view" >View</option>
-                          </select>
-                        </div>
-                          </div>
-                        </td>
-                      </tr>
-                    ) : null
-                  )
-                : null}
-            </tbody>
+
+            {selectedDoctorForAppt === "viewAll" ? (
+              <>
+                <tbody>
+                  {allAppointment
+                    ? allAppointment.map((item) =>
+                        item.appt_date >= todayDate ? (
+                          <tr key={item.appt_id}>
+                            <th scope="row">{item.appt_id}</th>
+                            <th>{item.patient_name}</th>
+                            <td>{item.appt_date.split("T")[0]}</td>
+                            <td>{item.appt_start.split("+")[0]}</td>
+                            <td>{item.doctor_name}</td>
+                            <td>{item.confirmed ? `True` : `False`}</td>
+                            <td>
+                              <div class="dropdown">
+                                <div>
+                                  <select
+                                    value={actions}
+                                    onChange={(e) => setActions(e.target.value)}
+                                  >
+                                    <option selected value="Action">
+                                      Select
+                                    </option>
+                                    <option value="approve">Approve</option>
+                                    <option value="update">Update</option>
+                                    <option value="view">View</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        ) : null
+                      )
+                    : null}
+                </tbody>
+              </>
+            ) : (
+              <>
+                <tbody>
+                  {allAppointment
+                    ? allAppointment.map((item) =>
+                        (item.appt_date >= todayDate) &&
+                        (item.doctor_id == selectedDoctorForAppt) ? (
+                          <tr key={item.appt_id}>
+                            <th scope="row">{item.appt_id}</th>
+                            <th>{item.patient_name}</th>
+                            <td>{item.appt_date.split("T")[0]}</td>
+                            <td>{item.appt_start.split("+")[0]}</td>
+                            <td>{item.doctor_name}</td>
+                            <td>{item.confirmed ? `True` : `False`}</td>
+                            <td>
+                              <div class="dropdown">
+                                <div>
+                                  <select
+                                    value={actions}
+                                    onChange={(e) => setActions(e.target.value)}
+                                  >
+                                    <option selected value="Action">
+                                      Select
+                                    </option>
+                                    <option value="approve">Approve</option>
+                                    <option value="update">Update</option>
+                                    <option value="view">View</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        ) : null
+                      )
+                    : null}
+                </tbody>
+              </>
+            )}
           </table>
         </UserAppointmentContainer>
       </PageContainer>
