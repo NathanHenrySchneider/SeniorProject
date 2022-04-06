@@ -5,8 +5,12 @@ import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
 import Tab from 'react-bootstrap/Tab'
 import Row from 'react-bootstrap/Row'
+import Collapse from 'react-bootstrap/Collapse'
+import ListGroup from 'react-bootstrap/ListGroup'
+import Badge from 'react-bootstrap/Badge'
 import Col from 'react-bootstrap/Col'
 import Nav from 'react-bootstrap/Nav'
+import { Modal } from 'react-bootstrap'
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import { EmpNavBar } from "../../components/Empnavbar";
@@ -17,6 +21,7 @@ let messageArr = [];
 let set = new Set();
 let activeUsers = [];
 let user;
+let index = 0;
 let socket = io("ws://localhost:4000", { transports : ['websocket'] });
 
 export function EmpChat(props){
@@ -25,10 +30,14 @@ export function EmpChat(props){
     const [email, setEmail] = useState("Not logged in");
     const [userID, setUserID] = useState(-1);
     const [allMessages, setAllMessages] = useState([])
+    const [userList, setUserList] = useState([])
+    const [show, setShow] = useState(false);
+    const[composeTo, setComposeTo] = useState();
     const [loading, setLoading] = useState(true);
     const [fullName, setFullName] = useState();
+    const [open, setOpen] = useState(false);
+
     socket.on("new", (arg) => {
-        console.log(arg)
         setFetched(true);
         setFetched(false)
     })
@@ -77,11 +86,26 @@ export function EmpChat(props){
               
             })
             .catch((err) => console.log(err))
-            
+            axios
+            .get("http://localhost:3001/all-users")
+            .then((response) =>{
+                let arr = [];
+                response.data.forEach((element) => {
+                    if(!set.has(element.user_id)){
+                        arr.push({
+                            user_id : element.user_id,
+                            full_name: element.full_name,
+                            email: element.email,
+                            user_type: element.user_type
+                        })
+                    }
+                    index = index + 1;
+                })
+                setUserList(arr);
+            })
     }, [userID, fetched]);
     
     const selectHandler = (e) => {
-        console.log(e.target.attributes[1].value)
         setTimeout(() => {
             document.querySelector(".col-sm-9").childNodes.forEach((element) => {
                 if(element.classList.contains("active")) element.style.display = "block"
@@ -89,6 +113,17 @@ export function EmpChat(props){
             })
         }, 100)
     }
+
+    const handleClick = (e) => {
+        if (e.target.id === "") console.log(e.target.parentElement.id)
+        else console.log(e.target.id)
+        // setComposeTo(userList[])
+        console.log(userList)
+        setShow(true);
+    }
+    const handleClose = () => {
+        setShow(false);
+      };
 
     const handleSubmit = (e) =>{
         e.preventDefault();
@@ -103,14 +138,55 @@ export function EmpChat(props){
             sender_name: fullName
          }).then(e.target[0].value = "")
          .catch(err => console.log(err))
-        // console.log(e.target[0].value)
-        // console.log(e.target.parentElement.id)
+        
     }
     if(loading) return <h1>loading</h1>
     return (
         <>
         <EmpNavBar email={email} />
         <h1 className="text-center mb-3 mt-4">{fullName}'s Message Portal</h1>
+        <Button 
+            onClick={() => setOpen(!open)}
+            aria-controls="collapse"
+            aria-expanded={open}
+            style = {{margin:'0 auto', display:'block'}}>
+            {(open) ? 'Collapse List' : 'Compose new message' }</Button>
+            <br/>
+            {(open) ? <small style = {{margin: '-15px auto 8px auto', fontSize: 'large', display:'block', width:'fit-content'}}>
+                Select a user to start a conversation:</small> : <></>}
+        <Collapse in={open}>
+            <div id="collapse">
+            <ListGroup as="ol" numbered>
+                {userList.map((user) => {
+                    return(
+                    <ListGroup.Item
+                        key = {user.user_id}
+                        id = {user.user_id}
+                        action
+                        as="li"
+                        onClick = {(e)=>handleClick(e)}
+                        className="d-flex justify-content-between align-items-start"
+                    >
+                        <div className="ms-2 me-auto">
+                        <div className="fw-bold" id = {user.user_id}>{user.full_name}</div>
+                        {user.email}
+                        </div>
+                        <Badge bg="primary" pill>
+                        {user.user_type} #{user.user_id}
+                        </Badge>
+                    </ListGroup.Item>
+                    )
+                })}
+                
+            </ListGroup>
+            </div>
+        </Collapse>
+        <hr style = {{width:'500px', margin:'0 auto'}}/>
+        <br/>
+        {(activeUsers.length === 0) ? <h2 style = {{textAlign: 'center'}}>Click above to start a conversation!</h2>
+        : 
+        <small style = {{margin: '-15px auto 8px auto', fontSize: 'large', display:'block', width:'fit-content'}}>Open conversations:</small>
+        }
         <Tab.Container id="left-tabs-example" defaultActiveKey={first}>
             <Row style = {{maxWidth:'700px', margin:'0 auto'}}>
                 <Col sm={3}>
@@ -171,6 +247,23 @@ export function EmpChat(props){
                 </Col>
             </Row>
         </Tab.Container>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>New Message</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          {/* <FormContainer
+              onSubmit={(e) => {
+                handleModalSubmit(e);
+                handleClose();
+              }}
+          <Button type="submit" style={{ width: "fit-content" }}>
+                  Schedule
+                </Button>
+              )}
+            </FormContainer> */}
+          </Modal.Body>
+        </Modal>
         </>
     )
 }
