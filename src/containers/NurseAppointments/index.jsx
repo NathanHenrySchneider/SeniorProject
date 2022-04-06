@@ -12,6 +12,7 @@ export function NurseAppointments(props) {
   const [userID, setUserID] = useState(null);
   const [allAppointment, setAllAppointment] = useState(null);
   const [doctorList, setDoctorList] = useState(null);
+  const [actions,setActions] = useState();
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
@@ -201,8 +202,16 @@ export function NurseAppointments(props) {
                         <td>Null</td>
                         <td>{item.confirmed ? `True` : `False`}</td>
                         <td>
+                        {/* <div>
+                          <select value={actions} onChange = {e => setActions(e.target.value)}>
+                          <option selected value="Action">Select</option>
+                          <option value = "approve" >Approve</option>
+                          <option value = "update" >Update</option>
+                          <option value = "view" >View</option>
+                          </select>
+                        </div> */}
                           <div class="dropdown">
-                            <a
+                            {/* <a
                               class="btn btn-secondary dropdown-toggle"
                               href="#"
                               role="button"
@@ -211,8 +220,8 @@ export function NurseAppointments(props) {
                               aria-expanded="false"
                             >
                               Action
-                            </a>
-                            <ul
+                            </a> */}
+                            {/* <ul
                               class="dropdown-menu"
                               aria-labelledby="dropdownMenuLink"
                             >
@@ -231,7 +240,15 @@ export function NurseAppointments(props) {
                                   Cancel
                                 </a>
                               </li>
-                            </ul>
+                            </ul> */}
+                            <div>
+                          <select value={actions} onChange = {e => setActions(e.target.value)}>
+                          <option selected value="Action">Select</option>
+                          <option value = "approve" >Approve</option>
+                          <option value = "update" >Update</option>
+                          <option value = "view" >View</option>
+                          </select>
+                        </div>
                           </div>
                         </td>
                       </tr>
