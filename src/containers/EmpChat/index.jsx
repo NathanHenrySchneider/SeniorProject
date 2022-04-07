@@ -104,7 +104,7 @@ export function EmpChat(props){
                 setLoading(false)
                 setFetched(true)
             
-    }, [userID, fetched, mapDone]);
+    }, [userID, fetched, mapDone, userList]);
 
     const handleClick = (e) => {
         let targetIndex;
