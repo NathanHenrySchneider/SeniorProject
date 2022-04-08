@@ -4,6 +4,7 @@ import { EmpNavBar } from "../../components/Empnavbar";
 import { PageContainer } from "../../components/pageContainer";
 import './style.css';
 import axios from 'axios';
+import { Link} from "react-router-dom";
 
 
 export function EmpYourProfile(props) {
@@ -33,7 +34,9 @@ export function EmpYourProfile(props) {
                                     <div class="col-sm-4 bg-c-lite-green user-profile">
                                         <div class="card-block text-center text-white">
                                             <div class="m-b-25"> <img src="https://img.icons8.com/bubbles/240/000000/user.png" class="img-radius" alt="User Profile" /> </div>
-                                            <button class="btn btn-primary" type="submit">Edit</button>
+                                            {/* <button class="btn btn-primary" type="submit">Edit</button> */}
+                                            <Link to="/EmployeeHomePage/EmpYourProfile/EditProfileEmployee"><button class="btn btn-primary" type="submit">Edit</button></Link>
+                                        
                                         </div>
                                     </div>
                                     <div class="col-sm-8">

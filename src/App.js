@@ -19,6 +19,7 @@ import { EmpDocuments } from './containers/EmpDocuments';
 import { NurseHomePage } from './containers/NurseHomePage';
 import { NurseAppointments } from './containers/NurseAppointments';
 import { EditProfile } from './containers/EditProfile';
+import { EditProfileEmployee } from './containers/EditProfileEmployee';
 
 
 
@@ -52,6 +53,9 @@ function App() {
           <Route path="/NurseHomePage/empchat" exact component={EmpChat}/>
           <Route path="/NurseHomePage/EmpYourProfile" exact component={EmpYourProfile}/>
           <Route path="/Nursehomepage/EmpDocuments" exact component={EmpDocuments}/>
+
+          <Route path="/NurseHomePage/EmpYourProfile/EditProfileEmployee" exact component={EditProfileEmployee}/>
+          <Route path="/EmployeeHomePage/EmpYourProfile/EditProfileEmployee" exact component={EditProfileEmployee}/>
         </Switch>
       </Router>
     </div>
