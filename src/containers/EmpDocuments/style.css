@@ -9,9 +9,25 @@
       border-radius: 50rem !important;
     }
 }
-  
+[data-testid="picker-inline"] {
+  height:320px!important;
+  width: 360px;
+  margin:0 auto;
+}
+.alert{
+  width: 360px;
+  margin:0 auto;
+  text-align: center;
+  padding:8px;
+}
+.alert p {
+  margin: 0;
+}
 .nav-pills .nav-link {
     color: #555;
+}
+.fsp-picker-holder{
+  height: 300px;
 }
 
 .nav-item {
