@@ -27,6 +27,8 @@ export function EmpDocuments(props) {
     const [filesUploaded, setFilesUploaded]  = useState([]);
     const [show, setShow] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
+    const [patientList, setPatientList] = useState(null);
+    let patients = [];
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -78,8 +80,24 @@ export function EmpDocuments(props) {
             .catch((err) => {
                 console.log(err.message)
             })
+        
+            axios.get("http://localhost:3001/user/findAll")
+                .then((response) => {
+                    response.data.forEach((element) => {
+                        if (element.user_type === "patient") {
+                            patients.push({ id: element.user_id, name: element.full_name });
+                        }
+                    });
+                    setPatientList(patients);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
 
     }, [user_id])
+
+    const [selectedPatientID, setSelectedPatientID] = useState(null);
+    const [selectedPatientName, setSelectedPatientName] = useState(null);
 
     return (<>
         <EmpNavBar email={email} />
@@ -109,9 +127,16 @@ export function EmpDocuments(props) {
                         Select Patient: 
                     </Form.Label>
                     <Col sm={10}>
-                        <Form.Select aria-label="Default select example">
+                        <Form.Select 
+                            aria-label=""
+                            onChange={(e) => {setSelectedPatientID(e.target.value.split("-")[0]); setSelectedPatientName(e.target.value.split("-")[1])}}
+                        >
                             <option>Current Patients</option>
-                            <option value="1">John Doe</option>
+                            {patientList
+                            ? patientList.map((patient) => (
+                                <option key={patient.id} value={patient.name}>{patient.name}</option>
+                            ))
+                            : null}    
                         </Form.Select>  
                     </Col>
                 </Form.Group>
@@ -147,16 +172,23 @@ export function EmpDocuments(props) {
         </div>
 
         <Form.Group as={Row} className="mb-3" controlId="selectPatient">
-            <Form.Label column sm={2}>
-                Select Patient: 
-            </Form.Label>
-            <Col sm={10}>
-                <Form.Select aria-label="Default select example">
-                    <option>Current Patients</option>
-                    <option value="1">John Doe</option>
-                </Form.Select>  
-            </Col>
-        </Form.Group>
+                    <Form.Label column sm={2}>
+                        Select Patient: 
+                    </Form.Label>
+                    <Col sm={10}>
+                        <Form.Select 
+                            aria-label=""
+                            onChange={(e) => {setSelectedPatientID(e.target.value.split("-")[0]); setSelectedPatientName(e.target.value.split("-")[1])}}
+                        >
+                            <option>Current Patients</option>
+                            {patientList
+                            ? patientList.map((patient) => (
+                                <option key={patient.id} value={patient.name}>{patient.name}</option>
+                            ))
+                            : null}    
+                        </Form.Select>  
+                    </Col>
+                </Form.Group>
 
         <Button variant="success" onClick={handleShow}>Search</Button>
 
