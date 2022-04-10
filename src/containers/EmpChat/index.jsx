@@ -37,11 +37,35 @@ export function EmpChat(props){
     const[composeTo, setComposeTo] = useState();
     const [open, setOpen] = useState(false);
 
-
-    socket.on("new", (arg) => {
-        setFetched(true);
-        setFetched(false)
-    })
+    useEffect(() => {
+        socket.once("new", (arg) => {
+            socket.off()
+            console.log(arg)
+            setFetched(false)
+            return false;
+        })
+    },[fetched])
+   
+    useEffect(() => {
+        axios.defaults.withCredentials = true;
+        axios
+        .get("http://localhost:3001/all-users")
+        .then((response) =>{
+            let arr = [];
+            response.data.forEach((element) => {
+                if(!set.has(element.user_id)){
+                    arr.push({
+                        user_id : element.user_id,
+                        full_name: element.full_name,
+                        email: element.email,
+                        user_type: element.user_type
+                    })
+                }
+            })
+            setUserList(arr);
+            console.log(userList)
+        })
+    }, [])
     useEffect(() => {
         axios.defaults.withCredentials = true;
 
@@ -54,6 +78,8 @@ export function EmpChat(props){
         }).catch((err) => {
             console.log("CHP/index.jsx" + err);
         });
+    }, [userID])
+    useEffect(() => {
         axios
             .get("http://localhost:3001/messaging")
             .then((response) =>{
@@ -83,28 +109,10 @@ export function EmpChat(props){
                 })
             })
             .catch((err) => console.log(err))
-
-            axios
-            .get("http://localhost:3001/all-users")
-            .then((response) =>{
-                let arr = [];
-                response.data.forEach((element) => {
-                    if(!set.has(element.user_id)){
-                        arr.push({
-                            user_id : element.user_id,
-                            full_name: element.full_name,
-                            email: element.email,
-                            user_type: element.user_type
-                        })
-                    }
-                })
-                setUserList(arr);
-                console.log(userList)
-            })
                 setLoading(false)
                 setFetched(true)
             
-    }, [userID, fetched, mapDone, userList]);
+    }, [fetched, userID, mapDone]);
 
     const handleClick = (e) => {
         let targetIndex;
