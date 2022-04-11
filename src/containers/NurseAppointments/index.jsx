@@ -176,17 +176,22 @@ export function NurseAppointments(props) {
   const handleReject = (e) =>{
     const text = e.split(" ")[0]
     apptActionApptID = e.split(" ")[1];
-
-    axios
-    .delete(`http://localhost:3001/appointment/deleteAppt/${apptActionApptID}`)
-    .then((response) => {
-      reEnableDoctorSchedule(response.data[0]);
-      alert(`Appointment ID: ${response.data[0].appt_id} ${text} Successful`);
-      window.location.reload(true);
-    })
-    .catch((err) => {
-      console.log("CHP/index.jsx" + err);
-    });       
+    
+    if(apptActionApptID){
+      axios
+      .delete(`http://localhost:3001/appointment/deleteAppt/${apptActionApptID}`)
+      .then((response) => {
+        reEnableDoctorSchedule(response.data[0]);
+        alert(`Appointment ID: ${response.data[0].appt_id} ${text} Successful`);
+        window.location.reload(true);
+      })
+      .catch((err) => {
+        console.log("CHP/index.jsx" + err);
+      });     
+    }else{
+      console.log("Appointment ID missing");
+      return;
+    }
   }
   /**
    * Reenable doctor schedule once the appointment has been reject or cancle by nurse.
@@ -308,14 +313,14 @@ export function NurseAppointments(props) {
                             <td>{item.doctor_name}</td>
                             <td>{item.confirmed ? `TRUE` : `FALSE`}</td>
                             <td >
-                            {item.confirmed == false ?
+                            {item.confirmed === false ?
                               <>
                               <Button value="confirm" onClick={(e) => handleApprove(e.target.value + " " + item.appt_id)}>Confirm</Button>
                               {" "}
                               <Button variant="danger" value="Reject" onClick={(e) => handleReject(e.target.value + " " + item.appt_id)}>Reject</Button>
                               </>
                             : 
-                              <Button variant="danger" value="Cancel " onClick={(e) => handleReject(e.target.value + " " + item.appt_id)}>Cancel</Button>
+                              <Button variant="danger" value="Cancel" onClick={(e) => handleReject(e.target.value + " " + item.appt_id)}>Cancel</Button>
                             }
                             </td>
                           </tr>
