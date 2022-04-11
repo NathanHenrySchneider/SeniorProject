@@ -218,6 +218,48 @@ export function Appointments(props) {
   let todayDate = new Date().toLocaleString();
   todayDate = todayDate.slice(4,8) + "-0" + todayDate.slice(0,1) + "-0" + todayDate.slice(2,3);
 
+
+  /**
+   * User canceling an appointment
+   */
+   let apptActionApptID;
+  const handleCancel = (e) =>{
+    const text = e.split(" ")[0]
+    apptActionApptID = e.split(" ")[1];
+
+    axios
+    .delete(`http://localhost:3001/appointment/deleteAppt/${apptActionApptID}`)
+    .then((response) => {
+      reEnableDoctorSchedule(response.data[0]);
+      alert(`Appointment ID: ${response.data[0].appt_id} ${text} Successful`);
+      window.location.reload(true);
+    })
+    .catch((err) => {
+      console.log("CHP/index.jsx" + err);
+    });       
+  }
+  /**
+   * Reenable doctor schedule once the appointment has been reject or cancle by nurse.
+   */
+   const reEnableDoctorSchedule= (response)=>{
+    const doctorID = response.doctor_id;
+    const formatedTime = response.appt_date.split("T")[0] +"T"+ response.appt_start.split("+")[0];
+    const reEnableTime = new Date(`${formatedTime}`);
+
+    axios
+        .put("http://localhost:3001/doctorAppTime/reEnableAvailability", {
+          newSchedule: reEnableTime,
+          id: doctorID,
+        })
+        .then((response) => {
+          // console.log("reEnableDoctorSchedule response: ", response.data)
+        })
+        .catch((err) => {
+          console.log("CHP/index.jsx" + err);
+        });
+
+  }
+
   return (
     <>
       <NavBar email={email} />
@@ -274,7 +316,9 @@ export function Appointments(props) {
                 <th scope="col" style={{ width: "10vw" }}>
                   Confirmed
                 </th>
-                <th scope="col" style={{ width: "10vw" }}></th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -288,29 +332,9 @@ export function Appointments(props) {
                         <td>{item.appt_start.split("+")[0]}</td>
                         <td>{item.doctor_name}</td>
                         <td>{item.reason ? item.reason : "Not Specified"}</td>
-                        <td>{item.confirmed ? `True` : `False`}</td>
-                        <td>
-                          {/* <div class="dropdown">
-                          <a
-                            class="btn btn-secondary dropdown-toggle"
-                            href="#"
-                            role="button"
-                            id="dropdownMenuLink"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                          >Action</a>
-                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li>
-                              <a class="dropdown-item" href="#">View</a>
-                            </li>
-                            <li>
-                              <a class="dropdown-item" href="#">Update</a>
-                            </li>
-                            <li>
-                              <a class="dropdown-item" href="#">Cancel</a>
-                            </li>
-                          </ul>
-                        </div> */}
+                        <td>{item.confirmed ? `TRUE` : `FALSE`}</td>
+                        <td >
+                        <Button variant="danger" value="Cancel" onClick={(e) => handleCancel(e.target.value + " " + item.appt_id)}>Cancel</Button>
                         </td>
                       </tr>
                     ) : null
@@ -361,7 +385,7 @@ export function Appointments(props) {
                   }}
                 >
                   <Option value="">Select A Timeslot</Option>
-                  {timeToShow.map((item) => (
+                  {timeToShow.sort((a, b) => b < a ? 1: -1).map((item) => (
                     <Option key={item}>{item}</Option>
                   ))}
                 </Select>

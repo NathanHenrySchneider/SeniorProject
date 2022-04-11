@@ -143,9 +143,14 @@ export function NurseAppointments(props) {
   // console.log("selectedDoctorForAppt: ", selectedDoctorForAppt);
 
 
-  /**
+  /*****************************************
    * Action for appointments.
    * Approve and reject option.
+   ****************************************/
+
+
+  /**
+   * Nurse approving appointment
    */
   let apptActionApptID;
   const handleApprove = (e) =>{
@@ -163,26 +168,46 @@ export function NurseAppointments(props) {
     .catch((err) => {
       console.log("CHP/index.jsx" + err);
     });       
-
-
   }
+
+  /**
+   * Nurse Reject an unconfirm appointment and cancel an confirmed appointment.
+   */
   const handleReject = (e) =>{
-    console.log("inside reject, ", e)
+    const text = e.split(" ")[0]
     apptActionApptID = e.split(" ")[1];
 
     axios
-    .delete(`http://localhost:3001/appointment/nurseDeleteAppt/${apptActionApptID}`)
+    .delete(`http://localhost:3001/appointment/deleteAppt/${apptActionApptID}`)
     .then((response) => {
-      console.log("response is: ", response.data)
-      alert(`Appointment ID: ${response.data[0].appt_id} Rejected`);
+      reEnableDoctorSchedule(response.data[0]);
+      alert(`Appointment ID: ${response.data[0].appt_id} ${text} Successful`);
       window.location.reload(true);
     })
     .catch((err) => {
       console.log("CHP/index.jsx" + err);
     });       
   }
-  const handleCancel = (e) =>{
-    console.log("inside cancel, ", e)
+  /**
+   * Reenable doctor schedule once the appointment has been reject or cancle by nurse.
+   */
+  const reEnableDoctorSchedule= (response)=>{
+    const doctorID = response.doctor_id;
+    const formatedTime = response.appt_date.split("T")[0] +"T"+ response.appt_start.split("+")[0];
+    const reEnableTime = new Date(`${formatedTime}`);
+
+    axios
+        .put("http://localhost:3001/doctorAppTime/reEnableAvailability", {
+          newSchedule: reEnableTime,
+          id: doctorID,
+        })
+        .then((response) => {
+          // console.log("reEnableDoctorSchedule response: ", response.data)
+        })
+        .catch((err) => {
+          console.log("CHP/index.jsx" + err);
+        });
+
   }
 
 
@@ -287,10 +312,10 @@ export function NurseAppointments(props) {
                               <>
                               <Button value="confirm" onClick={(e) => handleApprove(e.target.value + " " + item.appt_id)}>Confirm</Button>
                               {" "}
-                              <Button variant="danger" value="reject" onClick={(e) => handleReject(e.target.value + " " + item.appt_id)}>Reject</Button>
+                              <Button variant="danger" value="Reject" onClick={(e) => handleReject(e.target.value + " " + item.appt_id)}>Reject</Button>
                               </>
                             : 
-                              <Button variant="danger" value="cancel" onClick={(e) => handleCancel(e.target.value + " " + item.appt_id)}>Cancel</Button>
+                              <Button variant="danger" value="Cancel " onClick={(e) => handleReject(e.target.value + " " + item.appt_id)}>Cancel</Button>
                             }
                             </td>
                           </tr>
@@ -318,10 +343,10 @@ export function NurseAppointments(props) {
                               <>
                               <Button value="confirm" onClick={(e) => handleApprove(e.target.value + " " + item.appt_id)}>Confirm</Button>
                               {" "}
-                              <Button variant="danger" value="reject" onClick={(e) => handleReject(e.target.value + " " + item.appt_id)}>Reject</Button>
+                              <Button variant="danger" value="Reject" onClick={(e) => handleReject(e.target.value + " " + item.appt_id)}>Reject</Button>
                               </>
                             : 
-                              <Button variant="danger" value="cancel" onClick={(e) => handleCancel(e.target.value + " " + item.appt_id)}>Cancel</Button>
+                              <Button variant="danger" value="Cancel" onClick={(e) => handleReject(e.target.value + " " + item.appt_id)}>Cancel</Button>
                             }
                             </td>
                           </tr>
