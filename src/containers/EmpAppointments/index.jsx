@@ -5,15 +5,15 @@ import { EmpNavBar } from "../../components/Empnavbar";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import ScheduleSelector from "react-schedule-selector";
+// import ScheduleSelector from "react-schedule-selector";
 
 export function EmpAppointments(props) {
   const [email, setEmail] = useState("Not logged in");
   const [userID, setUserID] = useState(null);
-  const [schedule, setSchedule] = useState([]);
-  const [updated, setUpdated] = useState(false);
+  // const [schedule, setSchedule] = useState([]);
+  // const [updated, setUpdated] = useState(false);
   const [allAppointment, setAllAppointment] = useState(null);
-  const todayDate = new Date().toISOString().split("T")[0];
+  // const todayDate = new Date().toISOString().split("T")[0];
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
@@ -22,7 +22,7 @@ export function EmpAppointments(props) {
       .post("http://localhost:3001/me", { withCredentials: true })
       .then((response) => {
         console.log("Doctor appt page me: ", response.data);
-        setEmail(response.data.email);
+        setEmail(response.data.full_name);
         setUserID(response.data.user_id);
         setAllAppointment(response.data.userAppointment);
       })
@@ -43,8 +43,11 @@ export function EmpAppointments(props) {
                 <th scope="col" style={{ width: "10vw" }}>
                   Appointments ID
                 </th>
-                <th scope="col" style={{ width: "10vw" }}>
+                <th scope="col" style={{ width: "8vw" }}>
                   Patient ID
+                </th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Patient Name
                 </th>
                 <th scope="col" style={{ width: "10vw" }}>
                   Date
@@ -65,6 +68,7 @@ export function EmpAppointments(props) {
                     <tr key={item.appt_id}>
                       <th scope="row">{item.appt_id}</th>
                       <th scope="row">{item.patient_id}</th>
+                      <th scope="row">{item.patient_name}</th>
                       <td>{item.appt_date.split("T")[0]}</td>
                       <td>{item.appt_start.split("+")[0]}</td>
                       <td>{item.confirmed ? `True` : `False`}</td>

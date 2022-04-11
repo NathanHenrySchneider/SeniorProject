@@ -21,7 +21,7 @@ export function NurseAppointments(props) {
       .post("http://localhost:3001/me", { withCredentials: true })
       .then((response) => {
         console.log("Nurse appt page me: ", response.data);
-        setEmail(response.data.email);
+        setEmail(response.data.full_name);
         setUserID(response.data.user_id);
         setAllAppointment(response.data.userAppointment);
         setDoctorList(response.data.allDoctor);
