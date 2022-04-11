@@ -31,7 +31,7 @@ export function Appointments(props) {
       .post("http://localhost:3001/me", { withCredentials: true })
       .then((response) => {
         console.log(response.data);
-        setEmail(response.data.email);
+        setEmail(response.data.full_name);
         setUserID(response.data.user_id);
         setUserFullName(response.data.full_name);
         setUserAppointment(response.data.userAppointment);

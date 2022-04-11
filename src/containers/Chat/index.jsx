@@ -159,7 +159,7 @@ export function Chat(props){
     index = -1
     return (
         <>
-        <NavBar email={email} />
+        <NavBar email={fullName} />
         <h1 className="text-center mb-3 mt-4">{fullName}'s Message Portal</h1>
         <Button 
             onClick={() => setOpen(!open)}

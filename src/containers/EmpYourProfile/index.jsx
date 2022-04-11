@@ -15,7 +15,7 @@ export function EmpYourProfile(props) {
         axios.post('http://localhost:3001/me', { withCredentials: true })
             .then((response) => {
                 console.log(response.data)
-                setEmail(response.data.email)
+                setEmail(response.data.full_name)
             })
             .catch((err) => {
                 console.log("CHP/index.jsx" + err);
