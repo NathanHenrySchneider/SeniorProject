@@ -42,7 +42,7 @@ export function EmpNavBar(props) {
   return (
     <EmpNavbar bg="lightgreen" variant="light">
       <Container>
-        <EmpNavbar.Brand href="#home">
+        <EmpNavbar.Brand>
           <img
             alt=""
             src={require("./newLogo.png")}

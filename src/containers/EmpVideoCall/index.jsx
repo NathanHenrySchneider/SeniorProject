@@ -93,11 +93,11 @@ export function EmpVideoCall(props) {
     return (<>
         <EmpNavBar email={email} />
         <PageContainer>
-            <div class="card-block text-center">
-                <div class="m-b-25"> <img src={zoomIcon} alt="zoom icon" class="img-radius" /> </div>
+            <div className="card-block text-center">
+                <div className="m-b-25"> <img src={zoomIcon} alt="zoom icon" className="img-radius" /> </div>
                 <div>
-                    <p class="m-b-10 f-w-600">Patient</p>
-                    <h6 class="text-muted f-w-400">{composeTo}</h6>
+                    <p className="m-b-10 f-w-600">Patient</p>
+                    <h6 className="text-muted f-w-400">{composeTo}</h6>
                     <Button 
             onClick={() => setOpen(!open)}
             aria-controls="collapse"
@@ -137,12 +137,12 @@ export function EmpVideoCall(props) {
         </Collapse>
                 </div>
                 <div>
-                    <p class="m-b-10 f-w-600">Time</p>
-                    <h6 class="text-muted f-w-400">12:00 PM</h6>
+                    <p className="m-b-10 f-w-600">Time</p>
+                    <h6 className="text-muted f-w-400">12:00 PM</h6>
                 </div>
                 <div>
-                    <p class="m-b-10 f-w-600">Date</p>
-                    <h6 class="text-muted f-w-400">mm/dd/yyyy</h6>
+                    <p className="m-b-10 f-w-600">Date</p>
+                    <h6 className="text-muted f-w-400">mm/dd/yyyy</h6>
                 </div>
                 
                 <div className="zoomDiv" >
@@ -154,7 +154,7 @@ export function EmpVideoCall(props) {
                     )}
                 </div>
                
-                {/* <button class="btn btn-primary" type="submit">Launch Meeting</button> */}
+                {/* <button className="btn btn-primary" type="submit">Launch Meeting</button> */}
             </div>
         </PageContainer>
     </>

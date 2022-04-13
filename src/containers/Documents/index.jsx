@@ -78,14 +78,12 @@ export function Documents(props) {
                 </thead>
                 <tbody>
                     {reports.map((report) => (
-                        <>
-                        <tr key={report.user_id}>
+                        <tr key={report.date_time}>
                             <td>{formatDate(report.date_time)}</td>
                             <td>{report.description}</td>
                             <td><a href = {report.link} target ="_blank" rel ="noreferer noopener noreferrer">Open in new tab</a></td>
                             <td><Button onClick = {(e) => handleClick(report, e)}>Preview</Button></td>
                         </tr>
-                        </>
                     ))}    
                 </tbody>
             </table>

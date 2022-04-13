@@ -31,62 +31,62 @@ export function NurseHomePage(props) {
 	return (<>
 		<EmpNavBar email={email} />
 		<PageContainer>
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-4 col-sm-6">
-						<div class="card-box bg-blue">
-							<div class="inner">
+			<div className="container">
+				<div className="row">
+					<div className="col-lg-4 col-sm-6">
+						<div className="card-box bg-blue">
+							<div className="inner">
 								<h1>Your Profile</h1>
 							</div>
-							<div class="icon">
+							<div className="icon">
 								<img src={accountIcon} alt="account icon" />
 							</div>
-							<Link to="/NurseHomePage/EmpYourProfile"><div class="card-box-footer">View More</div></Link>
+							<Link to="/NurseHomePage/EmpYourProfile"><div className="card-box-footer">View More</div></Link>
 						</div>
 					</div>
 
-					<div class="col-lg-4 col-sm-6">
-						<div class="card-box bg-green">
-							<div class="inner">
+					<div className="col-lg-4 col-sm-6">
+						<div className="card-box bg-green">
+							<div className="inner">
 								<h1>Appointments</h1>
 							</div>
-							<div class="icon">
+							<div className="icon">
 								<img src={calendarIcon} alt="calendar icon" />
 							</div>
-							<Link to="/Nursehomepage/NurseAppointments"><div class="card-box-footer">View More</div></Link>
+							<Link to="/Nursehomepage/NurseAppointments"><div className="card-box-footer">View More</div></Link>
 						</div>
 					</div>
-					<div class="col-lg-4 col-sm-6">
-						<div class="card-box bg-orange">
-							<div class="inner">
+					<div className="col-lg-4 col-sm-6">
+						<div className="card-box bg-orange">
+							<div className="inner">
 								<h1>Video Call</h1>
 							</div>
-							<div class="icon">
+							<div className="icon">
 								<img src={videoIcon} alt="video icon" />
 							</div>
-							<Link to="/NurseHomePage/empvideocall"><div class="card-box-footer">View More</div></Link>
+							<Link to="/NurseHomePage/empvideocall"><div className="card-box-footer">View More</div></Link>
 						</div>
 					</div>
-					<div class="col-lg-4 col-sm-6">
-						<div class="card-box bg-red">
-							<div class="inner">
+					<div className="col-lg-4 col-sm-6">
+						<div className="card-box bg-red">
+							<div className="inner">
 								<h1>Chat</h1>
 							</div>
-							<div class="icon">
+							<div className="icon">
 								<img src={chatIcon} alt="chat icon" />
 							</div>
-							<Link to="/NurseHomePage/empchat"><div class="card-box-footer">View More</div></Link>
+							<Link to="/NurseHomePage/empchat"><div className="card-box-footer">View More</div></Link>
 						</div>
 					</div>
-					<div class="col-lg-4 col-sm-6">
-						<div class="card-box bg-purple">
-							<div class="inner">
+					<div className="col-lg-4 col-sm-6">
+						<div className="card-box bg-purple">
+							<div className="inner">
 								<h1>Documents</h1>
 							</div>
-							<div class="icon">
+							<div className="icon">
 								<img src={documentsIcon} alt="documents icon" />
 							</div>
-							<Link to="/Nursehomepage/EmpDocuments"><div class="card-box-footer">View More</div></Link>
+							<Link to="/Nursehomepage/EmpDocuments"><div className="card-box-footer">View More</div></Link>
 						</div>
 					</div>
 				</div>

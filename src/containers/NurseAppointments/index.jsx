@@ -6,7 +6,6 @@ import styled from "styled-components";
 import axios from "axios";
 import ScheduleSelector from "react-schedule-selector";
 import Button from "react-bootstrap/Button";
-import { Appointments } from "./../Appointments/index";
 
 export function NurseAppointments(props) {
   const [email, setEmail] = useState("Not logged in");
@@ -272,7 +271,7 @@ export function NurseAppointments(props) {
         </Select>
 
         <UserAppointmentContainer>
-          <table class="table">
+          <table className="table">
             <thead>
               <tr>
                 <th scope="col" style={{ width: "10vw" }}>

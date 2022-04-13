@@ -295,7 +295,7 @@ export function Appointments(props) {
         <PseudoBorder style={{ marginTop: "15px" }}>Appointments</PseudoBorder>
 
         <UserAppointmentContainer>
-          <table class="table">
+          <table className="table">
             <thead>
               <tr>
                 <th scope="col" style={{ width: "10vw" }}>
@@ -326,7 +326,7 @@ export function Appointments(props) {
                 ? userAppointment.sort((a, b) => b.appt_start > a.appt_start ? 1: -1).sort((a, b) => b.appt_date < a.appt_date ? 1: -1).map((item) =>
                     /*Shows appointment only today and onward */
                     item.appt_date >= todayDate ? (
-                      <tr>
+                      <tr key = {item.appt_id}>
                         <th scope="row">{item.appt_id}</th>
                         <td>{item.appt_date.split("T")[0]}</td>
                         <td>{item.appt_start.split("+")[0]}</td>

@@ -37,7 +37,7 @@ export function EmpAppointments(props) {
       <PageContainer>
         <PseudoBorder>Upcoming Appointments</PseudoBorder>
         <UserAppointmentContainer>
-          <table class="table">
+          <table className="table">
             <thead>
               <tr>
                 <th scope="col" style={{ width: "10vw" }}>
