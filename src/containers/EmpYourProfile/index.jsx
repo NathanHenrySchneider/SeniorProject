@@ -51,14 +51,14 @@ export function EmpYourProfile(props) {
                                                     <p className="m-b-10 f-w-600">DoB</p>
                                                     <h6 className="text-muted f-w-400">mm/dd/yyyy</h6>
                                                 </div>
-                                                <div className="col-sm-6">
+                                                {/* <div className="col-sm-6">
                                                     <p className="m-b-10 f-w-600">Height</p>
                                                     <h6 className="text-muted f-w-400">10'6''</h6>
                                                 </div>
                                                 <div className="col-sm-6">
                                                     <p className="m-b-10 f-w-600">Weight</p>
                                                     <h6 className="text-muted f-w-400">??? lbs</h6>
-                                                </div>
+                                                </div> */}
                                             </div>
                                             <h1 className="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Doctors</h1>
                                             <div className="row">
@@ -71,7 +71,7 @@ export function EmpYourProfile(props) {
                                                     <h6 className="text-muted f-w-400">Dr. FirstName LastName</h6>
                                                 </div>
                                             </div>
-                                            <h1 className="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Medications</h1>
+                                            {/* <h1 className="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Medications</h1>
                                             <div className="row">
                                                 <div className="col-sm-6">
                                                     <p className="m-b-10 f-w-600">Medication</p>
@@ -81,8 +81,8 @@ export function EmpYourProfile(props) {
                                                     <p className="m-b-10 f-w-600">Medication</p>
                                                     <h6 className="text-muted f-w-400">Advil</h6>
                                                 </div>
-                                            </div>
-                                            <h1 className="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Insurance</h1>
+                                            </div> */}
+                                            {/* <h1 className="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Insurance</h1>
                                             <div className="row">
                                                 <div className="col-sm-6">
                                                     <p className="m-b-10 f-w-600">Provider</p>
@@ -96,7 +96,7 @@ export function EmpYourProfile(props) {
                                                     <p className="m-b-10 f-w-600">Coverage</p>
                                                     <h6 className="text-muted f-w-400">$100 copay</h6>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 </div>

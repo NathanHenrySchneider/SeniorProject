@@ -58,10 +58,11 @@ export function EditProfile(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log("YUUUUUUUU");
 
         axios
         .put(
-          `http://localhost:3001/profile/${userID}`,
+          `http://localhost:3001/user/profile/${userID}`,
           {
             full_name: fullName,
             birthdate: dob,
@@ -111,7 +112,7 @@ export function EditProfile(props) {
             <Container
                 align="center"
             >
-            <FormContainer onSubmit = {e => {}}>
+            <FormContainer onSubmit = {e => {handleSubmit(e)}}>
                 <Col >
                 <div className="col-sm-8 justify-content-center text-center">
                         <h1 className="m-b-20 p-b-5 b-b-default f-w-600">Personal Information</h1>
