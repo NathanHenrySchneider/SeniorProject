@@ -18,6 +18,7 @@ export function EditProfile(props) {
     const [email, setEmail] = useState('Not logged in');
     const [userID, setUserID] = useState();
     const [fullName, setFullName] = useState();
+    // const [newName, setNewName] = useState();
     const [dob, setDoB] = useState();
     const [height, setHeight] = useState(); 
     const [weight, setWeight] = useState(); 
@@ -47,6 +48,7 @@ export function EditProfile(props) {
                 setIns(response.data.insurance);
                 setGroupNo(response.data.groupId);
                 setPolicyHolder(response.data.insurance_policy_holder);
+                // setNewName(response.data.full_name)
     
 
             })
@@ -64,7 +66,7 @@ export function EditProfile(props) {
         .put(
           `http://localhost:3001/user/profile/${userID}`,
           {
-            full_name: fullName,
+            // full_name: newName,
             birthdate: dob,
             height: height,
             weight: weight,
@@ -117,10 +119,10 @@ export function EditProfile(props) {
                 <div className="col-sm-8 justify-content-center text-center">
                         <h1 className="m-b-20 p-b-5 b-b-default f-w-600">Personal Information</h1>
                         <div className="row">
-                            <div className="col-sm-6">
+                            {/* <div className="col-sm-6">
                                 <p className="m-b-10 f-w-600">Name</p>
-                                <Input type ="text" name= "txt" placeholder={fullName} disabled/>
-                            </div>
+                                <Input type ="text" name= "txt" placeholder={newName} disabled/>
+                            </div> */}
                             <div className ="col-sm-6">
                                 <p className="m-b-10 f-w-600">Email</p>
                                 <Input type="email" name="email" placeholder={email}

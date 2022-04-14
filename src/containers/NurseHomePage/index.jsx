@@ -89,6 +89,17 @@ export function NurseHomePage(props) {
 							<Link to="/Nursehomepage/EmpDocuments"><div className="card-box-footer">View More</div></Link>
 						</div>
 					</div>
+					<div className="col-lg-4 col-sm-6">
+						<div className="card-box bg-yellow">
+							<div className="inner">
+								<h1>Manage Patients</h1>
+							</div>
+							<div className="icon">
+								<img src={documentsIcon} alt="documents icon" />
+							</div>
+							<Link to="/Nursehomepage/ManagePatients"><div className="card-box-footer">View More</div></Link>
+						</div>
+					</div>
 				</div>
 			</div>
 		</PageContainer></>

@@ -20,6 +20,7 @@ import { NurseHomePage } from './containers/NurseHomePage';
 import { NurseAppointments } from './containers/NurseAppointments';
 import { EditProfile } from './containers/EditProfile';
 import { EditProfileEmployee } from './containers/EditProfileEmployee';
+import { ManagePatients } from './containers/ManagePatients';
 
 
 
@@ -46,6 +47,7 @@ function App() {
           <Route path="/EmployeeHomePage/EmpYourProfile" exact component={EmpYourProfile}/>
           <Route path="/Employeehomepage/EmpDocuments" exact component={EmpDocuments}/>
           <Route path="/Employeehomepage/EmpAppointments" exact component={EmpAppointments}/>
+          <Route path="/EmployeeHomePage/EmpYourProfile/EditProfileEmployee" exact component={EditProfileEmployee}/>
 
           <Route path="/NurseHomePage" exact component={NurseHomePage} />
           <Route path="/Nursehomepage/NurseAppointments" exact component={NurseAppointments}/>
@@ -53,9 +55,9 @@ function App() {
           <Route path="/NurseHomePage/empchat" exact component={EmpChat}/>
           <Route path="/NurseHomePage/EmpYourProfile" exact component={EmpYourProfile}/>
           <Route path="/Nursehomepage/EmpDocuments" exact component={EmpDocuments}/>
-
           <Route path="/NurseHomePage/EmpYourProfile/EditProfileEmployee" exact component={EditProfileEmployee}/>
-          <Route path="/EmployeeHomePage/EmpYourProfile/EditProfileEmployee" exact component={EditProfileEmployee}/>
+          <Route path="/Nursehomepage/ManagePatients" exact component={ManagePatients}/>
+          
         </Switch>
       </Router>
     </div>
