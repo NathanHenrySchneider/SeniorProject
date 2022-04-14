@@ -45,6 +45,8 @@ export function ManagePatients(props) {
     const [composeTo, setComposeTo] = useState();
     const [openPatient, setOpenPatient] = useState(false);
     const [openDoctor, setOpenDoctor] = useState(false);
+    const [choosePatient, setChoosePatient] = useState();
+    const [chooseDoctor, setChooseDoctor] = useState();
     
     
 
@@ -106,11 +108,21 @@ export function ManagePatients(props) {
             console.log(doctorList)
         })
     }, [])
-    const handleClick = (e) => {
+    const handleClickPatient = (e) => {
         let targetIndex;
         if (e.target.id === "") targetIndex = e.target.parentElement.id;
         else targetIndex = e.target.id;
-        setComposeTo(targetIndex)
+        setChoosePatient(targetIndex)
+        // console.log('---' + userList[targetIndex].full_name)
+        setTimeout(()=>{
+            setShow(true);
+        },100)
+    }
+    const handleClickDoctor = (e) => {
+        let targetIndex;
+        if (e.target.id === "") targetIndex = e.target.parentElement.id;
+        else targetIndex = e.target.id;
+        setChooseDoctor(targetIndex)
         // console.log('---' + userList[targetIndex].full_name)
         setTimeout(()=>{
             setShow(true);
@@ -119,8 +131,9 @@ export function ManagePatients(props) {
     const handleClose = () => {
         setShow(false);
       };
-
-    
+    const handleSubmit = (e) => {
+        console.log("SUBMIT")
+    };
     
 
     return (<>
@@ -142,7 +155,7 @@ export function ManagePatients(props) {
                 align="center"
 
             >
-            
+            <FormContainer onSubmit = {e => {handleSubmit(e)}}>
             <Button 
             onClick={() => setOpenPatient(!openPatient)}
             aria-controls="collapse"
@@ -163,7 +176,7 @@ export function ManagePatients(props) {
                         id = {index}
                         action
                         as="li"
-                        onClick = {(e)=>handleClick(e)}
+                        onClick = {(e)=>handleClickPatient(e)}
                         className="d-flex justify-content-between align-items-start"
                     >
                         <div className="ms-2 me-auto">
@@ -200,7 +213,7 @@ export function ManagePatients(props) {
                         id = {index}
                         action
                         as="li"
-                        onClick = {(e)=>handleClick(e)}
+                        onClick = {(e)=>handleClickDoctor(e)}
                         className="d-flex justify-content-between align-items-start"
                     >
                         <div className="ms-2 me-auto">
@@ -217,6 +230,8 @@ export function ManagePatients(props) {
             </ListGroup>
             </div>
         </Collapse>
+        <SubmitButton type="submit">Submit</SubmitButton>
+        </FormContainer>
             </Container>
             </div>
             </div>
