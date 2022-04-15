@@ -4,30 +4,25 @@ import { NavBar } from "../../components/navbar";
 import { PageContainer } from "../../components/pageContainer";
 import './style.css';
 import zoomIcon from "../../images/zoom_logo.png";
-// import axios from 'axios';
-import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
-// import { useState, useEffect } from "react";
-// import { NavBar } from "../../components/navbar";
-import { io } from "socket.io-client";
-import ScrollableFeed from 'react-scrollable-feed'
 import Collapse from 'react-bootstrap/Collapse'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Badge from 'react-bootstrap/Badge'
 
 let index;
-let messageArr = [];
 let set = new Set();
-let activeUsers = [];
-let nameMap = new Map();
+var dateTime = new Date();
 
 export function VideoCall(props) {
     const [email, setEmail] = useState('Not logged in');
     const [userList, setUserList] = useState([])
     const [show, setShow] = useState(false);
-    const[composeTo, setComposeTo] = useState('');
+    const [composeTo, setComposeTo] = useState('');
     const [open, setOpen] = useState(false);
+    const [curTime, setCurTime] = useState();
+    const [curDate, setCurDate] = useState();
+
     useEffect(() => {
         axios.defaults.withCredentials = true;
 
@@ -64,6 +59,11 @@ export function VideoCall(props) {
 
     }, [composeTo])
 
+    useEffect(() => {
+        setCurTime(dateTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}));
+        setCurDate(dateTime.toLocaleDateString());
+    })
+
     const handleClick = (e) => {
         let targetIndex;
         if (e.target.id === "") targetIndex = e.target.parentElement.id;
@@ -78,6 +78,7 @@ export function VideoCall(props) {
 
     index = -1
     // if(composeTo !== undefined) return (<h1>Loading...</h1>)
+    
 
     return (<>
         <NavBar email={email} />
@@ -127,11 +128,11 @@ export function VideoCall(props) {
                 </div>
                 <div>
                     <p class="m-b-10 f-w-600">Time</p>
-                    <h6 class="text-muted f-w-400">12:00 PM</h6>
+                    <h6 class="text-muted f-w-400">{curTime}</h6>
                 </div>
                 <div>
                     <p class="m-b-10 f-w-600">Date</p>
-                    <h6 class="text-muted f-w-400">mm/dd/yyyy</h6>
+                    <h6 class="text-muted f-w-400">{curDate}</h6>
                 </div>
                 {/* <button class="btn btn-primary" type="submit">Launch Meeting</button> */}
                 <a id="Join meeting" href="https://us04web.zoom.us/j/77685262436?pwd=I0qcN5jBMhT-sdQT0d9nVVS5kYbOwu.1">Join Call</a>

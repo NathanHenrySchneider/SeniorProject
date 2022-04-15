@@ -28,6 +28,7 @@ export function EditProfile(props) {
     const [insurance, setIns] = useState(); 
     const [groupNo, setGroupNo] = useState(); 
     const [policyHolder, setPolicyHolder] = useState(); 
+    const history = useHistory(); 
     
 
     useEffect(() => {
@@ -88,6 +89,7 @@ export function EditProfile(props) {
           alert("Profile Edited");
 
           window.location.reload(true);
+          history.goBack();
           
         })
         .catch(function (error) {

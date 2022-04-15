@@ -21,6 +21,7 @@ export function EditProfileEmployee(props) {
     const [newName, setNewName] = useState();
     const [dob, setDoB] = useState(); 
     // const [allergy, setAllergy] = useState();
+    const history = useHistory(); 
     
 
     useEffect(() => {
@@ -43,7 +44,6 @@ export function EditProfileEmployee(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("YUUUUUUUU");
 
         axios
         .put(
@@ -62,6 +62,7 @@ export function EditProfileEmployee(props) {
         ).then(function(response){
             alert("Profile Edited");
             window.location.reload(true);
+            history.goBack();
         })
         .catch(function(error){
             console.log(error);

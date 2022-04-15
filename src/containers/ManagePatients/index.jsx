@@ -137,7 +137,7 @@ export function ManagePatients(props) {
     
 
     return (<>
-        <EmpNavBar email={fullName + "   :    " + email} />
+        <EmpNavBar email={fullName} />
         <PageContainer>
         <div className="page-content page-container" id="page-content">
         <Container

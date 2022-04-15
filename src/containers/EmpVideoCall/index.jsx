@@ -26,10 +26,8 @@ import Button from 'react-bootstrap/Button'
 // JWT_TOK = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOm51bGwsImlzcyI6Im1ydms0NDZJUmh5YzZkRkZ4T29PZlEiLCJleHAiOjE2NDY3OTgyNTMsImlhdCI6MTY0Njc5Mjg1M30.V6fpiEXIlAiNRWzK5n0CA1a2rhKtZvQbkQdZQ6RSyBo'
 
 let index;
-let messageArr = [];
 let set = new Set();
-let activeUsers = [];
-let nameMap = new Map();
+var dateTime = new Date();
 
 
 
@@ -42,6 +40,9 @@ export function EmpVideoCall(props) {
     const [show, setShow] = useState(false);
     const[composeTo, setComposeTo] = useState('');
     const [open, setOpen] = useState(false);
+    const [curTime, setCurTime] = useState();
+    const [curDate, setCurDate] = useState();
+
     useEffect(() => {
         axios.defaults.withCredentials = true;
 
@@ -75,7 +76,12 @@ export function EmpVideoCall(props) {
                 console.log(arr)
         })
 
-    }, [])
+    }, [],
+    useEffect(() => {
+        setCurTime(dateTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}));
+        setCurDate(dateTime.toLocaleDateString());
+    }),
+    )
     
     const handleClick = (e) => {
         let targetIndex;
@@ -138,11 +144,11 @@ export function EmpVideoCall(props) {
                 </div>
                 <div>
                     <p className="m-b-10 f-w-600">Time</p>
-                    <h6 className="text-muted f-w-400">12:00 PM</h6>
+                    <h6 className="text-muted f-w-400">{curTime}</h6>
                 </div>
                 <div>
                     <p className="m-b-10 f-w-600">Date</p>
-                    <h6 className="text-muted f-w-400">mm/dd/yyyy</h6>
+                    <h6 className="text-muted f-w-400">{curDate}</h6>
                 </div>
                 
                 <div className="zoomDiv" >
