@@ -17,7 +17,7 @@ export function NavBar(props){
     return (
         <Navbar bg="lavendar" variant="light">
         <Container>
-          <Navbar.Brand href="#home">
+          <Navbar.Brand>
             <img
               alt=""
               src= {require("./newLogo.png")}

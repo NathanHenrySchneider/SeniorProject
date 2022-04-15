@@ -6,14 +6,12 @@ import styled from "styled-components";
 import axios from "axios";
 import ScheduleSelector from "react-schedule-selector";
 import Button from "react-bootstrap/Button";
-import { Appointments } from "./../Appointments/index";
 
 export function NurseAppointments(props) {
   const [email, setEmail] = useState("Not logged in");
   const [userID, setUserID] = useState(null);
   const [allAppointment, setAllAppointment] = useState(null);
   const [doctorList, setDoctorList] = useState(null);
-  const [actions, setActions] = useState();
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
@@ -22,7 +20,7 @@ export function NurseAppointments(props) {
       .post("http://localhost:3001/me", { withCredentials: true })
       .then((response) => {
         console.log("Nurse appt page me: ", response.data);
-        setEmail(response.data.email);
+        setEmail(response.data.full_name);
         setUserID(response.data.user_id);
         setAllAppointment(response.data.userAppointment);
         setDoctorList(response.data.allDoctor);
@@ -137,10 +135,86 @@ export function NurseAppointments(props) {
     todayDate.slice(2, 3);
 
   /**
+   * For Upcoming Appointments in Nurse appt page.
    * Display selected doctor schedule.
    */
   const [selectedDoctorForAppt, setSelectedDoctorForAppt] = useState("viewAll");
   // console.log("selectedDoctorForAppt: ", selectedDoctorForAppt);
+
+
+  /*****************************************
+   * Action for appointments.
+   * Approve and reject option.
+   ****************************************/
+
+
+  /**
+   * Nurse approving appointment
+   */
+  let apptActionApptID;
+  const handleApprove = (e) =>{
+    apptActionApptID = e.split(" ")[1];
+
+    axios
+    .put(`http://localhost:3001/appointment/nurseUpdateAppt/${apptActionApptID}`, {
+      action: e.split(" ")[0],
+    })
+    .then((response) => {
+      console.log("response is: ", response.data)
+      alert(`Appointment ID: ${response.data[0].appt_id} Confirmed`);
+      window.location.reload(true);
+    })
+    .catch((err) => {
+      console.log("CHP/index.jsx" + err);
+    });       
+  }
+
+  /**
+   * Nurse Reject an unconfirm appointment and cancel an confirmed appointment.
+   */
+  const handleReject = (e) =>{
+    const text = e.split(" ")[0]
+    apptActionApptID = e.split(" ")[1];
+    
+    if(apptActionApptID){
+      axios
+      .delete(`http://localhost:3001/appointment/deleteAppt/${apptActionApptID}`)
+      .then((response) => {
+        reEnableDoctorSchedule(response.data[0]);
+        alert(`Appointment ID: ${response.data[0].appt_id} ${text} Successful`);
+        window.location.reload(true);
+      })
+      .catch((err) => {
+        console.log("CHP/index.jsx" + err);
+      });     
+    }else{
+      console.log("Appointment ID missing");
+      return;
+    }
+  }
+  /**
+   * Reenable doctor schedule once the appointment has been reject or cancle by nurse.
+   */
+  const reEnableDoctorSchedule= (response)=>{
+    const doctorID = response.doctor_id;
+    const formatedTime = response.appt_date.split("T")[0] +"T"+ response.appt_start.split("+")[0];
+    const reEnableTime = new Date(`${formatedTime}`);
+
+    axios
+        .put("http://localhost:3001/doctorAppTime/reEnableAvailability", {
+          newSchedule: reEnableTime,
+          id: doctorID,
+        })
+        .then((response) => {
+          // console.log("reEnableDoctorSchedule response: ", response.data)
+        })
+        .catch((err) => {
+          console.log("CHP/index.jsx" + err);
+        });
+
+  }
+
+
 
   return (
     <>
@@ -197,7 +271,7 @@ export function NurseAppointments(props) {
         </Select>
 
         <UserAppointmentContainer>
-          <table class="table">
+          <table className="table">
             <thead>
               <tr>
                 <th scope="col" style={{ width: "10vw" }}>
@@ -218,7 +292,9 @@ export function NurseAppointments(props) {
                 <th scope="col" style={{ width: "10vw" }}>
                   Confirmed
                 </th>
-                <th scope="col" style={{ width: "10vw" }}></th>
+                <th scope="col" style={{ width: "10vw" }}>
+                  Action
+                </th>
               </tr>
             </thead>
 
@@ -234,23 +310,17 @@ export function NurseAppointments(props) {
                             <td>{item.appt_date.split("T")[0]}</td>
                             <td>{item.appt_start.split("+")[0]}</td>
                             <td>{item.doctor_name}</td>
-                            <td>{item.confirmed ? `True` : `False`}</td>
-                            <td>
-                              <div class="dropdown">
-                                <div>
-                                  <select
-                                    value={actions}
-                                    onChange={(e) => setActions(e.target.value)}
-                                  >
-                                    <option selected value="Action">
-                                      Select
-                                    </option>
-                                    <option value="approve">Approve</option>
-                                    <option value="update">Update</option>
-                                    <option value="view">View</option>
-                                  </select>
-                                </div>
-                              </div>
+                            <td>{item.confirmed ? `TRUE` : `FALSE`}</td>
+                            <td >
+                            {item.confirmed === false ?
+                              <>
+                              <Button value="confirm" onClick={(e) => handleApprove(e.target.value + " " + item.appt_id)}>Confirm</Button>
+                              {" "}
+                              <Button variant="danger" value="Reject" onClick={(e) => handleReject(e.target.value + " " + item.appt_id)}>Reject</Button>
+                              </>
+                            : 
+                              <Button variant="danger" value="Cancel" onClick={(e) => handleReject(e.target.value + " " + item.appt_id)}>Cancel</Button>
+                            }
                             </td>
                           </tr>
                         ) : null
@@ -271,23 +341,17 @@ export function NurseAppointments(props) {
                             <td>{item.appt_date.split("T")[0]}</td>
                             <td>{item.appt_start.split("+")[0]}</td>
                             <td>{item.doctor_name}</td>
-                            <td>{item.confirmed ? `True` : `False`}</td>
-                            <td>
-                              <div class="dropdown">
-                                <div>
-                                  <select
-                                    value={actions}
-                                    onChange={(e) => setActions(e.target.value)}
-                                  >
-                                    <option selected value="Action">
-                                      Select
-                                    </option>
-                                    <option value="approve">Approve</option>
-                                    <option value="update">Update</option>
-                                    <option value="view">View</option>
-                                  </select>
-                                </div>
-                              </div>
+                            <td>{item.confirmed ? `TRUE` : `FALSE`}</td>
+                            <td >
+                            {item.confirmed == false ?
+                              <>
+                              <Button value="confirm" onClick={(e) => handleApprove(e.target.value + " " + item.appt_id)}>Confirm</Button>
+                              {" "}
+                              <Button variant="danger" value="Reject" onClick={(e) => handleReject(e.target.value + " " + item.appt_id)}>Reject</Button>
+                              </>
+                            : 
+                              <Button variant="danger" value="Cancel" onClick={(e) => handleReject(e.target.value + " " + item.appt_id)}>Cancel</Button>
+                            }
                             </td>
                           </tr>
                         ) : null

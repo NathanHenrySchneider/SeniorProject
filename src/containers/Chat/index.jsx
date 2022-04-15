@@ -55,7 +55,7 @@ export function Chat(props){
         .then((response) =>{
             let arr = [];
             response.data.forEach((element) => {
-                if(!set.has(element.user_id)){
+                if(!set.has(element.user_id) && element.user_type != "patient"){
                     arr.push({
                         user_id : element.user_id,
                         full_name: element.full_name,
@@ -159,7 +159,7 @@ export function Chat(props){
     index = -1
     return (
         <>
-        <NavBar email={email} />
+        <NavBar email={fullName} />
         <h1 className="text-center mb-3 mt-4">{fullName}'s Message Portal</h1>
         <Button 
             onClick={() => setOpen(!open)}

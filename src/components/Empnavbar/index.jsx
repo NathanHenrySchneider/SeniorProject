@@ -30,6 +30,7 @@ export function EmpNavBar(props) {
   //Check what type the user is
   function checkUserType(userType){
     if(userType === "patient"){
+      console.log("Found patient when should not be patient")
       return "Customer";
     }
     else if(userType === "doctor"){
@@ -42,7 +43,7 @@ export function EmpNavBar(props) {
   return (
     <EmpNavbar bg="lightgreen" variant="light">
       <Container>
-        <EmpNavbar.Brand href="#home">
+        <EmpNavbar.Brand>
           <img
             alt=""
             src={require("./newLogo.png")}

@@ -155,7 +155,7 @@ export function EmpChat(props){
     index = -1
     return (
         <>
-        <EmpNavBar email={email} />
+        <EmpNavBar email={fullName} />
         <h1 className="text-center mb-3 mt-4">{fullName}'s Message Portal</h1>
         <hr style = {{width:'500px', margin:'0 auto'}}/>
         <br/>
