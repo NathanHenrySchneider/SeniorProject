@@ -38,6 +38,8 @@ export function YourProfile(props) {
                 setIns(response.data.insurance);
                 setGroupNo(response.data.groupId);
                 setPolicyHolder(response.data.insurance_policy_holder);
+                console.log("Prefered Doc");
+                console.log(String(doc));
     
 
             })

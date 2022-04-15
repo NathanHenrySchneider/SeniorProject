@@ -12,6 +12,13 @@ import { AccountContext } from "../../accountBox/accountContext";
 import { useHistory } from "react-router-dom";
 import Alert from 'react-bootstrap/Alert'
 import { Container, Col } from 'react-grid';
+import Collapse from 'react-bootstrap/Collapse'
+import ListGroup from 'react-bootstrap/ListGroup'
+import Badge from 'react-bootstrap/Badge'
+import Button from 'react-bootstrap/Button'
+
+let set = new Set();
+let index;
 
 
 export function EditProfile(props) {
@@ -28,6 +35,10 @@ export function EditProfile(props) {
     const [insurance, setIns] = useState(); 
     const [groupNo, setGroupNo] = useState(); 
     const [policyHolder, setPolicyHolder] = useState(); 
+    // const [chooseDoctor, setChooseDoctor] = useState();
+    const [doctorList, setDoctorList] = useState([])
+    const [openDoctor, setOpenDoctor] = useState(false);
+    const [show, setShow] = useState(false);
     const history = useHistory(); 
     
 
@@ -57,6 +68,26 @@ export function EditProfile(props) {
                 console.log("CHP/index.jsx" + err);
             })
 
+    }, [])
+    useEffect(() => {
+        axios.defaults.withCredentials = true;
+        axios
+        .get("http://localhost:3001/all-users")
+        .then((response) =>{
+            let arr = [];
+            response.data.forEach((element) => {
+                if(!set.has(element.user_id)&&(element.user_type === 'doctor')){
+                    arr.push({
+                        user_id : element.user_id,
+                        full_name: element.full_name,
+                        email: element.email,
+                        user_type: element.user_type
+                    })
+                }
+            })
+            setDoctorList(arr);
+            console.log(doctorList)
+        })
     }, [])
 
     const handleSubmit = (e) => {
@@ -96,6 +127,17 @@ export function EditProfile(props) {
           console.log(error);
           alert("Error")
         });
+    }
+    const handleClickDoctor = (e) => {
+        let targetIndex;
+        if (e.target.id === "") targetIndex = e.target.parentElement.id;
+        else targetIndex = e.target.id;
+        // setChooseDoctor(targetIndex)
+        setDoc(targetIndex);
+        // console.log('---' + userList[targetIndex].full_name)
+        setTimeout(()=>{
+            setShow(true);
+        },100)
     }
 
     return (<>
@@ -148,6 +190,59 @@ export function EditProfile(props) {
                                     onChange = {e => setAllergy(e.target.value)}/>
                             </div>
                         </div>
+                        <h1 className="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Prefered Provider</h1>
+                        <Container
+                align="center"
+            >
+                        <div className="card-block justify-content-center ">
+                        {/* <div className="col-sm-8 justify-content-center text-center"> */}
+                        {/* <div className="row">    */}
+                        {/* <div className="col-sm-8 justify-content-center text-center"> */}
+                        {/* <Col> */}
+                            <div className="col-sm-6 justify-content-center ">                
+                            <Button 
+            onClick={() => setOpenDoctor(!openDoctor)}
+            aria-controls="collapse"
+            aria-expanded={openDoctor}
+            style = {{margin:'0 auto', display:'block'}}>
+            {(openDoctor) ? 'Collapse List' : 'Select Doctor' }</Button>
+            </div>
+            <br/>
+            {(openDoctor) ? <small style = {{margin: '-15px auto 8px auto', fontSize: 'large', display:'block', width:'fit-content'}}>
+                Select a provider:</small> : <></>}
+        <Collapse in={openDoctor}>
+            <div id="collapse">
+            <ListGroup as="ol" numbered>
+                {doctorList.map((user) => {
+                    index++;
+                    return(
+                    <ListGroup.Item
+                        key = {index}
+                        id = {index}
+                        action
+                        as="li"
+                        onClick = {(e)=>handleClickDoctor(e)}
+                        className="d-flex justify-content-between align-items-start"
+                    >
+                        <div className="ms-2 me-auto">
+                        <div className="fw-bold" id = {user.user_id}>{user.full_name}</div>
+                        {user.email}
+                        </div>
+                        <Badge bg="primary" pill>
+                        {user.user_type} #{user.user_id}
+                        </Badge>
+                    </ListGroup.Item>
+                    )
+                })}
+
+            </ListGroup>
+            </div>
+        </Collapse>
+        {/* </Col> */}
+                            </div>
+                            {/* </div> */}
+                        {/* </div> */}
+                        </Container>
                         <h1 className="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Insurance</h1>
                         <div className="row">
                             <div className="col-sm-6">
@@ -168,8 +263,10 @@ export function EditProfile(props) {
                         </div>
                     </div>
                     <div className="col-sm-8">
+                    <div className="col-sm-8 justify-content-center text-center">
                     <div className="card-block text-center">
                     <SubmitButton type="submit">Submit</SubmitButton>
+                    </div>
                     </div>
                     </div>
                     
