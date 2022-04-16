@@ -22,6 +22,7 @@ export function VideoCall(props) {
     const [open, setOpen] = useState(false);
     const [curTime, setCurTime] = useState();
     const [curDate, setCurDate] = useState();
+    const [checked, setChecked] = useState(false);
 
     useEffect(() => {
         axios.defaults.withCredentials = true;
@@ -74,6 +75,18 @@ export function VideoCall(props) {
         setTimeout(()=>{
             setShow(true);
         },100)
+    }
+
+    const handleCheck = () => {
+        setChecked(!checked);
+    }
+    
+    const joinMeeting = () => {
+        if (composeTo) {
+            window.location.href = 'https://us04web.zoom.us/j/77685262436?pwd=I0qcN5jBMhT-sdQT0d9nVVS5kYbOwu.1';
+        } else {
+            alert("Please select your doctor");
+        }
     }
 
     index = -1
@@ -134,8 +147,12 @@ export function VideoCall(props) {
                     <p class="m-b-10 f-w-600">Date</p>
                     <h6 class="text-muted f-w-400">{curDate}</h6>
                 </div>
-                {/* <button class="btn btn-primary" type="submit">Launch Meeting</button> */}
-                <a id="Join meeting" href="https://us04web.zoom.us/j/77685262436?pwd=I0qcN5jBMhT-sdQT0d9nVVS5kYbOwu.1">Join Call</a>
+                <div> <label>
+                    <input type="checkbox" checked={checked} onChange={handleCheck}/> Compliance with the Privacy Rule for electronic health care transaction, please notice to the members of the meeting when it is recorded by any devices.
+                </label></div>
+               
+                {(checked) ? <button class="btn btn-primary" type="submit" onClick={joinMeeting}>Join Call</button> : <div></div>}
+
             </div>
         </PageContainer>
     </>
