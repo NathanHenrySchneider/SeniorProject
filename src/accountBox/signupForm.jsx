@@ -25,6 +25,7 @@ export function SignUpForm(props){
             user_type: selects
           })
           .then(function (response) {
+            alert("Successfully created account. Please return to login.")
             console.log(response);
             
           })
