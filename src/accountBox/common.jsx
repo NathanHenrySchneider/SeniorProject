@@ -71,3 +71,21 @@ export const SubmitButton = styled.button`
         filter: brightness(1.03);
     }
 `;
+
+export const SubmitButtonEmp = styled.button`
+    width: 100%;
+    padding: 11px 40%;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 100px 100px 100px 100px;
+    cursor: pointer;
+    transition: all, 240ms ease-in-out;
+    background: rgb(9,9,121);
+    background: linear-gradient(58deg, #558808 20%, #adff2f 100%);
+
+    &:hover{
+        filter: brightness(1.03);
+    }
+`;

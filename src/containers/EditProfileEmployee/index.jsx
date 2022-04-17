@@ -5,7 +5,7 @@ import { PageContainer } from "../../components/pageContainer";
 import './style.css';
 import axios from 'axios';
 // import React, { useContext, useState } from "react";
-import { BoldLink, BoxContainer, FormContainer, Input, SubmitButton } from "../../accountBox/common";
+import { BoldLink, BoxContainer, FormContainer, Input, SubmitButtonEmp } from "../../accountBox/common";
 import { Marginer } from  "../../components/marginer";//"../components/marginer"
 import { AccountContext } from "../../accountBox/accountContext";
 // import axios from "axios";
@@ -115,7 +115,7 @@ export function EditProfileEmployee(props) {
                     </div>
                     <div className="col-sm-8">
                     <div className="card-block text-center">
-                    <SubmitButton type="submit">Submit</SubmitButton>
+                    <SubmitButtonEmp type="submit">Submit</SubmitButtonEmp>
                     </div>
                     </div>
                     
