@@ -41,7 +41,7 @@ export const Input = styled.input`
     font-size: 12px;
     
     &::placeholder{
-        color: rgba(200, 200, 200, 1);
+        color: #000000;
     }
 
     &:not(:last-of-type){
