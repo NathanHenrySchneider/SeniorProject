@@ -141,7 +141,7 @@ export function EditProfile(props) {
     }
 
     return (<>
-        <NavBar email={fullName + "   :    " + email} />
+        <NavBar email={fullName} />
         <PageContainer>
         <div className="page-content page-container" id="page-content">
         <Container
