@@ -7,8 +7,10 @@ import { Form, Row, Col, FormControl, Button, Modal, Alert } from "react-bootstr
 import { PickerInline } from 'filestack-react';
 
 const options = {
-    fromSources: ["local_file_system", "url"]
+    fromSources: ["local_file_system", "url"],
+    displayMode: "dropPane"
 }
+
 
 function formatDate(date) {
  
@@ -204,6 +206,7 @@ export function EmpDocuments(props) {
         show={show} 
         onHide={handleClose}
         size="lg"
+        fullscreen="true"
         aria-labelledby="contained-modal-title-vcenter"
         centered>
                 
