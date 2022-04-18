@@ -9,6 +9,8 @@ import { Link} from "react-router-dom";
 
 export function EmpYourProfile(props) {
     const [email, setEmail] = useState('Not logged in');
+    const [fullName, setFullName] = useState();
+    const [dob, setDoB] = useState();
     useEffect(() => {
         axios.defaults.withCredentials = true;
 
@@ -16,6 +18,8 @@ export function EmpYourProfile(props) {
             .then((response) => {
                 console.log(response.data)
                 setEmail(response.data.full_name)
+                setFullName(response.data.full_name);
+                setDoB(response.data.birthdate);
             })
             .catch((err) => {
                 console.log("CHP/index.jsx" + err);
@@ -45,11 +49,11 @@ export function EmpYourProfile(props) {
                                             <div className="row">
                                                 <div className="col-sm-6">
                                                     <p className="m-b-10 f-w-600">Name</p>
-                                                    <h6 className="text-muted f-w-400">FirstName Last Name</h6>
+                                                    <h6 className="text-muted f-w-400">{fullName}</h6>
                                                 </div>
                                                 <div className="col-sm-6">
                                                     <p className="m-b-10 f-w-600">DoB</p>
-                                                    <h6 className="text-muted f-w-400">mm/dd/yyyy</h6>
+                                                    <h6 className="text-muted f-w-400">{dob}</h6>
                                                 </div>
                                                 {/* <div className="col-sm-6">
                                                     <p className="m-b-10 f-w-600">Height</p>
