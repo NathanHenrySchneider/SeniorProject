@@ -157,6 +157,43 @@ export function EmpChat(props){
         <>
         <EmpNavBar email={fullName} />
         <h1 className="text-center mb-3 mt-4">{fullName}'s Message Portal</h1>
+        <Button 
+            onClick={() => setOpen(!open)}
+            aria-controls="collapse"
+            aria-expanded={open}
+            style = {{margin:'0 auto', display:'block'}}>
+            {(open) ? 'Collapse List' : 'Compose new message' }</Button>
+            <br/>
+            {(open) ? <small style = {{margin: '-15px auto 8px auto', fontSize: 'large', display:'block', width:'fit-content'}}>
+                Select a user to start a conversation:</small> : <></>}
+        <Collapse in={open}>
+            <div id="collapse">
+            <ListGroup as="ol" numbered>
+                {userList.map((user) => {
+                    index++;
+                    return(
+                    <ListGroup.Item
+                        key = {index}
+                        id = {index}
+                        action
+                        as="li"
+                        onClick = {(e)=>handleClick(e)}
+                        className="d-flex justify-content-between align-items-start"
+                    >
+                        <div className="ms-2 me-auto">
+                        <div className="fw-bold" id = {user.user_id}>{user.full_name}</div>
+                        {user.email}
+                        </div>
+                        <Badge bg="primary" pill>
+                        {user.user_type} #{user.user_id}
+                        </Badge>
+                    </ListGroup.Item>
+                    )
+                })}
+
+            </ListGroup>
+            </div>
+        </Collapse>
         <hr style = {{width:'500px', margin:'0 auto'}}/>
         <br/>
         {(activeUsers.length === 0) ? <h2 style = {{textAlign: 'center'}}>Click above to start a conversation!</h2>
