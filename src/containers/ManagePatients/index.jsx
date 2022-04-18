@@ -1,34 +1,18 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { EmpNavBar } from "../../components/Empnavbar";
+import styled from "styled-components";
+import PatientList from "./PatientList"
 import { PageContainer } from "../../components/pageContainer";
 import './style.css';
 import axios from 'axios';
-import { BoldLink, BoxContainer, FormContainer, Input, SubmitButton } from "../../accountBox/common";
-import { Marginer } from  "../../components/marginer";//"../components/marginer"
-import { AccountContext } from "../../accountBox/accountContext";
-// import axios from "axios";
-import { useHistory } from "react-router-dom";
-import Alert from 'react-bootstrap/Alert'
-import { Container, Col } from 'react-grid';
-import ScrollableFeed from 'react-scrollable-feed'
-import Collapse from 'react-bootstrap/Collapse'
-import ListGroup from 'react-bootstrap/ListGroup'
-import Badge from 'react-bootstrap/Badge'
-import InputGroup from 'react-bootstrap/InputGroup'
-import FormControl from 'react-bootstrap/FormControl'
-import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
-
 
 export function ManagePatients(props) {
     const [email, setEmail] = useState('Not logged in');
     const [userID, setUserID] = useState();
     const [fullName, setFullName] = useState();
-    const [patientList, setPatientList] = useState([])
     const [doctorList, setDoctorList] = useState([])
-    const [show, setShow] = useState(false);
-    const [openDoctor, setOpenDoctor] = useState(false);
+    const [loaded, setLoaded] = useState(false);
     
 
     useEffect(() => {
@@ -62,8 +46,9 @@ export function ManagePatients(props) {
                 }
             })
 
-            setPatientList(arr);
-            console.log(patientList)
+            setDoctorList(arr);
+            setLoaded(true)
+            // console.log(patientList)
         })
     }, [])
 
@@ -71,36 +56,36 @@ export function ManagePatients(props) {
         document.title = "Manage Patients";  
       }, []);
 
+    if(!loaded) return<h1>Loading</h1>
     return (<>
         <EmpNavBar email={fullName} />
         <PageContainer>
+        <br/>
+        <PseudoBorder> Manage Patients:</PseudoBorder>
+        <hr/>
         <div className="page-content page-container" id="page-content">
-        <Container
-            align="center"
-        >
-        <Col 
-            align="center"
-        >
-        <div className="padding justify-content-center">
-            <div className="row d-flex justify-content-center text-center">
-            <div className="card user-card-full justify-content-center">
-            <h1 className="m-b-20 p-b-5 b-b-default f-w-600 text-center">Manage Patients</h1>
-            <div className="padding justify-content-center">
-            <Container
-                align="center"
-
-            >
-        
-            </Container>
-            </div>
-            </div>
-            </div>
-        </div>
-        </Col>
-        </Container>
+        {doctorList.map((doc) => (
+            <PatientList key = {doc.user_id} doctorID = {doc.user_id} doctorName = {doc.full_name}/>
+        ))}
         </div>
         </PageContainer>
     </>
     );
 }
+const PseudoBorder = styled.h1`
+  position: relative;
+  color: black;
+  display: inline-block;
+  &:after {
+    content: "";
+    position: absolute;
+    display: inline-block;
+    left: 0;
+    top: 100%;
+    margin: 10px auto;
+    width: 33%;
+    height: 6px;
+    background: #00f;
+  }
+`;
 
