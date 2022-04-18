@@ -42,6 +42,10 @@ export function EditProfileEmployee(props) {
             })
     }, [])
 
+    useEffect(() => {
+        document.title = "Edit Your Profile";  
+      }, []);
+
     const handleSubmit = (e) => {
         e.preventDefault();
 

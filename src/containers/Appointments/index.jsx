@@ -54,6 +54,9 @@ export function Appointments(props) {
         console.log("customer homepage index.jsx" + err);
       });
   }, []);
+  useEffect(() => {
+    document.title = "Appointments";  
+  }, []);
 
   // let history = useHistory();
   const [err, setError] = useState(false);
