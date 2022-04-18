@@ -6,6 +6,9 @@ import axios from 'axios';
 import { Form, Row, Col, FormControl, Button, Modal, Alert } from "react-bootstrap";
 import { PickerInline } from 'filestack-react';
 
+const options = {
+    fromSources: ["local_file_system", "url"]
+}
 
 function formatDate(date) {
  
@@ -152,6 +155,7 @@ export function EmpDocuments(props) {
                 </Alert>
                 <PickerInline
                     apikey="ADRLkeKpRRGZuFOBdJR0Hz"
+                    pickerOptions={options}
                     onSuccess={(res) => console.log(res)}
                     onUploadDone={(res) => {
                         setUploaded(true)
