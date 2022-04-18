@@ -60,6 +60,10 @@ export function Documents(props) {
         
     }, [user_id])
 
+    useEffect(() => {
+        document.title = "Documents";  
+      }, []);
+
 
         return (<>
             <NavBar email={email} />

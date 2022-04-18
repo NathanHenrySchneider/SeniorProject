@@ -90,6 +90,10 @@ export function EditProfile(props) {
         })
     }, [])
 
+    useEffect(() => {
+        document.title = "Edit Your Profile";  
+      }, []);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("YUUUUUUUU");

@@ -30,6 +30,10 @@ export function NurseAppointments(props) {
       });
   }, []);
 
+  useEffect(() => {
+    document.title = "Appointments";  
+  }, []);
+
   /*********************************************************************************
    * Below are operation related to ScheduleSelector
    *

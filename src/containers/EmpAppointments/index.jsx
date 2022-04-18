@@ -31,6 +31,10 @@ export function EmpAppointments(props) {
       });
   }, []);
 
+  useEffect(() => {
+    document.title = "Appointments";  
+  }, []);
+
   return (
     <>
       <EmpNavBar email={email} />

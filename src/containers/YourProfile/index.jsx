@@ -48,6 +48,10 @@ export function YourProfile(props) {
             })
     }, [])
 
+    useEffect(() => {
+        document.title = "Your Profile";  
+      }, []);
+
     return (<>
         <NavBar email={fullName} />
         <PageContainer>

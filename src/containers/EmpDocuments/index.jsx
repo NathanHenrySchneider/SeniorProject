@@ -96,6 +96,10 @@ export function EmpDocuments(props) {
 
     }, [user_id])
 
+    useEffect(() => {
+        document.title = "Documents";  
+      }, []);
+
     const [selectedPatientID, setSelectedPatientID] = useState(null);
     const [selectedPatientName, setSelectedPatientName] = useState(null);
 

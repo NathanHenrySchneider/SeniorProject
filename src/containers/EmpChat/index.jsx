@@ -114,6 +114,10 @@ export function EmpChat(props){
             
     }, [fetched, userID, mapDone]);
 
+    useEffect(() => {
+        document.title = "Chat";  
+      }, []);
+
     const handleClick = (e) => {
         let targetIndex;
         if (e.target.id === "") targetIndex = e.target.parentElement.id;

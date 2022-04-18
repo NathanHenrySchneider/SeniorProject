@@ -28,6 +28,10 @@ export function EmployeeHomePage(props) {
 			})
 	})
 
+	useEffect(() => {
+		document.title = "Doctor Home Page";  
+	  }, []);
+
 	return (<>
 		<EmpNavBar email={email} />
 		<PageContainer>

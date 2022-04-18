@@ -82,6 +82,10 @@ export function EmpVideoCall(props) {
         setCurDate(dateTime.toLocaleDateString());
     }),
     )
+
+    useEffect(() => {
+        document.title = "Video Call";  
+      }, []);
     
     const handleClick = (e) => {
         let targetIndex;

@@ -25,6 +25,11 @@ export function EmpYourProfile(props) {
                 console.log("CHP/index.jsx" + err);
             })
     }, [])
+    useEffect(() => {
+        document.title = "Employee Profile";  
+      }, []);
+
+    
 
     return (<>
         <EmpNavBar email={email} />

@@ -67,6 +67,10 @@ export function ManagePatients(props) {
         })
     }, [])
 
+    useEffect(() => {
+        document.title = "Manage Patients";  
+      }, []);
+
     return (<>
         <EmpNavBar email={fullName} />
         <PageContainer>

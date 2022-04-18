@@ -65,6 +65,10 @@ export function VideoCall(props) {
         setCurDate(dateTime.toLocaleDateString());
     })
 
+    useEffect(() => {
+        document.title = "Video Call";  
+      }, []);
+
     const handleClick = (e) => {
         let targetIndex;
         if (e.target.id === "") targetIndex = e.target.parentElement.id;
