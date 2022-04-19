@@ -39,6 +39,7 @@ export function EditProfile(props) {
     const [doctorList, setDoctorList] = useState([])
     const [openDoctor, setOpenDoctor] = useState(false);
     const [show, setShow] = useState(false);
+    const [prefDocPlaceHolder, setPrefDocPlaceHolder] = useState();
     const history = useHistory(); 
     
 
@@ -60,6 +61,11 @@ export function EditProfile(props) {
                 setIns(response.data.insurance);
                 setGroupNo(response.data.groupId);
                 setPolicyHolder(response.data.insurance_policy_holder);
+                if (response.data.preferred_doc) {
+                    setPrefDocPlaceHolder(response.data.preferred_doc);
+                } else {
+                    setPrefDocPlaceHolder("No Provider Selected");
+                }
                 // setNewName(response.data.full_name)
     
 
@@ -137,12 +143,23 @@ export function EditProfile(props) {
         if (e.target.id === "") targetIndex = e.target.parentElement.id;
         else targetIndex = e.target.id;
         // setChooseDoctor(targetIndex)
-        setDoc(targetIndex);
+        console.log("DOCTOR LIST");
+        console.log(doctorList);
+        console.log("TARGET INDEX" + String(targetIndex));
+        console.log((doctorList[targetIndex]));
+        var docTemp = doctorList[targetIndex];
+        console.log(docTemp.full_name);
+        var docName = docTemp.full_name;
+        console.log(docName);
+        setDoc(docName);
+        // console.log(doc); 
+        setPrefDocPlaceHolder(docName);
         // console.log('---' + userList[targetIndex].full_name)
         setTimeout(()=>{
             setShow(true);
         },100)
     }
+    index = -1
 
     return (<>
         <NavBar email={fullName} />
@@ -195,9 +212,10 @@ export function EditProfile(props) {
                             </div>
                         </div>
                         <h1 className="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Prefered Provider</h1>
-                        <Container
-                align="center"
-            >
+                        <Container align="center">
+                        <div className="col-sm-6">
+                            {prefDocPlaceHolder}
+                        </div>
                         <div className="card-block justify-content-center ">
                         {/* <div className="col-sm-8 justify-content-center text-center"> */}
                         {/* <div className="row">    */}
