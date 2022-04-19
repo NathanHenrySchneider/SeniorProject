@@ -33,6 +33,7 @@ export function EmpDocuments(props) {
     const [show, setShow] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [patientList, setPatientList] = useState(null);
+    const [fullName, setFullName] = useState("");
     let patients = [];
 
     const handleClose = () => setShow(false);
@@ -50,7 +51,7 @@ export function EmpDocuments(props) {
             axios
             .post("http://localhost:3001/documents", 
             { 
-                user_id: 22,
+                user_id: selectedPatientID,
                 description: description,
                 link: link.url
             }).then(res => console.log(res))
@@ -72,7 +73,9 @@ export function EmpDocuments(props) {
         axios.post('http://localhost:3001/me', { withCredentials: true })
             .then((response) => {
                 console.log(response.data)
-                setEmail(response.data.full_name)
+                setEmail(response.data.email)
+                setFullName(response.data.full_name)
+                setID(response.data.user_id)
             })
             .catch((err) => {
                 console.log("CHP/index.jsx" + err);
@@ -109,7 +112,7 @@ export function EmpDocuments(props) {
     const [selectedPatientName, setSelectedPatientName] = useState(null);
 
     return (<>
-        <EmpNavBar email={email} />
+        <EmpNavBar email={fullName} />
             <h1 className="text-center mb-3 mt-4">Document Portal</h1>
             <Modal 
                 show={showSuccess} 
@@ -207,11 +210,12 @@ export function EmpDocuments(props) {
         onHide={handleClose}
         size="lg"
         fullscreen="true"
+        backdrop="static"
         aria-labelledby="contained-modal-title-vcenter"
         centered>
                 
         <Modal.Header closeButton>
-          <Modal.Title>Patient Reports for John Doe</Modal.Title>
+          <Modal.Title>Patient Reports for</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <Fragment>
