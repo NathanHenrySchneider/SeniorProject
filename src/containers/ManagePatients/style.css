@@ -17,7 +17,9 @@
     border: none;
     margin-bottom: 30px;
 }
-
+ol.list-group li:hover{
+    cursor: pointer;
+}
 .m-r-0 {
     margin-right: 0px;
 }
