@@ -36,6 +36,8 @@ export function Chat(props){
     const [show, setShow] = useState(false);
     const[composeTo, setComposeTo] = useState();
     const [open, setOpen] = useState(false);
+    // Uncomment to implement assigned doctor
+    // const [assignedDocId, setAssignedDocId] = useState();
 
     useEffect(() => {
         socket.once("new", (arg) => {
@@ -56,6 +58,8 @@ export function Chat(props){
             let arr = [];
             response.data.forEach((element) => {
                 if(!set.has(element.user_id) && element.user_type !== "patient"){
+                    // Uncomment to implement assigned doctor
+                // if(!set.has(element.user_id) && element.user_type !== "patient" && assignedDocId === element.user_id){
                     arr.push({
                         user_id : element.user_id,
                         full_name: element.full_name,
@@ -78,6 +82,9 @@ export function Chat(props){
             setEmail(response.data.email);
             setUserID(response.data.user_id);
             setFullName(response.data.full_name);
+            // Uncomment to implement assigned doctor
+            // setAssignedDocId(response.data.assigned_doctor_id);
+            // console.log("Assigned doc id: " + String(assignedDocId));
         }).catch((err) => {
             console.log("CHP/index.jsx" + err);
         });
