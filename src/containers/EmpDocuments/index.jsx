@@ -64,9 +64,7 @@ export function EmpDocuments(props) {
     const handleDescriptionChange = (e) => {
         setDescription(e.target.value)
     }
-
-
-        
+  
     useEffect(() => {
         axios.defaults.withCredentials = true;
 
@@ -141,12 +139,13 @@ export function EmpDocuments(props) {
                     <Col sm={10}>
                         <Form.Select 
                             aria-label=""
-                            onChange={(e) => {setSelectedPatientID(e.target.value.split("-")[0]); setSelectedPatientName(e.target.value.split("-")[1])}}
+                            onChange={(e) => 
+                                setSelectedPatientID(e.target.value)}
                         >
                             <option>Current Patients</option>
                             {patientList
                             ? patientList.map((patient) => (
-                                <option key={patient.id} value={patient.name}>{patient.name}</option>
+                                <option key={patient.id} value={patient.id}>{patient.name}</option>
                             ))
                             : null}    
                         </Form.Select>  
@@ -176,7 +175,6 @@ export function EmpDocuments(props) {
                     <FormControl value = {description} onChange = {(e) => handleDescriptionChange(e)} type="text" />
                     </Col>
                 </Form.Group>
-
                 <Button type="submit" variant="success">Submit</Button>{' '}
             </Form>
          
@@ -198,7 +196,7 @@ export function EmpDocuments(props) {
                             ? patientList.map((patient) => (
                                 <option key={patient.id} value={patient.name}>{patient.name}</option>
                             ))
-                            : null}    
+                            : null} 
                         </Form.Select>  
                     </Col>
                 </Form.Group>
@@ -215,7 +213,7 @@ export function EmpDocuments(props) {
         centered>
                 
         <Modal.Header closeButton>
-          <Modal.Title>Patient Reports for</Modal.Title>
+          <Modal.Title>Patient Reports for {selectedPatientName} </Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <Fragment>
