@@ -17,7 +17,6 @@ export default function PatientList(props){
   const [showDelete, setShowDelete] = useState(false);
   const [doctorId, setDoctorId] = useState();
   let index = -1;
-  console.log(props)
   const handleClose = () => {
     setShow(false)
   }
@@ -31,7 +30,6 @@ export default function PatientList(props){
     .get("http://localhost:3001/all-users")
     .then((response) =>{
         let arr = [];
-        console.log(response.data)
         response.data.forEach((element) => {
             if(element.user_type === "patient" && element.assigned_doctor_id === null){
                 arr.push({
@@ -41,7 +39,6 @@ export default function PatientList(props){
             }
         })
         setUserList(arr);
-        console.log(userList)
     })
 }, [])
   useEffect(() => {
@@ -91,7 +88,7 @@ export default function PatientList(props){
       withCredentials: true 
     })
         .then((response) => {
-            setPatients(response.data)
+            window.location.reload();
         })
         .catch((err) => {
             console.log(err);
@@ -99,7 +96,18 @@ export default function PatientList(props){
 
   }
   const confirmDelete = () =>{
-
+    axios.put('http://localhost:3001/remove-assigned-doctor', 
+    {
+      "user_id" : parseInt(toRemove)
+    },{ 
+      withCredentials: true 
+    })
+        .then((response) => {
+            window.location.reload();
+        })
+        .catch((err) => {
+            console.log(err);
+        })
   }
     return(<>
     <div className=" justify-content-center" style = {{padding: '0px 3em', maxWidth: '600px', margin:'0 auto'}}>
