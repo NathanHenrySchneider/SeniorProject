@@ -79,7 +79,24 @@ export default function PatientList(props){
     if (e.target.id === "") targetIndex = e.target.parentElement.id;
     if (parseInt(e.target.id) > 19) targetIndex = e.target.parentElement.parentElement.id;
     else targetIndex = e.target.id;
-    console.log('to add ------>' + userList[targetIndex].user_id)
+    console.log('user to add ------>' + userList[targetIndex].user_id)
+    console.log('doctor ====>' + doctorId)
+    let user = parseInt(userList[targetIndex].user_id)
+    console.log(typeof(doctorId))
+    axios.post('http://localhost:3001/add-patient', 
+    {
+      "doctor_id" : parseInt(doctorId),
+      "user_to_add" : user
+    },{ 
+      withCredentials: true 
+    })
+        .then((response) => {
+            setPatients(response.data)
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+
   }
   const confirmDelete = () =>{
 
@@ -142,12 +159,6 @@ export default function PatientList(props){
                 })}
 
             </ListGroup>
-                {/* 
-                    <Button type = "submit" variant="outline-secondary" id="button-addon2">
-                    Send
-                    </Button>
-                </InputGroup>
-                </form> */}
             </Modal.Body>
         </Modal>
     </>)
