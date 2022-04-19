@@ -83,7 +83,7 @@ export default function PatientList(props){
     console.log('doctor ====>' + doctorId)
     let user = parseInt(userList[targetIndex].user_id)
     console.log(typeof(doctorId))
-    axios.post('http://localhost:3001/add-patient', 
+    axios.put('http://localhost:3001/add-patient', 
     {
       "doctor_id" : parseInt(doctorId),
       "user_to_add" : user
