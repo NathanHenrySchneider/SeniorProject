@@ -141,6 +141,7 @@ export function EditProfile(props) {
     const handleClickDoctor = (e) => {
         let targetIndex;
         if (e.target.id === "") targetIndex = e.target.parentElement.id;
+        if (parseInt(e.target.id) > 19) targetIndex = e.target.parentElement.parentElement.id;
         else targetIndex = e.target.id;
         // setChooseDoctor(targetIndex)
         console.log("DOCTOR LIST");
