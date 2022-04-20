@@ -45,7 +45,7 @@ export function NurseHomePage(props) {
 							<div className="icon">
 								<img src={accountIcon} alt="account icon" />
 							</div>
-							<Link to="/NurseHomePage/EmpYourProfile"><div className="card-box-footer">View More</div></Link>
+							<Link to="/NurseHomePage/EmpYourProfile"><div className="card-box-footer"></div></Link>
 						</div>
 					</div>
 
@@ -57,7 +57,7 @@ export function NurseHomePage(props) {
 							<div className="icon">
 								<img src={calendarIcon} alt="calendar icon" />
 							</div>
-							<Link to="/Nursehomepage/NurseAppointments"><div className="card-box-footer">View More</div></Link>
+							<Link to="/Nursehomepage/NurseAppointments"><div className="card-box-footer"></div></Link>
 						</div>
 					</div>
 					<div className="col-lg-4 col-sm-6">
@@ -68,7 +68,7 @@ export function NurseHomePage(props) {
 							<div className="icon">
 								<img src={videoIcon} alt="video icon" />
 							</div>
-							<Link to="/NurseHomePage/empvideocall"><div className="card-box-footer">View More</div></Link>
+							<Link to="/NurseHomePage/empvideocall"><div className="card-box-footer"></div></Link>
 						</div>
 					</div>
 					<div className="col-lg-4 col-sm-6">
@@ -79,7 +79,7 @@ export function NurseHomePage(props) {
 							<div className="icon">
 								<img src={chatIcon} alt="chat icon" />
 							</div>
-							<Link to="/NurseHomePage/empchat"><div className="card-box-footer">View More</div></Link>
+							<Link to="/NurseHomePage/empchat"><div className="card-box-footer"></div></Link>
 						</div>
 					</div>
 					<div className="col-lg-4 col-sm-6">
@@ -90,7 +90,7 @@ export function NurseHomePage(props) {
 							<div className="icon">
 								<img src={documentsIcon} alt="documents icon" />
 							</div>
-							<Link to="/Nursehomepage/EmpDocuments"><div className="card-box-footer">View More</div></Link>
+							<Link to="/Nursehomepage/EmpDocuments"><div className="card-box-footer"></div></Link>
 						</div>
 					</div>
 					<div className="col-lg-4 col-sm-6">
@@ -101,7 +101,7 @@ export function NurseHomePage(props) {
 							<div className="icon">
 								<img src={documentsIcon} alt="documents icon" />
 							</div>
-							<Link to="/Nursehomepage/ManagePatients"><div className="card-box-footer">View More</div></Link>
+							<Link to="/Nursehomepage/ManagePatients"><div className="card-box-footer"></div></Link>
 						</div>
 					</div>
 				</div>

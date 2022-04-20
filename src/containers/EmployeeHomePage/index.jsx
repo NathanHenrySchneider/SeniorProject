@@ -45,7 +45,7 @@ export function EmployeeHomePage(props) {
 							<div className="icon">
 								<img src={accountIcon} alt="account icon" />
 							</div>
-							<Link to="/EmployeeHomePage/EmpYourProfile"><div className="card-box-footer">View More</div></Link>
+							<Link to="/EmployeeHomePage/EmpYourProfile"><div className="card-box-footer"></div></Link>
 						</div>
 					</div>
 
@@ -57,7 +57,7 @@ export function EmployeeHomePage(props) {
 							<div className="icon">
 								<img src={calendarIcon} alt="calendar icon" />
 							</div>
-							<Link to="/Employeehomepage/EmpAppointments"><div className="card-box-footer">View More</div></Link>
+							<Link to="/Employeehomepage/EmpAppointments"><div className="card-box-footer"></div></Link>
 						</div>
 					</div>
 					<div className="col-lg-4 col-sm-6">
@@ -68,7 +68,7 @@ export function EmployeeHomePage(props) {
 							<div className="icon">
 								<img src={videoIcon} alt="video icon" />
 							</div>
-							<Link to="/EmployeeHomePage/empvideocall"><div className="card-box-footer">View More</div></Link>
+							<Link to="/EmployeeHomePage/empvideocall"><div className="card-box-footer"></div></Link>
 						</div>
 					</div>
 					<div className="col-lg-4 col-sm-6">
@@ -79,7 +79,7 @@ export function EmployeeHomePage(props) {
 							<div className="icon">
 								<img src={chatIcon} alt="chat icon" />
 							</div>
-							<Link to="/EmployeeHomePage/empchat"><div className="card-box-footer">View More</div></Link>
+							<Link to="/EmployeeHomePage/empchat"><div className="card-box-footer"></div></Link>
 						</div>
 					</div>
 					<div className="col-lg-4 col-sm-6">
@@ -90,7 +90,7 @@ export function EmployeeHomePage(props) {
 							<div className="icon">
 								<img src={documentsIcon} alt="documents icon" />
 							</div>
-							<Link to="/Employeehomepage/EmpDocuments"><div className="card-box-footer">View More</div></Link>
+							<Link to="/Employeehomepage/EmpDocuments"><div className="card-box-footer"></div></Link>
 						</div>
 					</div>
 				</div>

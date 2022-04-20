@@ -50,6 +50,13 @@
     width: 100%;
     text-decoration: none;
 }
+.card-box-footer{
+    height: 100%;
+    opacity: 0;
+}
+.card-box-footer:hover{
+    opacity: 50;
+}
 
 .card-box:hover .card-box-footer {
     background: rgba(0, 0, 0, 0.3);

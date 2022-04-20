@@ -45,7 +45,7 @@ export function CustomerHomePage(props) {
 							<div className="icon">
 								<img src={accountIcon} alt="account icon" />
 							</div>
-							<Link to="/customerhomepage/yourprofile"><div className="card-box-footer">View More</div></Link>
+							<Link to="/customerhomepage/yourprofile"><div className="card-box-footer"></div></Link>
 						</div>
 					</div>
 
@@ -57,7 +57,7 @@ export function CustomerHomePage(props) {
 							<div className="icon">
 								<img src={calendarIcon} alt="calendar icon" />
 							</div>
-							<Link to="/customerhomepage/appointments"><div className="card-box-footer">View More</div></Link>
+							<Link to="/customerhomepage/appointments"><div className="card-box-footer"></div></Link>
 						</div>
 					</div>
 					<div className="col-lg-4 col-sm-6">
@@ -68,7 +68,7 @@ export function CustomerHomePage(props) {
 							<div className="icon">
 								<img src={videoIcon} alt="video icon" />
 							</div>
-							<Link to="/customerhomepage/videocall"><div className="card-box-footer">View More</div></Link>
+							<Link to="/customerhomepage/videocall"><div className="card-box-footer"></div></Link>
 						</div>
 					</div>
 					<div className="col-lg-4 col-sm-6">
@@ -79,7 +79,7 @@ export function CustomerHomePage(props) {
 							<div className="icon">
 								<img src={chatIcon} alt="chat icon" />
 							</div>
-							<Link to="/customerhomepage/chat"><div className="card-box-footer">View More</div></Link>
+							<Link to="/customerhomepage/chat"><div className="card-box-footer"></div></Link>
 						</div>
 					</div>
 					<div className="col-lg-4 col-sm-6">
@@ -90,7 +90,7 @@ export function CustomerHomePage(props) {
 							<div className="icon">
 								<img src={documentsIcon} alt="documents icon" />
 							</div>
-							<Link to="/customerhomepage/documents"><div className="card-box-footer">View More</div></Link>
+							<Link to="/customerhomepage/documents"><div className="card-box-footer"></div></Link>
 						</div>
 					</div>
 				</div>

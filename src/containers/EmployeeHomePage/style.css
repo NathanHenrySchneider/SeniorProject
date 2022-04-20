@@ -158,6 +158,14 @@ input.form-control{
     opacity: 0.4;
 }
 
+.card-box-footer{
+  height: 100%;
+  opacity: 0;
+}
+.card-box-footer:hover{
+  opacity: 50;
+}
+
 .card-box .card-box-footer {
     position: absolute;
     left: 0px;
