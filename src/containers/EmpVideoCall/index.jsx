@@ -93,7 +93,7 @@ export function EmpVideoCall(props) {
       }, []);
     
     useEffect(() => {
-        if (composeTo === "Doctor Smith") {
+        if (email === "doctor@doctor") {
             setZoomLink(zoom1);
         } else {
             setZoomLink(zoom2);
