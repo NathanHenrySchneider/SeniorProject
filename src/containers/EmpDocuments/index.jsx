@@ -34,6 +34,7 @@ export function EmpDocuments(props) {
     const [showSuccess, setShowSuccess] = useState(false);
     const [patientList, setPatientList] = useState(null);
     const [fullName, setFullName] = useState("");
+    const [preview, setPreview] = useState({})
     let patients = [];
 
     const handleClose = () => setShow(false);
@@ -43,8 +44,6 @@ export function EmpDocuments(props) {
         setUploaded(false)
     }
 
-
-    //submits for user 22 currently. (patient@patient)
     const handleSubmit = (e) => {
         e.preventDefault();
         filesUploaded.forEach((link) => {
@@ -59,6 +58,27 @@ export function EmpDocuments(props) {
             })
         setDescription("")
         setShowSuccess(true)
+    }
+
+    const handleSearch = (selectedPatientID, e) => {
+        e.preventDefault();
+        console.log(selectedPatientID)
+        axios.get(`http://localhost:3001/documents/${selectedPatientID}`, { withCredentials: true })
+            .then((response) => {
+                setReports(response.data)
+                console.log(reports)
+    
+            }) 
+            .catch((err) => {
+                console.log(err.message)
+            })
+
+    }
+
+    const handleClick = (doc, e) => {
+        e.preventDefault();
+        setPreview(doc)
+        setShow(true)
     }
 
     const handleDescriptionChange = (e) => {
@@ -107,7 +127,7 @@ export function EmpDocuments(props) {
       }, []);
 
     const [selectedPatientID, setSelectedPatientID] = useState(null);
-    const [selectedPatientName, setSelectedPatientName] = useState(null);
+    
 
     return (<>
         <EmpNavBar email={fullName} />
@@ -189,21 +209,62 @@ export function EmpDocuments(props) {
                     <Col sm={10}>
                         <Form.Select 
                             aria-label=""
-                            onChange={(e) => {setSelectedPatientID(e.target.value.split("-")[0]); setSelectedPatientName(e.target.value.split("-")[1])}}
-                        >
+                            onChange={(e) => {setSelectedPatientID(e.target.value)}} >
+                            {console.log(selectedPatientID)}
                             <option>Current Patients</option>
                             {patientList
                             ? patientList.map((patient) => (
-                                <option key={patient.id} value={patient.name}>{patient.name}</option>
+                                <option key={patient.id} value={patient.id}>{patient.name}</option>
                             ))
                             : null} 
                         </Form.Select>  
+                        
                     </Col>
                 </Form.Group>
 
-        <Button variant="success" onClick={handleShow}>Search</Button>
+        <Button variant="success"
+                onClick={(e) => handleSearch(selectedPatientID,e)}>Search</Button>
+         </div>
+         {reports.length === 0 ? <h3 className="text-center mb-3 mt-4"></h3>
+            :<>
+            <h3 className="text-center mb-3 mt-4">Selected Patient's Reports</h3>
+            <table className="table mt-5 text-center">
+                <thead>
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>Description</th>
+                        <th>Document Link</th>
+                        <th>Preview</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {reports.map((report) => (
+                        <tr key={report.date_time}>
+                            <td>{formatDate(report.date_time)}</td>
+                            <td>{report.description}</td>
+                            <td><a href = {report.link} target ="_blank" rel ="noreferer noopener noreferrer">Open in new tab</a></td>
+                            <td><Button onClick = {(e) => handleClick(report, e)}>Preview</Button></td>
+                        </tr>
+                    ))}    
+                </tbody>
+            </table>
+            <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>Document Preview</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+            <iframe title = {preview.description} src = {preview.link} height = "400px" style = {{margin:'0 auto', display:'block'}}/>
+            </Modal.Body>
+        </Modal>
+            </>
+            }
+            
 
-        <Modal 
+        <div>
+
+        </div>
+
+        {/* <Modal 
         show={show} 
         onHide={handleClose}
         size="lg"
@@ -244,8 +305,8 @@ export function EmpDocuments(props) {
           </Button>
           
         </Modal.Footer>
-      </Modal>
-        </div>
+      </Modal> */}
+        
         </>
     );
 }
