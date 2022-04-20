@@ -179,6 +179,7 @@ export function EmpChat(props){
             message: e.target[0].value
          }).then(e.target[0].value = "").then(setShow(false))
          .catch(err => console.log(err))
+         window.location.reload(true);
     }
     const handleModalSubmitPatient = (e) =>{
         e.preventDefault();
@@ -190,6 +191,7 @@ export function EmpChat(props){
             message: e.target[0].value
          }).then(e.target[0].value = "").then(setShowDocModal(false))
          .catch(err => console.log(err))
+         window.location.reload(true);
     }
     const handleSubmit = (e) =>{
         e.preventDefault();
