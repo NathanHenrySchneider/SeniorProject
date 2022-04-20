@@ -38,7 +38,7 @@ var zoom2 = "https://us05web.zoom.us/j/3481873040?pwd=eVp2ZDI5MEdwS2NZc25BN0xBTG
 
 export function EmpVideoCall(props) {
     const [email, setEmail] = useState('Not logged in');
-    const [joinMeeting, setJoinMeeting] = useState(false);
+    //const [joinMeeting, setJoinMeeting] = useState(false);
     // const [email, setEmail] = useState('Not logged in');
     const [userList, setUserList] = useState([])
     const [show, setShow] = useState(false);
@@ -47,6 +47,7 @@ export function EmpVideoCall(props) {
     const [curTime, setCurTime] = useState();
     const [curDate, setCurDate] = useState();
     const [zoomLink, setZoomLink] = useState();
+    const [checked, setChecked] = useState(false);
 
     useEffect(() => {
         axios.defaults.withCredentials = true;
@@ -112,6 +113,17 @@ export function EmpVideoCall(props) {
             setShow(true);
         },100)
     }
+    const handleCheck = () => {
+        setChecked(!checked);
+    }
+    
+    const joinMeeting = () => {
+        if (composeTo) {
+            window.location.href = 'https://us04web.zoom.us/j/77685262436?pwd=I0qcN5jBMhT-sdQT0d9nVVS5kYbOwu.1';
+        } else {
+            alert("Please select your patient");
+        }
+    }
 
     index = -1
 
@@ -170,16 +182,10 @@ export function EmpVideoCall(props) {
                     <h6 className="text-muted f-w-400">{curDate}</h6>
                 </div>
                 
-                <div className="zoomDiv" >
-                    {joinMeeting ? (
-                        <Zoom />
-                    ) : (
-                        // <button style = {{border: '2px solid #abc'}} onClick={() => setJoinMeeting(true)}>Join Meeting</button>
-                        <a id="Join meeting" href={zoomLink}>Join Call</a>
-                    )}
-                </div>
-               
-                {/* <button className="btn btn-primary" type="submit">Launch Meeting</button> */}
+                <div> <label>
+                    <input type="checkbox" checked={checked} onChange={handleCheck}/> By checking this box, you agree to the company's Privacy Policy for electronic health care.<div>Recording a session must be agreed by all participants.</div>
+                </label></div>
+                {(checked) ? <button class="btn btn-primary" type="submit" onClick={joinMeeting}>Join Call</button> : <div></div>}
             </div>
         </PageContainer>
     </>

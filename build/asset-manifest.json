@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.50292794.css",
-    "main.js": "/static/js/main.7dcaa907.js",
+    "main.css": "/static/css/main.a8433eff.css",
+    "main.js": "/static/js/main.0b78b082.js",
     "static/js/787.02b2344c.chunk.js": "/static/js/787.02b2344c.chunk.js",
     "static/media/zoom_logo.png": "/static/media/zoom_logo.fa16b1a95a169a223d7e.png",
     "static/media/calendar_w.png": "/static/media/calendar_w.41cd2572c3e0c3ea3003.png",
@@ -10,12 +10,12 @@
     "static/media/chat_w.png": "/static/media/chat_w.eeb67afbe8d466f1bac5.png",
     "static/media/video_w.png": "/static/media/video_w.55a80ef93ea556dc1a2d.png",
     "index.html": "/index.html",
-    "main.50292794.css.map": "/static/css/main.50292794.css.map",
-    "main.7dcaa907.js.map": "/static/js/main.7dcaa907.js.map",
+    "main.a8433eff.css.map": "/static/css/main.a8433eff.css.map",
+    "main.0b78b082.js.map": "/static/js/main.0b78b082.js.map",
     "787.02b2344c.chunk.js.map": "/static/js/787.02b2344c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.50292794.css",
-    "static/js/main.7dcaa907.js"
+    "static/css/main.a8433eff.css",
+    "static/js/main.0b78b082.js"
   ]
 }
