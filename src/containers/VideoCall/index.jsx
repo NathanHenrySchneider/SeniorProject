@@ -78,8 +78,10 @@ export function VideoCall(props) {
     useEffect(() => {
         if (composeTo === "Doctor Smith") {
             setZoomLink(zoom1);
+            console.log("zoom1");
         } else {
             setZoomLink(zoom2);
+            console.log("zoom2");
         }
     })
 
