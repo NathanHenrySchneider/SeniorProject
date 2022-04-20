@@ -14,6 +14,7 @@ import ScrollableFeed from 'react-scrollable-feed'
 import Collapse from 'react-bootstrap/Collapse'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Badge from 'react-bootstrap/Badge'
+import Alert from 'react-bootstrap/Alert'
 
 let index
 let messageArr = [];
@@ -212,7 +213,15 @@ export function EmpChat(props){
         <EmpNavBar email={fullName} />
         <h1 className="text-center mb-3 mt-4">{fullName}'s Message Portal</h1>
         {(isDoctor) ? <ListGroup as="ol" numbered style = {{maxWidth: '500px', margin: '0 auto'}}>
-        <small style = {{margin: '-15px auto 8px auto', fontSize: 'large', display:'block', width:'fit-content'}}>Start a conversation with your patients:</small>
+        {(isDoctor && patients.length === 0) ? 
+        <Alert variant="danger">
+        <Alert.Heading>No patients found!</Alert.Heading>
+            <p>
+            Please contact your nurse to put your patients into the system.
+            </p>
+        </Alert>
+        : <></>}
+        {(isDoctor && patients.length !== 0) ? <small style = {{margin: '-15px auto 8px auto', fontSize: 'large', display:'block', width:'fit-content'}}>Start a conversation with your patients:</small> : <></>}
           {patients.map((user) => {
               return(
               <ListGroup.Item
@@ -278,7 +287,10 @@ export function EmpChat(props){
         <br/>
         <hr style = {{width:'500px', margin:'0 auto'}}/>
         <br/>
-        {(activeUsers.length === 0) ? <h2 style = {{textAlign: 'center'}}>Click above to start a conversation!</h2>
+        {/* {(isDoctor && patients.length === 0) */}
+        {(activeUsers.length === 0) ? <h2 style = {{textAlign: 'center'}}>
+        {(isDoctor && patients.length !== 0) ? <>Click above to start a conversation!</> : <></>}
+            </h2>
         : 
         <small style = {{margin: '-15px auto 8px auto', fontSize: 'large', display:'block', width:'fit-content'}}>Open conversations:</small>
         }
