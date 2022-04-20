@@ -152,9 +152,8 @@ export function VideoCall(props) {
                     <h6 class="text-muted f-w-400">{curDate}</h6>
                 </div>
                 <div> <label>
-                    <input type="checkbox" checked={checked} onChange={handleCheck}/> Compliance with the Privacy Rule for electronic health care transaction, please notice to the members of the meeting when it is recorded by any devices.
+                    <input type="checkbox" checked={checked} onChange={handleCheck}/> By checking this box, you agree to the company's Privacy Policy for electronic health care.<div>Recording a session must be agreed by all participants.</div>
                 </label></div>
-               
                 {(checked) ? <button class="btn btn-primary" type="submit" onClick={joinMeeting}>Join Call</button> : <div></div>}
 
             </div>
