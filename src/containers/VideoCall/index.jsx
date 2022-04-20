@@ -13,6 +13,11 @@ import Badge from 'react-bootstrap/Badge'
 let index;
 let set = new Set();
 var dateTime = new Date();
+var zoom1 = "https://us04web.zoom.us/j/3839197009?pwd=O5yDRmWmm9QnV64e_bnzUZr4_pcLlG.1";
+// This is Nate's personal zoom
+var zoom2 = "https://us05web.zoom.us/j/3481873040?pwd=eVp2ZDI5MEdwS2NZc25BN0xBTGNNQT09";
+// Email ksudoctorone@gmail.com
+// Password Doctor123
 
 export function VideoCall(props) {
     const [email, setEmail] = useState('Not logged in');
@@ -23,6 +28,7 @@ export function VideoCall(props) {
     const [curTime, setCurTime] = useState();
     const [curDate, setCurDate] = useState();
     const [checked, setChecked] = useState(false);
+    const [zoomLink, setZoomLink] = useState();
 
     useEffect(() => {
         axios.defaults.withCredentials = true;
@@ -69,6 +75,14 @@ export function VideoCall(props) {
         document.title = "Video Call";  
       }, []);
 
+    useEffect(() => {
+        if (composeTo === "Doctor Smith") {
+            setZoomLink(zoom1);
+        } else {
+            setZoomLink(zoom2);
+        }
+    })
+
     const handleClick = (e) => {
         let targetIndex;
         if (e.target.id === "") targetIndex = e.target.parentElement.id;
@@ -87,7 +101,7 @@ export function VideoCall(props) {
     
     const joinMeeting = () => {
         if (composeTo) {
-            window.location.href = 'https://us04web.zoom.us/j/77685262436?pwd=I0qcN5jBMhT-sdQT0d9nVVS5kYbOwu.1';
+            window.location.href = zoomLink;
         } else {
             alert("Please select your doctor");
         }

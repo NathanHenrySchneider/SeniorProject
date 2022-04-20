@@ -28,7 +28,11 @@ import Button from 'react-bootstrap/Button'
 let index;
 let set = new Set();
 var dateTime = new Date();
-
+var zoom1 = "https://us04web.zoom.us/j/3839197009?pwd=O5yDRmWmm9QnV64e_bnzUZr4_pcLlG.1";
+// This is Nate's personal zoom
+var zoom2 = "https://us05web.zoom.us/j/3481873040?pwd=eVp2ZDI5MEdwS2NZc25BN0xBTGNNQT09";
+// Email ksudoctorone@gmail.com
+// Password Doctor123
 
 
 
@@ -42,6 +46,7 @@ export function EmpVideoCall(props) {
     const [open, setOpen] = useState(false);
     const [curTime, setCurTime] = useState();
     const [curDate, setCurDate] = useState();
+    const [zoomLink, setZoomLink] = useState();
 
     useEffect(() => {
         axios.defaults.withCredentials = true;
@@ -87,6 +92,14 @@ export function EmpVideoCall(props) {
         document.title = "Video Call";  
       }, []);
     
+    useEffect(() => {
+        if (composeTo === "Doctor Smith") {
+            setZoomLink(zoom1);
+        } else {
+            setZoomLink(zoom2);
+        }
+    })
+
     const handleClick = (e) => {
         let targetIndex;
         if (e.target.id === "") targetIndex = e.target.parentElement.id;
@@ -160,7 +173,7 @@ export function EmpVideoCall(props) {
                         <Zoom />
                     ) : (
                         // <button style = {{border: '2px solid #abc'}} onClick={() => setJoinMeeting(true)}>Join Meeting</button>
-                        <a id="Join meeting" href="https://us04web.zoom.us/j/77685262436?pwd=I0qcN5jBMhT-sdQT0d9nVVS5kYbOwu.1">Join Call</a>
+                        <a id="Join meeting" href={zoomLink}>Join Call</a>
                     )}
                 </div>
                
