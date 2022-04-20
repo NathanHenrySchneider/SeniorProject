@@ -119,7 +119,7 @@ export function EmpVideoCall(props) {
     
     const joinMeeting = () => {
         if (composeTo) {
-            window.location.href = 'https://us04web.zoom.us/j/77685262436?pwd=I0qcN5jBMhT-sdQT0d9nVVS5kYbOwu.1';
+            window.location.href = {zoomLink};
         } else {
             alert("Please select your patient");
         }
