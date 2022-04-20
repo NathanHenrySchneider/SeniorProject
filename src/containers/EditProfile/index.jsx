@@ -102,7 +102,6 @@ export function EditProfile(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("YUUUUUUUU");
 
         axios
         .put(
