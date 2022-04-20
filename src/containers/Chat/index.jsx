@@ -33,6 +33,8 @@ export function Chat(props){
     const [fullName, setFullName] = useState();
     const [mapDone, setMapDone] = useState(false);
     const [userList, setUserList] = useState([])
+    const [assignedDocId, setAssignedDocId] = useState()
+    const [assignedDocName, setAssignedDocName] = useState()
     const [show, setShow] = useState(false);
     const[composeTo, setComposeTo] = useState();
     const [open, setOpen] = useState(false);
@@ -47,31 +49,7 @@ export function Chat(props){
             return false;
         })
     }, [fetched])
-   
 
-    useEffect(()=>{
-        axios.defaults.withCredentials = true;
-
-        axios
-        .get("http://localhost:3001/all-users")
-        .then((response) =>{
-            let arr = [];
-            response.data.forEach((element) => {
-                if(!set.has(element.user_id) && element.user_type !== "patient"){
-                    // Uncomment to implement assigned doctor
-                // if(!set.has(element.user_id) && element.user_type !== "patient" && assignedDocId === element.user_id){
-                    arr.push({
-                        user_id : element.user_id,
-                        full_name: element.full_name,
-                        email: element.email,
-                        user_type: element.user_type
-                    })
-                }
-            })
-            setUserList(arr);
-            console.log(userList)
-        })
-    }, [])
 
     useEffect(() => {
         axios.defaults.withCredentials = true;
@@ -82,14 +60,20 @@ export function Chat(props){
             setEmail(response.data.email);
             setUserID(response.data.user_id);
             setFullName(response.data.full_name);
-            // Uncomment to implement assigned doctor
-            // setAssignedDocId(response.data.assigned_doctor_id);
-            // console.log("Assigned doc id: " + String(assignedDocId));
+            setAssignedDocId(response.data.assigned_doctor_id);
         }).catch((err) => {
             console.log("CHP/index.jsx" + err);
         });
-
-    }, [userID])
+        if(assignedDocId){
+            axios.get(`http://localhost:3001/user/find/${assignedDocId}`, { withCredentials: true })
+            .then((response) => {
+                setAssignedDocName(response.data[0].full_name)
+            }).catch((err) => {
+                console.log("CHP/index.jsx" + err);
+            });
+        }
+    
+    }, [userID, assignedDocId])
     useEffect(()=>{
         axios
             .get("http://localhost:3001/messaging")
@@ -134,7 +118,6 @@ export function Chat(props){
         if (e.target.id === "") targetIndex = e.target.parentElement.id;
         else targetIndex = e.target.id;
         setComposeTo(targetIndex)
-        // console.log('---' + userList[targetIndex].full_name)
         setTimeout(()=>{
             setShow(true);
         },100)
@@ -149,11 +132,12 @@ export function Chat(props){
         .post("http://localhost:3001/messaging", 
         { 
             sender_id: userID,
-            recipient_id: userList[composeTo].user_id,
+            recipient_id: assignedDocId,
             message: e.target[0].value
          }).then(e.target[0].value = "").then(setShow(false))
          .catch(err => console.log(err))
     }
+
     const handleSubmit = (e) =>{
         e.preventDefault();
         setFetched(false);
@@ -172,49 +156,30 @@ export function Chat(props){
         <>
         <NavBar email={fullName} />
         <h1 className="text-center mb-3 mt-4">{fullName}'s Message Portal</h1>
-        <Button 
-            onClick={() => setOpen(!open)}
-            aria-controls="collapse"
-            aria-expanded={open}
-            style = {{margin:'0 auto', display:'block'}}>
-            {(open) ? 'Collapse List' : 'Compose new message' }</Button>
-            <br/>
-            {(open) ? <small style = {{margin: '-15px auto 8px auto', fontSize: 'large', display:'block', width:'fit-content'}}>
-                Select a user to start a conversation:</small> : <></>}
-        <Collapse in={open}>
-            <div id="collapse">
-            <ListGroup as="ol" numbered>
-                {userList.map((user) => {
-                    index++;
-                    return(
-                    <ListGroup.Item
-                        key = {index}
-                        id = {index}
-                        action
-                        as="li"
-                        onClick = {(e)=>handleClick(e)}
-                        className="d-flex justify-content-between align-items-start"
-                    >
-                        <div className="ms-2 me-auto">
-                        <div className="fw-bold" id = {user.user_id}>{user.full_name}</div>
-                        {user.email}
-                        </div>
-                        <Badge bg="primary" pill>
-                        {user.user_type} #{user.user_id}
-                        </Badge>
-                    </ListGroup.Item>
-                    )
-                })}
 
-            </ListGroup>
-            </div>
-        </Collapse>
         <hr style = {{width:'500px', margin:'0 auto'}}/>
         <br/>
-        {(activeUsers.length === 0) ? <h2 style = {{textAlign: 'center'}}>Click above to start a conversation!</h2>
-        : 
-        <small style = {{margin: '-15px auto 8px auto', fontSize: 'large', display:'block', width:'fit-content'}}>Open conversations:</small>
+        
+        {(activeUsers.length === 0 ) 
+            ? 
+            <> 
+            {(!assignedDocId) 
+                ? <h2 style = {{textAlign: 'center'}}>Doctor not assigned. Please contact us.</h2>
+                : <> 
+                <h2 style = {{textAlign: 'center'}}>
+                Say Hi to {assignedDocName}! 
+                </h2>
+                <Button onClick={handleClick} style = {{margin:'0 auto', display:'block'}}>Compose new message</Button>
+
+                </>
+            }
+            </>
+            : 
+            <small style = {{margin: '-15px auto 8px auto', fontSize: 'large', display:'block', width:'fit-content'}}>
+            Open conversation:
+            </small> 
         }
+        
         {activeUsers.map((id) => (
             <Card key = {id} id = {id} className = "message-box">
             <h3 style = {{'textAlign' : 'center'}}>{nameMap.get(id)}</h3>
@@ -251,7 +216,7 @@ export function Chat(props){
                 <Modal.Title>New Message</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {(userList[composeTo] !== undefined) ? <h3>Say Hi to {userList[composeTo].full_name}</h3> : <></>}
+                {(assignedDocName !== undefined) ? <h3>Say Hi to {assignedDocName}</h3> : <></>}
                  <form onSubmit = {(e) => handleModalSubmit(e)}>
                 <InputGroup style = {{'bottom': '-17px'}} className="mb-3">
                     <FormControl
