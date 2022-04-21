@@ -294,7 +294,9 @@ export function Appointments(props) {
           selection={schedule}
           numDays={5}
           minTime={9}
-          maxTime={18}
+          // Original Time
+          // maxTime = {18}
+          maxTime={19}
         />
         {selectedDoctorID ? 
         <Button variant="primary" onClick={handleShow}>
