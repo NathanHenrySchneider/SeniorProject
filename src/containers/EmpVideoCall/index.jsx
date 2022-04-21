@@ -118,8 +118,9 @@ export function EmpVideoCall(props) {
     }
     
     const joinMeeting = () => {
+        // console.log(zoomLink)
         if (composeTo) {
-            window.location.href = {zoomLink};
+            window.location.href = zoomLink;
         } else {
             alert("Please select your patient");
         }
