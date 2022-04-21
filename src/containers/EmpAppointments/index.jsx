@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Children } from "react";
 import Button from "react-bootstrap/Button";
 import { PageContainer } from "../../components/pageContainer";
 import { EmpNavBar } from "../../components/Empnavbar";
@@ -35,6 +35,7 @@ export function EmpAppointments(props) {
     document.title = "Appointments";  
   }, []);
 
+  console.log("All appot: ", allAppointment)
   return (
     <>
       <EmpNavBar email={email} />
@@ -69,16 +70,18 @@ export function EmpAppointments(props) {
               {allAppointment
                 ?
                 allAppointment.sort((a, b) => b.appt_date < a.appt_date ? 1: -1).sort((a, b) => b.appt_start < a.appt_start ? 1: -1).map((item) => (
-                    <tr key={item.appt_id}>
+                  item.confirmed == true ?
+                    (<tr key={item.appt_id}>
                       <th scope="row">{item.appt_id}</th>
                       <th scope="row">{item.patient_id}</th>
                       <th scope="row">{item.patient_name}</th>
                       <td>{item.appt_date.split("T")[0]}</td>
                       <td>{item.appt_start.split("+")[0]}</td>
                       <td>{item.confirmed ? `True` : `False`}</td>
-                    </tr>
+                    </tr>) : null
                   ))
-                : null}
+                : null
+                }
             </tbody>
           </table>
         </UserAppointmentContainer>
@@ -103,49 +106,6 @@ const PseudoBorder = styled.h1`
     background: #00f;
   }
 `;
-
-// const FormContainer = styled.form`
-//   display: flex;
-//   flex-direction: column;
-//   width: 90vw;
-//   margin-left: 40px;
-// `;
-// const Title = styled.h1`
-//   font-size: 16px;
-//   width: 200px;
-// `;
-
-// const Input = styled.input`
-//   width: 220px;
-//   margin-bottom: 5px;
-// `;
-// const ReasonInput = styled.textarea`
-//   width: 300px;
-//   height: 100px;
-//   margin-bottom: 5px;
-// `;
-
-// const Select = styled.select`
-//   padding: 5px;
-//   width: 150px;
-// `;
-
-// const Option = styled.option``;
-
-// const Submit = styled.button`
-//   display: flex;
-//   justify-content: center;
-//   width: 100px;
-//   border-radius: 5px;
-//   margin-top: 30px;
-//   background-color: white;
-//   transition: all 0.5s ease;
-
-//   &:hover {
-//     background-color: #e9f5f5;
-//     transform: scale(1.02);
-//   }
-// `;
 
 const UserAppointmentContainer = styled.div`
   display: flex;

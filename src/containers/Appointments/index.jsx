@@ -15,6 +15,7 @@ export function Appointments(props) {
   const [userAppointment, setUserAppointment] = useState(null);
   const [show, setShow] = useState(false);
   const [doctorList, setDoctorList] = useState(null);
+  const [assignedDoctor, setAssignedDoctor] = useState("");
   let doctors = [];
 
   const handleClose = () => {
@@ -35,6 +36,7 @@ export function Appointments(props) {
         setUserID(response.data.user_id);
         setUserFullName(response.data.full_name);
         setUserAppointment(response.data.userAppointment);
+        setAssignedDoctor(response.data.assigned_doctor_id);
         getSchedule();
       })
       .catch((err) => {
@@ -278,7 +280,10 @@ export function Appointments(props) {
           {doctorList
             ? doctorList.map((doctor) => (
                 <Option key={doctor.id} value={doctor.id +"-"+ doctor.name}>
-                  {doctor.name}
+                  {doctor.id == assignedDoctor ? 
+                    doctor.name + " (Assign Doctor)": 
+                    doctor.name
+                  }
                 </Option>
               ))
             : null}
@@ -463,7 +468,7 @@ const ReasonInput = styled.textarea`
 
 const Select = styled.select`
   padding: 5px;
-  width: 150px;
+  width: 200px;
 `;
 
 const Option = styled.option``;
