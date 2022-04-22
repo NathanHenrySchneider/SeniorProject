@@ -5,26 +5,42 @@ import { EmpNavBar } from "../../components/Empnavbar";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-// import ScheduleSelector from "react-schedule-selector";
+import { Scheduler, DayView } from "@progress/kendo-react-scheduler";
+import parse from 'html-react-parser'
+import '@progress/kendo-theme-default/dist/all.css';
+
+
 
 export function EmpAppointments(props) {
   const [email, setEmail] = useState("Not logged in");
   const [userID, setUserID] = useState(null);
-  // const [schedule, setSchedule] = useState([]);
-  // const [updated, setUpdated] = useState(false);
+  const displayDate = new Date(new Date().toISOString())
   const [allAppointment, setAllAppointment] = useState(null);
   // const todayDate = new Date().toISOString().split("T")[0];
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
-
+    let arr = [];
     axios
       .post("http://localhost:3001/me", { withCredentials: true })
       .then((response) => {
         console.log("Doctor appt page me: ", response.data);
         setEmail(response.data.full_name);
         setUserID(response.data.user_id);
-        setAllAppointment(response.data.userAppointment);
+        response.data.userAppointment.forEach((appt) => {
+          let date = new Date(appt.appt_date)
+          let iso = new Date(new Date(date).setHours(date.getHours() + 1)).toISOString()
+          console.log(appt.appt_date + " " + iso)
+
+          arr.push({
+            id: appt.appt_id,
+            title: parse(`<a href = "#" style = "color:white;">Join Zoom meeting with {appt.patient_name}</a>`),
+            start: new Date(appt.appt_date),
+            //end date set start + 1 hour. could be changed later if the user uses new library.
+            end: new Date(iso)
+          })
+        })
+        setAllAppointment(arr);
       })
       .catch((err) => {
         console.log("CHP/index.jsx" + err);
@@ -41,7 +57,11 @@ export function EmpAppointments(props) {
       <EmpNavBar email={email} />
       <PageContainer>
         <PseudoBorder>Upcoming Appointments</PseudoBorder>
-        <UserAppointmentContainer>
+        <br/>
+        <Scheduler style = {{maxWidth: '700px'}} data={allAppointment} defaultDate={displayDate} timezone="Etc/UTC">
+          <DayView />
+        </Scheduler>
+        {/* <UserAppointmentContainer>
           <table className="table">
             <thead>
               <tr>
@@ -84,7 +104,7 @@ export function EmpAppointments(props) {
                 }
             </tbody>
           </table>
-        </UserAppointmentContainer>
+        </UserAppointmentContainer> */}
       </PageContainer>
     </>
   );
