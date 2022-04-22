@@ -34,7 +34,7 @@ export function EmpAppointments(props) {
 
           arr.push({
             id: appt.appt_id,
-            title: parse(`<a href = "#" style = "color:white;">Join Zoom meeting with {appt.patient_name}</a>`),
+            title: parse(`<a href = "#" style = "color:white;"><h4>Click to join the meeting with ${appt.patient_name}</h4></a>`),
             start: new Date(appt.appt_date),
             //end date set start + 1 hour. could be changed later if the user uses new library.
             end: new Date(iso)
