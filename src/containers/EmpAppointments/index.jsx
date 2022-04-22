@@ -9,8 +9,6 @@ import { Scheduler, DayView } from "@progress/kendo-react-scheduler";
 import parse from 'html-react-parser'
 import '@progress/kendo-theme-default/dist/all.css';
 
-
-
 export function EmpAppointments(props) {
   const [email, setEmail] = useState("Not logged in");
   const [userID, setUserID] = useState(null);
