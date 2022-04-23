@@ -76,7 +76,7 @@ export function VideoCall(props) {
       }, []);
 
     useEffect(() => {
-        if (composeTo === "Doctor Smith") {
+        if (composeTo === "doctor@doctor") {
             setZoomLink(zoom1);
             console.log("zoom1");
         } else {
@@ -90,7 +90,7 @@ export function VideoCall(props) {
         if (e.target.id === "") targetIndex = e.target.parentElement.id;
         else targetIndex = e.target.id;
         console.log("targetindex" + targetIndex)
-        setComposeTo(userList[targetIndex].full_name)
+        setComposeTo(userList[targetIndex].email)
         // console.log('---' + userList[targetIndex].full_name)
         setTimeout(()=>{
             setShow(true);

@@ -9,13 +9,19 @@ import { Scheduler, DayView, WeekView,AgendaView,TimelineView,MonthView } from "
 import parse from 'html-react-parser'
 import '@progress/kendo-theme-default/dist/all.css';
 
-
+var zoom1 = "https://us04web.zoom.us/j/3839197009?pwd=O5yDRmWmm9QnV64e_bnzUZr4_pcLlG.1";
+// This is Nate's personal zoom
+var zoom2 = "https://us05web.zoom.us/j/3481873040?pwd=eVp2ZDI5MEdwS2NZc25BN0xBTGNNQT09";
+// Email ksudoctorone@gmail.com
+// Password Doctor123
 
 export function EmpAppointments(props) {
   const [email, setEmail] = useState("Not logged in");
   const [userID, setUserID] = useState(null);
   const displayDate = new Date(new Date().toISOString())
   const [allAppointment, setAllAppointment] = useState(null);
+  const [zoomLink, setZoomLink] = useState();
+  const [userFullName, setUserFullName] = useState(null);
   // const todayDate = new Date().toISOString().split("T")[0];
 
 
@@ -26,9 +32,9 @@ export function EmpAppointments(props) {
       .post("http://localhost:3001/me", { withCredentials: true })
       .then((response) => {
         console.log("Doctor appt page me: ", response.data);
-        setEmail(response.data.full_name);
+        setEmail(response.data.email);
+        setUserFullName(response.data.full_name);
         setUserID(response.data.user_id);
-
         response.data.userAppointment.forEach((appt) => {
           let apptStartDateTime = appt.appt_date.split('T')[0]+ "T" + appt.appt_start.split('+')[0] + '.000Z'
           // console.log("apptStartDateTime: ",apptStartDateTime)
@@ -46,8 +52,13 @@ export function EmpAppointments(props) {
 
           arr.push({
             id: appt.appt_id,
+<<<<<<< HEAD
             title: parse(`<a href = "#" style = "color:white;"><h5>Click to join the meeting with ${appt.patient_name}</h5></a>`),
             start: startTime,
+=======
+            title: parse(`<a href = ${zoomLink} style = "color:white;"><h4>Click to join the meeting with ${appt.patient_name}</h4></a>`),
+            start: new Date(appt.appt_date),
+>>>>>>> dc2dc03472dd2d6fb894bc721223e4520ef7c411
             //end date set start + 1 hour. could be changed later if the user uses new library.
             end: endTime
           })
@@ -63,12 +74,26 @@ export function EmpAppointments(props) {
     document.title = "Appointments";  
   }, []);
 
+<<<<<<< HEAD
   console.log("Doctor appt page- allAppointment: ", allAppointment)
   // console.log("Doctor appt page- displayDate:", displayDate)
 
+=======
+  useEffect(() => {
+    if (email === "doctor@doctor") {
+        setZoomLink(zoom1);
+        console.log("zoom1");
+    } else {
+        setZoomLink(zoom2);
+        console.log("zoom2");
+    }
+  });   
+
+  console.log("All appot: ", allAppointment)
+>>>>>>> dc2dc03472dd2d6fb894bc721223e4520ef7c411
   return (
     <>
-      <EmpNavBar email={email} />
+      <EmpNavBar email={userFullName} />
       <PageContainer>
         <PseudoBorder>Upcoming Appointments</PseudoBorder>
         <br/>
