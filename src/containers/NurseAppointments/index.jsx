@@ -247,15 +247,10 @@ export function NurseAppointments(props) {
           onChange={handleChange}
           selection={schedule}
           numDays={5}
-<<<<<<< HEAD
-          minTime = {9}
-          maxTime={19}
-=======
           minTime = {8}
           // Original Time
           // maxTime = {18}
           maxTime={17}
->>>>>>> dc2dc03472dd2d6fb894bc721223e4520ef7c411
         />
         {selectedDoctorID ? (
           <Button variant="primary" onClick={updateDoctorSchedule}>

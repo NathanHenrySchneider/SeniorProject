@@ -52,13 +52,8 @@ export function EmpAppointments(props) {
 
           arr.push({
             id: appt.appt_id,
-<<<<<<< HEAD
-            title: parse(`<a href = "#" style = "color:white;"><h5>Click to join the meeting with ${appt.patient_name}</h5></a>`),
-            start: startTime,
-=======
             title: parse(`<a href = ${zoomLink} style = "color:white;"><h4>Click to join the meeting with ${appt.patient_name}</h4></a>`),
-            start: new Date(appt.appt_date),
->>>>>>> dc2dc03472dd2d6fb894bc721223e4520ef7c411
+            start: startTime,
             //end date set start + 1 hour. could be changed later if the user uses new library.
             end: endTime
           })
@@ -74,11 +69,6 @@ export function EmpAppointments(props) {
     document.title = "Appointments";  
   }, []);
 
-<<<<<<< HEAD
-  console.log("Doctor appt page- allAppointment: ", allAppointment)
-  // console.log("Doctor appt page- displayDate:", displayDate)
-
-=======
   useEffect(() => {
     if (email === "doctor@doctor") {
         setZoomLink(zoom1);
@@ -90,7 +80,6 @@ export function EmpAppointments(props) {
   });   
 
   console.log("All appot: ", allAppointment)
->>>>>>> dc2dc03472dd2d6fb894bc721223e4520ef7c411
   return (
     <>
       <EmpNavBar email={userFullName} />
