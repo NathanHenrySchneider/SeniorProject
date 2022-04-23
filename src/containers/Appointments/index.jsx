@@ -7,6 +7,13 @@ import axios from "axios";
 // import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Button, Modal } from "react-bootstrap";
 import ScheduleSelector from "react-schedule-selector";
+import parse from 'html-react-parser';
+import { Scheduler, DayView } from "@progress/kendo-react-scheduler";
+var zoom1 = "https://us04web.zoom.us/j/3839197009?pwd=O5yDRmWmm9QnV64e_bnzUZr4_pcLlG.1";
+// This is Nate's personal zoom
+var zoom2 = "https://us05web.zoom.us/j/3481873040?pwd=eVp2ZDI5MEdwS2NZc25BN0xBTGNNQT09";
+// Email ksudoctorone@gmail.com
+// Password Doctor123
 
 export function Appointments(props) {
   const [email, setEmail] = useState("Not logged in");
@@ -16,6 +23,8 @@ export function Appointments(props) {
   const [show, setShow] = useState(false);
   const [doctorList, setDoctorList] = useState(null);
   const [assignedDoctor, setAssignedDoctor] = useState("");
+  const [allAppointment, setAllAppointment] = useState(null);
+  const displayDate = new Date(new Date().toISOString());
   let doctors = [];
 
   const handleClose = () => {
@@ -27,6 +36,7 @@ export function Appointments(props) {
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
+    let arr = [];
 
     axios
       .post("http://localhost:3001/me", { withCredentials: true })
@@ -38,6 +48,28 @@ export function Appointments(props) {
         setUserAppointment(response.data.userAppointment);
         setAssignedDoctor(response.data.assigned_doctor_id);
         getSchedule();
+        response.data.userAppointment.forEach((appt) => {
+          let date = new Date(appt.appt_date)
+          let iso = new Date(new Date(date).setHours(date.getHours() + 1)).toISOString()
+          console.log(appt.appt_date + " " + iso)
+          let tempZoomLink = "";
+          if (appt.doctor_id === 21) {
+            tempZoomLink = zoom1;
+            console.log("zoom1");
+          } else {
+            tempZoomLink = zoom2
+            console.log("zoom2");
+        }
+
+          arr.push({
+            id: appt.appt_id,
+            title: parse(`<a href = ${tempZoomLink} style = "color:white;"><h4>Click to join the meeting with ${appt.doctor_name}</h4></a>`),
+            start: new Date(appt.appt_date),
+            //end date set start + 1 hour. could be changed later if the user uses new library.
+            end: new Date(iso)
+          })
+        })
+        setAllAppointment(arr);
       })
       .catch((err) => {
         console.log("customer homepage index.jsx" + err);
@@ -269,6 +301,11 @@ export function Appointments(props) {
     <>
       <NavBar email={userFullName} />
       <PageContainer>
+      <br/>
+        <Scheduler style = {{maxWidth: '700px'}} data={allAppointment} defaultDate={displayDate} timezone="Etc/UTC">
+          <DayView />
+        </Scheduler>
+        <br/>
         <PseudoBorder> Available Timeslot:</PseudoBorder>
 
         <Select
