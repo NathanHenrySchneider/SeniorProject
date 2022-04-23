@@ -5,7 +5,7 @@ import { EmpNavBar } from "../../components/Empnavbar";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { Scheduler, DayView } from "@progress/kendo-react-scheduler";
+import { Scheduler, DayView, WeekView,AgendaView,TimelineView,MonthView } from "@progress/kendo-react-scheduler";
 import parse from 'html-react-parser'
 import '@progress/kendo-theme-default/dist/all.css';
 
@@ -18,6 +18,7 @@ export function EmpAppointments(props) {
   const [allAppointment, setAllAppointment] = useState(null);
   // const todayDate = new Date().toISOString().split("T")[0];
 
+
   useEffect(() => {
     axios.defaults.withCredentials = true;
     let arr = [];
@@ -27,17 +28,28 @@ export function EmpAppointments(props) {
         console.log("Doctor appt page me: ", response.data);
         setEmail(response.data.full_name);
         setUserID(response.data.user_id);
+
         response.data.userAppointment.forEach((appt) => {
-          let date = new Date(appt.appt_date)
-          let iso = new Date(new Date(date).setHours(date.getHours() + 1)).toISOString()
-          console.log(appt.appt_date + " " + iso)
+          let apptStartDateTime = appt.appt_date.split('T')[0]+ "T" + appt.appt_start.split('+')[0] + '.000Z'
+          // console.log("apptStartDateTime: ",apptStartDateTime)
+          /**
+           * console.log prints both startTime and endTime off by 4 hours.
+           * On Scheduler array, it is also off by 4 hours.
+           * But it shows correctly in Scheduler UI.
+           */
+          let startTime= new Date(apptStartDateTime);
+          startTime.setHours(startTime.getHours());
+          let endTime = new Date(apptStartDateTime);
+          endTime.setHours(endTime.getHours()+1);
+          // console.log('startTime: ', startTime)
+          // console.log("endTime: ", endTime)
 
           arr.push({
             id: appt.appt_id,
-            title: parse(`<a href = "#" style = "color:white;"><h4>Click to join the meeting with ${appt.patient_name}</h4></a>`),
-            start: new Date(appt.appt_date),
+            title: parse(`<a href = "#" style = "color:white;"><h5>Click to join the meeting with ${appt.patient_name}</h5></a>`),
+            start: startTime,
             //end date set start + 1 hour. could be changed later if the user uses new library.
-            end: new Date(iso)
+            end: endTime
           })
         })
         setAllAppointment(arr);
@@ -51,60 +63,22 @@ export function EmpAppointments(props) {
     document.title = "Appointments";  
   }, []);
 
-  console.log("All appot: ", allAppointment)
+  console.log("Doctor appt page- allAppointment: ", allAppointment)
+  // console.log("Doctor appt page- displayDate:", displayDate)
+
   return (
     <>
       <EmpNavBar email={email} />
       <PageContainer>
         <PseudoBorder>Upcoming Appointments</PseudoBorder>
         <br/>
-        <Scheduler style = {{maxWidth: '700px'}} data={allAppointment} defaultDate={displayDate} timezone="Etc/UTC">
+        <Scheduler 
+          style = {{maxWidth: '700px'}}
+          data={allAppointment} 
+          defaultDate={displayDate} 
+          timezone="Etc/UTC">
           <DayView />
         </Scheduler>
-        {/* <UserAppointmentContainer>
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col" style={{ width: "10vw" }}>
-                  Appointments ID
-                </th>
-                <th scope="col" style={{ width: "8vw" }}>
-                  Patient ID
-                </th>
-                <th scope="col" style={{ width: "10vw" }}>
-                  Patient Name
-                </th>
-                <th scope="col" style={{ width: "10vw" }}>
-                  Date
-                </th>
-                <th scope="col" style={{ width: "10vw" }}>
-                  Start
-                </th>
-                <th scope="col" style={{ width: "10vw" }}>
-                  Confirmed
-                </th>
-                <th scope="col" style={{ width: "10vw" }}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {allAppointment
-                ?
-                allAppointment.sort((a, b) => b.appt_date < a.appt_date ? 1: -1).sort((a, b) => b.appt_start < a.appt_start ? 1: -1).map((item) => (
-                  item.confirmed == true ?
-                    (<tr key={item.appt_id}>
-                      <th scope="row">{item.appt_id}</th>
-                      <th scope="row">{item.patient_id}</th>
-                      <th scope="row">{item.patient_name}</th>
-                      <td>{item.appt_date.split("T")[0]}</td>
-                      <td>{item.appt_start.split("+")[0]}</td>
-                      <td>{item.confirmed ? `True` : `False`}</td>
-                    </tr>) : null
-                  ))
-                : null
-                }
-            </tbody>
-          </table>
-        </UserAppointmentContainer> */}
       </PageContainer>
     </>
   );

@@ -246,8 +246,6 @@ export function NurseAppointments(props) {
           selection={schedule}
           numDays={5}
           minTime = {9}
-          // Original Time
-          // maxTime = {18}
           maxTime={19}
         />
         {selectedDoctorID ? (
