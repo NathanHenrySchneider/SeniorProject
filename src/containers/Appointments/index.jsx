@@ -32,7 +32,7 @@ export function Appointments(props) {
       .post("http://localhost:3001/me", { withCredentials: true })
       .then((response) => {
         console.log(response.data);
-        setEmail(response.data.full_name);
+        setEmail(response.data.email);
         setUserID(response.data.user_id);
         setUserFullName(response.data.full_name);
         setUserAppointment(response.data.userAppointment);
@@ -267,7 +267,7 @@ export function Appointments(props) {
 
   return (
     <>
-      <NavBar email={email} />
+      <NavBar email={userFullName} />
       <PageContainer>
         <PseudoBorder> Available Timeslot:</PseudoBorder>
 

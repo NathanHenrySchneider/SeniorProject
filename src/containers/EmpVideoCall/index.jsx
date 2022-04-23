@@ -40,6 +40,7 @@ export function EmpVideoCall(props) {
     const [email, setEmail] = useState('Not logged in');
     //const [joinMeeting, setJoinMeeting] = useState(false);
     // const [email, setEmail] = useState('Not logged in');
+    const [userFullName, setUserFullName] = useState(null);
     const [userList, setUserList] = useState([])
     const [show, setShow] = useState(false);
     const[composeTo, setComposeTo] = useState('');
@@ -55,7 +56,8 @@ export function EmpVideoCall(props) {
         axios.post('http://localhost:3001/me', { withCredentials: true })
             .then((response) => {
                 console.log(response.data)
-                setEmail(response.data.full_name)
+                setEmail(response.data.email)
+                setUserFullName(response.data.full_name)
             })
             .catch((err) => {
                 console.log("CHP/index.jsx" + err);
@@ -94,7 +96,7 @@ export function EmpVideoCall(props) {
       }, []);
     
     useEffect(() => {
-        if (email === "Doctor Smith") {
+        if (email === "doctor@doctor") {
             setZoomLink(zoom1);
             console.log("zoom1");
         } else {
@@ -129,7 +131,7 @@ export function EmpVideoCall(props) {
     index = -1
 
     return (<>
-        <EmpNavBar email={email} />
+        <EmpNavBar email={userFullName} />
         <PageContainer>
             <div className="card-block text-center">
                 <div className="m-b-25"> <img src={zoomIcon} alt="zoom icon" className="img-radius" /> </div>

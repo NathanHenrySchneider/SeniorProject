@@ -12,6 +12,7 @@ export function NurseAppointments(props) {
   const [userID, setUserID] = useState(null);
   const [allAppointment, setAllAppointment] = useState(null);
   const [doctorList, setDoctorList] = useState(null);
+  const [userFullName, setUserFullName] = useState(null);
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
@@ -20,7 +21,8 @@ export function NurseAppointments(props) {
       .post("http://localhost:3001/me", { withCredentials: true })
       .then((response) => {
         console.log("Nurse appt page me: ", response.data);
-        setEmail(response.data.full_name);
+        setEmail(response.data.email);
+        setUserFullName(response.data.full_name);
         setUserID(response.data.user_id);
         setAllAppointment(response.data.userAppointment);
         setDoctorList(response.data.allDoctor);
@@ -222,7 +224,7 @@ export function NurseAppointments(props) {
 
   return (
     <>
-      <EmpNavBar email={email} />
+      <EmpNavBar email={userFullName} />
       <PageContainer>
         <PseudoBorder>Set Doctor Availability:</PseudoBorder>
 

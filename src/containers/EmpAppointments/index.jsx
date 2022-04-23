@@ -21,6 +21,7 @@ export function EmpAppointments(props) {
   const displayDate = new Date(new Date().toISOString())
   const [allAppointment, setAllAppointment] = useState(null);
   const [zoomLink, setZoomLink] = useState();
+  const [userFullName, setUserFullName] = useState(null);
   // const todayDate = new Date().toISOString().split("T")[0];
 
   useEffect(() => {
@@ -30,15 +31,10 @@ export function EmpAppointments(props) {
       .post("http://localhost:3001/me", { withCredentials: true })
       .then((response) => {
         console.log("Doctor appt page me: ", response.data);
-        setEmail(response.data.full_name);
+        setEmail(response.data.email);
+        setUserFullName(response.data.full_name);
         setUserID(response.data.user_id);
-        if (email === "Doctor Smith") {
-          setZoomLink(zoom1);
-          console.log("zoom1");
-      } else {
-          setZoomLink(zoom2);
-          console.log("zoom2");
-      }
+        console.log("EMAIL:" + email);
         response.data.userAppointment.forEach((appt) => {
           let date = new Date(appt.appt_date)
           let iso = new Date(new Date(date).setHours(date.getHours() + 1)).toISOString()
@@ -64,7 +60,7 @@ export function EmpAppointments(props) {
   }, []);
 
   useEffect(() => {
-    if (email === "Doctor Smith") {
+    if (email === "doctor@doctor") {
         setZoomLink(zoom1);
         console.log("zoom1");
     } else {
@@ -76,7 +72,7 @@ export function EmpAppointments(props) {
   console.log("All appot: ", allAppointment)
   return (
     <>
-      <EmpNavBar email={email} />
+      <EmpNavBar email={userFullName} />
       <PageContainer>
         <PseudoBorder>Upcoming Appointments</PseudoBorder>
         <br/>
