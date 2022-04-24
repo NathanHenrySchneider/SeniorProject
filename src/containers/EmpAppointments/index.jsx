@@ -20,7 +20,7 @@ export function EmpAppointments(props) {
   const [userID, setUserID] = useState(null);
   const displayDate = new Date(new Date().toISOString())
   const [allAppointment, setAllAppointment] = useState(null);
-  const [zoomLink, setZoomLink] = useState();
+  const [zoomLink, setZoomLink] = useState(zoom1);
   const [userFullName, setUserFullName] = useState(null);
   // const todayDate = new Date().toISOString().split("T")[0];
 
