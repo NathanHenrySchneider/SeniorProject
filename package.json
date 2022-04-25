@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@progress/kendo-licensing": "^1.2.2",
+    "@progress/kendo-react-common": "^5.2.0",
     "@progress/kendo-react-labels": "^5.2.0",
     "@progress/kendo-react-scheduler": "^5.2.0",
     "@progress/kendo-theme-classic": "^5.3.1",

@@ -1569,7 +1569,7 @@
     "@progress/kendo-react-popup" "5.2.0"
     "prop-types" "^15.6.0"
 
-"@progress/kendo-react-common@5.2.0":
+"@progress/kendo-react-common@^5.2.0", "@progress/kendo-react-common@5.2.0":
   "integrity" "sha512-2TqK/QymUqoW9oXrs+HFlgsCummTh3ub/D/tEx0t6hHxcXeL7sGt0KmDIa3tUBpd2H54xHZJ5BYETZsO+TDHlA=="
   "resolved" "https://registry.npmjs.org/@progress/kendo-react-common/-/kendo-react-common-5.2.0.tgz"
   "version" "5.2.0"

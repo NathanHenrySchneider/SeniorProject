@@ -5,7 +5,7 @@ import { EmpNavBar } from "../../components/Empnavbar";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { Scheduler, DayView, WeekView,AgendaView,TimelineView,MonthView } from "@progress/kendo-react-scheduler";
+import { Scheduler, DayView, SchedulerViewItem } from "@progress/kendo-react-scheduler";
 import parse from 'html-react-parser'
 import '@progress/kendo-theme-default/dist/all.css';
 
@@ -19,7 +19,7 @@ export function EmpAppointments(props) {
   const [email, setEmail] = useState("Not logged in");
   const [userID, setUserID] = useState(null);
   const displayDate = new Date(new Date().toISOString())
-  const [allAppointment, setAllAppointment] = useState(null);
+  const [allAppointment, setAllAppointment] = useState([]);
   const [zoomLink, setZoomLink] = useState();
   const [userFullName, setUserFullName] = useState(null);
   // const todayDate = new Date().toISOString().split("T")[0];
@@ -35,64 +35,98 @@ export function EmpAppointments(props) {
         setEmail(response.data.email);
         setUserFullName(response.data.full_name);
         setUserID(response.data.user_id);
-        response.data.userAppointment.forEach((appt) => {
-          let apptStartDateTime = appt.appt_date.split('T')[0]+ "T" + appt.appt_start.split('+')[0] + '.000Z'
-          // console.log("apptStartDateTime: ",apptStartDateTime)
-          /**
-           * console.log prints both startTime and endTime off by 4 hours.
-           * On Scheduler array, it is also off by 4 hours.
-           * But it shows correctly in Scheduler UI.
-           */
-          let startTime= new Date(apptStartDateTime);
-          startTime.setHours(startTime.getHours());
-          let endTime = new Date(apptStartDateTime);
-          endTime.setHours(endTime.getHours()+1);
-          // console.log('startTime: ', startTime)
-          // console.log("endTime: ", endTime)
 
-          arr.push({
-            id: appt.appt_id,
-            title: parse(`<a href = ${zoomLink} style = "color:white;"><h4>Click to join the meeting with ${appt.patient_name}</h4></a>`),
-            start: startTime,
-            //end date set start + 1 hour. could be changed later if the user uses new library.
-            end: endTime
+        if(response.data.userAppointment != 0){
+          response.data.userAppointment.forEach((appt) => {
+            if(appt.confirmed == false){
+              return;
+            }
+            let start = new Date(appt.start);
+            let end = new Date(appt.end)
+            let id = appt.id;
+            let description= appt.description;
+            let title = appt.title;
+
+            arr.push({
+              id: id,
+              title: title,
+              description: description,
+              start: start,
+              end: end,
+            })
           })
-        })
-        setAllAppointment(arr);
+          setAllAppointment(arr);
+        }
       })
       .catch((err) => {
         console.log("CHP/index.jsx" + err);
       });
   }, []);
 
-  useEffect(() => {
-    document.title = "Appointments";  
-  }, []);
+  // useEffect(() => {
+  //   document.title = "Appointments";  
+  // }, []);
 
-  useEffect(() => {
-    if (email === "doctor@doctor") {
-        setZoomLink(zoom1);
-        console.log("zoom1");
-    } else {
-        setZoomLink(zoom2);
-        console.log("zoom2");
-    }
-  });   
+  // useEffect(() => {
+  //   if (email === "doctor@doctor") {
+  //       setZoomLink(zoom1);
+  //       // console.log("zoom1");
+  //   } else {
+  //       setZoomLink(zoom2);
+  //       // console.log("zoom2");
+  //   }
+  // });   
 
-  console.log("All appot: ", allAppointment)
   return (
     <>
       <EmpNavBar email={userFullName} />
       <PageContainer>
-        <PseudoBorder>Upcoming Appointments</PseudoBorder>
-        <br/>
-        <Scheduler 
-          style = {{maxWidth: '700px'}}
-          data={allAppointment} 
-          defaultDate={displayDate} 
-          timezone="Etc/UTC">
-          <DayView />
-        </Scheduler>
+      {allAppointment.length == 0 ? 
+        <>
+          <PseudoBorder>No Upcoming Appointments</PseudoBorder>
+          <br/>
+          <Scheduler 
+            style = {{maxWidth: '700px'}}
+            data={null} 
+            defaultDate={displayDate} 
+            timezone="Etc/UTC"
+            editable={false}
+            >  
+            <DayView 
+              startTime={"05:00"}
+              endTime={"19:00"}
+              workDayStart={"08:00"}
+              workDayEnd={"18:00"}
+              slotDivisions={1}
+              slotDuration={60}
+              editable={false}
+            />
+          </Scheduler>
+        </>
+      :
+        <>
+          <PseudoBorder>Upcoming Appointments</PseudoBorder>
+          <br/>
+          <Scheduler 
+            style = {{maxWidth: '700px'}}
+            data={allAppointment} 
+            defaultDate={displayDate} 
+            timezone="Etc/UTC"
+            editable={false}
+            >  
+            <DayView 
+              startTime={"05:00"}
+              endTime={"19:00"}
+              workDayStart={"08:00"}
+              workDayEnd={"18:00"}
+              slotDivisions={1}
+              slotDuration={60}
+              editable={false}
+            />
+          </Scheduler>
+        </>
+      }
+      
       </PageContainer>
     </>
   );
