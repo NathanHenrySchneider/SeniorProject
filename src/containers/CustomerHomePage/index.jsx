@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link, useHistory} from 'react-router-dom';
 import { NavBar } from "../../components/navbar";
+import { AppointmentBanner } from "../../components/appointmentBanner";
 import { PageContainer } from "../../components/pageContainer";
 import './style.css';
 import axios from 'axios';
@@ -34,6 +35,8 @@ export function CustomerHomePage(props) {
 
 	return (<>
 		<NavBar email={email} />
+		{/* Uncomment to test alert banner */}
+		{/* <AppointmentBanner/> */}
 		<PageContainer>
 			<div className="container">
 				<div className="row">
