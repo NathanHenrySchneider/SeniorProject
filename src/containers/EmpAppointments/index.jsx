@@ -36,16 +36,16 @@ export function EmpAppointments(props) {
         setUserFullName(response.data.full_name);
         setUserID(response.data.user_id);
 
-        if(response.data.userAppointment != 0){
+        if(response.data.userAppointment !== 0){
           response.data.userAppointment.forEach((appt) => {
-            if(appt.confirmed == false){
+            if(appt.confirmed === false){
               return;
             }
             let start = new Date(appt.start);
             let end = new Date(appt.end)
             let id = appt.id;
             let description= appt.description;
-            let title = appt.title;
+            let title = parse(`<h5><a href = "#" style = "color:white;"><i>Click to join </i><b>${appt.title}</b> with <b>${appt.patient_name}</b></a></h5>`);
 
             arr.push({
               id: id,
@@ -81,7 +81,8 @@ export function EmpAppointments(props) {
     <>
       <EmpNavBar email={userFullName} />
       <PageContainer>
-      {allAppointment.length == 0 ? 
+        <br/>
+      {allAppointment.length === 0 ? 
         <>
           <PseudoBorder>No Upcoming Appointments</PseudoBorder>
           <br/>

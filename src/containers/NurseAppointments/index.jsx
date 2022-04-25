@@ -4,8 +4,7 @@ import { EmpNavBar } from "../../components/Empnavbar";
 import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import ScheduleSelector from "react-schedule-selector";
-import Button from "react-bootstrap/Button";
+import './style.css';
 import { Scheduler, DayView } from "@progress/kendo-react-scheduler";
 
 export function NurseAppointments(props) {
@@ -64,7 +63,7 @@ useEffect(()=>{
  */
 const showAppt= (response) =>{
   let arr=[]
-  if(response.data != []){
+  if(response.data !== []){
     response.data.forEach((appt) => {
       let start = new Date(appt.start);
       let end = new Date(appt.end)
@@ -89,11 +88,11 @@ const showAppt= (response) =>{
    * @param {created} param0 
    */
  const handleDataChange = ({updated, deleted }) =>{
-  if(updated.length != 0){
-    if(!updated[0].title.includes("-UNCONFIRM")){
+  if(updated.length !== 0){
+    if(!updated[0].title.includes("-UNCONFIRMED")){
       updateApptConfirm({updated});
     }
-  }else if(deleted.length != 0){
+  }else if(deleted.length !== 0){
     deleteApptConfirm({deleted});
   }
 }
@@ -153,9 +152,11 @@ return (
     <>
       <EmpNavBar email={userFullName} />
       <PageContainer>
-
-      <PseudoBorder>Set Doctor Availability:</PseudoBorder>
-
+      <br/>
+      <PseudoBorder>Manage Appointments:</PseudoBorder>
+      <br/>
+      <h4>To Confirm: <i>Double click the appointment block to remove '-UNCONFIRMED' tag.</i></h4>
+      <h4>To Reject: <i>Click the 'x' on the top right corner of appointment block</i></h4>
       <Select
           defaultValue
           style={{ margin: "20px" }}

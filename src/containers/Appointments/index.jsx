@@ -1,15 +1,13 @@
 import React from "react";
 import { PageContainer } from "../../components/pageContainer";
 import { NavBar } from "../../components/navbar";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { Button, Modal } from "react-bootstrap";
-import ScheduleSelector from "react-schedule-selector";
 import parse from 'html-react-parser';
 import { Scheduler, DayView } from "@progress/kendo-react-scheduler";
 import {  guid } from "@progress/kendo-react-common";
+
 var zoom1 = "https://us04web.zoom.us/j/3839197009?pwd=O5yDRmWmm9QnV64e_bnzUZr4_pcLlG.1";
 // This is Nate's personal zoom
 var zoom2 = "https://us05web.zoom.us/j/3481873040?pwd=eVp2ZDI5MEdwS2NZc25BN0xBTGNNQT09";
@@ -20,6 +18,7 @@ export function Appointments(props) {
   const [email, setEmail] = useState("Not logged in");
   const [userID, setUserID] = useState(null);
   const [userFullName, setUserFullName] = useState(null);
+  const [assignedDocName, setAssignedDocName] = useState();
   const [userAppointment, setUserAppointment] = useState([]);
   const [assignedDoctor, setAssignedDoctor] = useState("");
   const [allAppointment, setAllAppointment] = useState([]);
@@ -34,7 +33,6 @@ export function Appointments(props) {
     axios
       .post("http://localhost:3001/me", { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
         setEmail(response.data.email);
         setUserID(response.data.user_id);
         setUserFullName(response.data.full_name);
@@ -53,7 +51,7 @@ export function Appointments(props) {
 
             arr.push({
               id: id,
-              title: title,
+              title: parse(`<h5>${title}</h5>`),
               description: description,
               start: start,
               end: end,
@@ -66,6 +64,16 @@ export function Appointments(props) {
       .catch((err) => {
         console.log("customer homepage index.jsx" + err);
       });
+
+      if(assignedDoctor){
+        axios.get(`http://localhost:3001/user/find/${assignedDoctor}`, { withCredentials: true })
+        .then((response) => {
+          console.log(response)
+            setAssignedDocName(response.data[0].full_name)
+        }).catch((err) => {
+            console.log("CHP/index.jsx" + err);
+        });
+    }
 
     axios
       .get("http://localhost:3001/user/findAll")
@@ -80,7 +88,7 @@ export function Appointments(props) {
       .catch((err) => {
         console.log("customer homepage index.jsx" + err);
       });
-  }, []);
+  }, [assignedDoctor]);
   useEffect(() => {
     document.title = "Appointments";  
   }, []);
@@ -91,7 +99,7 @@ export function Appointments(props) {
    */
   const handleDataChange = ({ created }) =>{
     //add UNCONFIRM postfix to appt title.
-    created[created.length-1].title += " -UNCONFIRM"
+    created[created.length-1].title += " -UNCONFIRMED"
     let genID= guid();
     // console.log("guid is: ", genID)
     // console.log("created: ", created)
@@ -106,6 +114,7 @@ export function Appointments(props) {
     );
 
     bookAppt({created, genID});
+    window.location.reload();
   }
   /**
    * HandleChange for Scheduler
@@ -163,9 +172,7 @@ export function Appointments(props) {
 
   const [err, setError] = useState(false);
   const [message, setMessage] = useState("");
-  const [date, setDate] = useState(null);
-  const [reason, setReason] = useState(null);
-  const [doctor, setDoctor] = useState(null);
+
   return (
     <>
       <NavBar email={userFullName} />
@@ -173,7 +180,12 @@ export function Appointments(props) {
 
       {assignedDoctor ?
         <>
-          <PseudoBorder> Available Timeslot:</PseudoBorder>
+        <br/>
+          <PseudoBorder>Your doctor {assignedDocName}'s calendar:</PseudoBorder>
+          <br/>
+          <h3><i>Double click on timeslot to request an appointment:</i></h3>
+          <h3><i>You will get notified once the nurse confirms the appointment.</i></h3>
+          <br/>
           <Scheduler 
             style = {{maxWidth: '700px'}} 
             data={allAppointment} 
