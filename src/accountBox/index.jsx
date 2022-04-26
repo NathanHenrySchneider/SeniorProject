@@ -4,7 +4,7 @@ import { LoginForm } from "./loginForm";
 import { motion } from "framer-motion";
 import { AccountContext } from "./accountContext";
 import { SignUpForm } from "./signupForm";
-
+import Alert from 'react-bootstrap/Alert'
 
 const AppContainer = styled.div`
   width: 100%;
@@ -17,7 +17,7 @@ const AppContainer = styled.div`
 
 const BoxContainer = styled.div`
     width: 280px;
-    min-height: 550px;
+    min-height: 452px;
     display: flex;
     flex-direction: column;
     border-radius: 19px;
@@ -29,7 +29,7 @@ const BoxContainer = styled.div`
 
 const TopContainer = styled.div`
     width: 100%;
-    height: 250px;
+    height: 222px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -39,7 +39,7 @@ const TopContainer = styled.div`
 
 const BackDrop = styled(motion.div)`
     width: 160%;
-    height: 550px;
+    height: 486px;
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -93,7 +93,7 @@ const backdropVariants = {
     },
     collapsed:{
         width: "160%",
-        height: "550px",
+        height: "486px",
         borderRadius: "50%",
         transform: "rotate(60deg)"
     }
@@ -135,6 +135,9 @@ export function AccountBox(props){
     return (
     <AccountContext.Provider value={contextValue}>
         <AppContainer>
+            <Alert variant = "warning" style = {{width:'280px', borderWidth:'medium'}}>
+                Compatible browsers:<br/><b>Google Chrome</b>, <b>Firefox</b> and <b>Opera</b>.
+            </Alert>
             <BoxContainer>
                 <TopContainer>
                     <BackDrop  
@@ -153,6 +156,7 @@ export function AccountBox(props){
                         <HeaderText>Account</HeaderText>
                         <SmallText>Please sign up to continue!</SmallText>
                     </HeaderContainer>}
+                    <br/>
                 </TopContainer>
                 <InnerContainer>
                     {active === "Login" && <LoginForm/>}

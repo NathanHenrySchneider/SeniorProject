@@ -53,7 +53,7 @@ export function EmpNavBar(props) {
           />{" "}
           <strong style={{ color: "#122a8e", size: "33px", margin: "0 0 0 5px" }}>
             <Link style={{ textDecoration: "none" }} to={`/${userType}HomePage`}>
-              Tele-Medic
+              Tele-Medic | {(userType === "Employee" ? "Doctor" : userType)}
             </Link>
           </strong>
         </EmpNavbar.Brand>
