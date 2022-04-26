@@ -181,7 +181,7 @@ export function Appointments(props) {
       {assignedDoctor ?
         <>
         <br/>
-          <PseudoBorder>Your doctor {assignedDocName}'s calendar:</PseudoBorder>
+          <PseudoBorder>{assignedDocName}'s calendar:</PseudoBorder>
           <br/>
           <h3><i>Double click on timeslot to request an appointment:</i></h3>
           <h3><i>You will get notified once the nurse confirms the appointment.</i></h3>

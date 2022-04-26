@@ -159,7 +159,7 @@ return (
       <h4>To Reject: <i>Click the 'x' on the top right corner of appointment block</i></h4>
       <Select
           defaultValue
-          style={{ margin: "20px" }}
+          style={{ marginTop: "10px", marginBottom: "20px", width: "200px"}}
           onChange={(e) => setSelectedDoctorID(e.target.value)}
         >
           <Option value="">Select A Doctor</Option>

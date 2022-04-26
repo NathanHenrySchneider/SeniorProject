@@ -84,7 +84,7 @@ export function EmpAppointments(props) {
         <br/>
       {allAppointment.length === 0 ? 
         <>
-          <PseudoBorder>No Upcoming Appointments</PseudoBorder>
+          <PseudoBorder style={{marginBottom: "40px"}}>No Upcoming Appointments</PseudoBorder>
           <br/>
           <Scheduler 
             style = {{maxWidth: '700px'}}
@@ -106,7 +106,7 @@ export function EmpAppointments(props) {
         </>
       :
         <>
-          <PseudoBorder>Upcoming Appointments</PseudoBorder>
+          <PseudoBorder style={{marginBottom: "40px"}}>Upcoming Appointments</PseudoBorder>
           <br/>
           <Scheduler 
             style = {{maxWidth: '700px'}}
