@@ -1,21 +1,25 @@
 {
   "files": {
-    "main.css": "/static/css/main.a8433eff.css",
-    "main.js": "/static/js/main.0b78b082.js",
+    "main.css": "/static/css/main.43b11dfb.css",
+    "main.js": "/static/js/main.647e404f.js",
     "static/js/787.02b2344c.chunk.js": "/static/js/787.02b2344c.chunk.js",
     "static/media/zoom_logo.png": "/static/media/zoom_logo.fa16b1a95a169a223d7e.png",
     "static/media/calendar_w.png": "/static/media/calendar_w.41cd2572c3e0c3ea3003.png",
     "static/media/account_w.png": "/static/media/account_w.eedc516b5092c0325b0b.png",
+    "static/media/account.png": "/static/media/account.152e4568193822add118.png",
     "static/media/folder_w.png": "/static/media/folder_w.32550f4ac3e39243ffc8.png",
     "static/media/chat_w.png": "/static/media/chat_w.eeb67afbe8d466f1bac5.png",
     "static/media/video_w.png": "/static/media/video_w.55a80ef93ea556dc1a2d.png",
+    "static/media/revicons.eot": "/static/media/revicons.a77de540a38981833f9e.eot",
+    "static/media/revicons.ttf": "/static/media/revicons.57fd05d4ae650374c8de.ttf",
+    "static/media/revicons.woff": "/static/media/revicons.e8746a624ed098489406.woff",
     "index.html": "/index.html",
-    "main.a8433eff.css.map": "/static/css/main.a8433eff.css.map",
-    "main.0b78b082.js.map": "/static/js/main.0b78b082.js.map",
+    "main.43b11dfb.css.map": "/static/css/main.43b11dfb.css.map",
+    "main.647e404f.js.map": "/static/js/main.647e404f.js.map",
     "787.02b2344c.chunk.js.map": "/static/js/787.02b2344c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a8433eff.css",
-    "static/js/main.0b78b082.js"
+    "static/css/main.43b11dfb.css",
+    "static/js/main.647e404f.js"
   ]
 }

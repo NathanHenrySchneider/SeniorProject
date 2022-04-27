@@ -6,6 +6,11 @@ import styled from "styled-components";
 import axios from "axios";
 import './style.css';
 import { Scheduler, DayView } from "@progress/kendo-react-scheduler";
+import Carousel from "react-multi-carousel";
+import 'react-multi-carousel/lib/styles.css';
+import './style.css';
+import accountIcon from "../../images/account.png";
+import { Button, Form, FormControl } from "react-bootstrap";
 
 export function NurseAppointments(props) {
   const [email, setEmail] = useState("Not logged in");
@@ -156,6 +161,53 @@ const deleteApptConfirm = ({deleted})=>{
     });
 }
 
+const textInput = useRef(null);
+  const [listDoctor, setListDoctor] = useState([]);
+  const [nameDoctor, setNameDoctor] = useState('');
+
+  const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5,
+      slidesToSlide: 5
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 5,
+      slidesToSlide: 5
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 390 },
+      items: 3,
+      slidesToSlide: 3
+    },
+    mobile: {
+      breakpoint: { max: 390, min: 0 },
+      items: 1,
+      slidesToSlide: 1
+    }
+  };
+
+  const searchDoctor = (event) => {
+    event.preventDefault()
+    const doctorName = textInput.current.value
+    axios
+      .post("http://localhost:3001/doctorAppTime/searchDoctor", {
+        doctorName: doctorName,
+      })
+      .then((response) => {
+        setListDoctor(response.data);
+      })
+      .catch((err) => {
+        console.log("CHP/index.jsx" + err);
+      });
+  };
+
+  const imageClick = (e) => {
+    setNameDoctor(e.item.full_name);
+    setSelectedDoctorID(e.item.user_id);
+  }
+
 
 return (
     <>
@@ -166,20 +218,27 @@ return (
       <br/>
       <h4>To Confirm: <i>Double click the appointment block to remove '-UNCONFIRMED' tag.</i></h4>
       <h4>To Reject: <i>Click the 'x' on the top right corner of appointment block</i></h4>
-      <Select
-          defaultValue
-          style={{ marginTop: "10px", marginBottom: "20px", width: "200px"}}
-          onChange={(e) => setSelectedDoctorID(e.target.value)}
-        >
-          <Option value="">Select A Doctor</Option>
-          {doctorList
-            ? doctorList.map((doctor) => (
-                <Option key={doctor.user_id} value={doctor.user_id}>
-                  {doctor.full_name}
-                </Option>
-              ))
-            : null}
-        </Select>
+      
+      <Form className="d-flex m-2" onSubmit={searchDoctor}>
+        <FormControl type="search" placeholder="Search" className="me-2" aria-label="Search" ref={textInput} style={{position: "relative"}}/>
+        <Button variant="outline-success" onClick={searchDoctor}>Search</Button>
+      </Form>
+      <div className="col-xs-12 cardcont nopadding">
+        <div className="wrapper">
+          <h3>Doctor Availability</h3>
+          <Carousel responsive={responsive} autoPlay={false} shouldResetAutoplay={false}>
+            {listDoctor.map((item) => (
+              <div className="col-md-12">
+                <div className="responsive-circle">
+                  <img src={accountIcon} className="image-cover" alt="" onClick={() => imageClick({ item })} />
+                  <figcaption>{item.full_name}</figcaption>
+                </div>
+              </div>
+            ))}
+          </Carousel>
+          <h3>Doctor Chosen: {nameDoctor}</h3>
+        </div>
+      </div>
 
         {selectedDoctorID ? 
           <Scheduler 
