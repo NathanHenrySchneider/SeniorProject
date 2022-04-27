@@ -36,6 +36,16 @@ export function EmpAppointments(props) {
         setEmail(response.data.email);
         setUserFullName(response.data.full_name);
         setUserID(response.data.user_id);
+        let tempZoomLink = "";
+        if (email === "doctor@doctor") {
+          setZoomLink(zoom1);
+          tempZoomLink = zoom1;
+          console.log("zoom1");
+        } else {
+          setZoomLink(zoom2);
+          tempZoomLink = zoom1;
+          console.log("zoom2");
+        }
 
         if(response.data.userAppointment !== 0){
           response.data.userAppointment.forEach((appt) => {
@@ -46,7 +56,8 @@ export function EmpAppointments(props) {
             let end = new Date(appt.end)
             let id = appt.id;
             let description= appt.description;
-            let title = parse(`<h5><a href = ${zoomLink} style = "color:white;"><i>Click to join </i><b>${appt.title}</b> with <b>${appt.patient_name}</b></a></h5>`);
+            
+            let title = parse(`<h5><a href = ${tempZoomLink} style = "color:white;"><i>Click to join </i><b>${appt.title}</b> with <b>${appt.patient_name}</b></a></h5>`);
 
             arr.push({
               id: id,
@@ -71,10 +82,10 @@ export function EmpAppointments(props) {
   useEffect(() => {
     if (email === "doctor@doctor") {
         setZoomLink(zoom1);
-        // console.log("zoom1");
+        console.log("zoom1");
     } else {
         setZoomLink(zoom2);
-        // console.log("zoom2");
+        console.log("zoom2");
     }
   });   
 
