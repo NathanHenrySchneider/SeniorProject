@@ -8,6 +8,7 @@ import axios from "axios";
 import { Scheduler, DayView, SchedulerViewItem } from "@progress/kendo-react-scheduler";
 import parse from 'html-react-parser'
 import '@progress/kendo-theme-default/dist/all.css';
+import { NotifyButton } from "../../accountBox/common";
 
 var zoom1 = "https://us04web.zoom.us/j/3839197009?pwd=O5yDRmWmm9QnV64e_bnzUZr4_pcLlG.1";
 // This is Nate's personal zoom
@@ -108,6 +109,26 @@ export function EmpAppointments(props) {
         <>
           <PseudoBorder style={{marginBottom: "40px"}}>Upcoming Appointments</PseudoBorder>
           <br/>
+          <NotificationButton>
+          <NotifyButton
+              // style={{ border: "none", background: "none" }}
+              onClick={() => {
+                if (allAppointment && allAppointment.length > 0) {
+                  axios
+                    .post("http://localhost:3001/send-sms", {  phone_number: "7706332309", text_content: `This is a reminder about your appointment ${allAppointment[0].title} sheduled for ${allAppointment[0].start} with ${userFullName}.`})
+                    .then(function (response) {
+                      alert("Patient notified"); 
+                    })
+                    .catch((err) => {
+                      console.log("CHP/index.jsx" + err);
+                  });
+                }
+              }}
+            >
+              <div>Notify your next patient</div>
+            </NotifyButton>
+            </NotificationButton>
+            <br/>
           <Scheduler 
             style = {{maxWidth: '700px'}}
             data={allAppointment} 
@@ -127,7 +148,7 @@ export function EmpAppointments(props) {
           </Scheduler>
         </>
       }
-      
+      <br/>
       </PageContainer>
     </>
   );
@@ -154,4 +175,10 @@ const UserAppointmentContainer = styled.div`
   display: flex;
   width: 90vw;
   margin: 30px;
+`;
+
+const NotificationButton = styled.div`
+  display: flex;
+  width: 350px;
+  height: 50px;
 `;

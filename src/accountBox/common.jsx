@@ -54,6 +54,24 @@ export const Input = styled.input`
     }
 `;
 
+export const NotifyButton = styled.button`
+    width: 100%;
+    /* padding: 11px 40%; */
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 100px 100px 100px 100px;
+    cursor: pointer;
+    transition: all, 240ms ease-in-out;
+    background: rgb(9,9,121);
+    background: linear-gradient(58deg, rgba(9,9,121,1) 20%, rgba(0,212,255,1) 100%);
+
+    &:hover{
+        filter: brightness(1.03);
+    }
+`;
+
 export const SubmitButton = styled.button`
     width: 100%;
     padding: 11px 40%;
