@@ -55,14 +55,14 @@ export function LoginForm(props){
             }, 500)
           });
     }
-
+ 
     return <BoxContainer>
         <FormContainer onSubmit = { e => {handleSubmit(e)}}>
             <Input type="email" name="email" placeholder="Email"
                 onChange = {e => setEmail(e.target.value)}/>
             <Input type ="password" name= "password" placeholder="Password" 
                 onChange = {e => setPassword(e.target.value)}/>
-            {err ? <Alert variant = "danger">{message}</Alert> : <></>}
+            {err ? <Alert style = {{width:'220px'}} variant = "danger">{message}</Alert> : <></>}
             <Marginer direction="vertical" margin="1.6em" />
             {loading ? <Spinner style = {{margin:'0 auto'}} animation="border" /> : <SubmitButton type="submit">Login</SubmitButton>}
             <Marginer direction="vertical" margin="1em" />

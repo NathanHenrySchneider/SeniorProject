@@ -89,6 +89,7 @@ export function EditProfile(props) {
                         user_id : element.user_id,
                         full_name: element.full_name,
                         email: element.email,
+                        mobile_number: element.mobile_number,
                         user_type: element.user_type
                     })
                 }
@@ -207,7 +208,7 @@ export function EditProfile(props) {
                                     onChange = {e => setWeight(e.target.value)}/>
                             </div>
                             <div className="col-sm-6">
-                                <p className="m-b-10 f-w-600">Contact</p>
+                                <p className="m-b-10 f-w-600">Phone</p>
                                 <Input type="text" name="txt" placeholder={mobileNumber}
                                     onChange = {e => setMobileNumber(e.target.value)}/>
                             </div>

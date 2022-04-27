@@ -69,7 +69,7 @@ export function Appointments(props) {
             }
             let title = parse(`<h5>${appt.title}</h5>`)
             if (appt.confirmed) {
-              title = parse(`<h5><a href = ${tempZoomLink} style = "color:white;"><i>Click to join </i><b>${appt.title}</b> with <b>${assignedDocName}</b></a></h5>`);}
+              title = parse(`<h5><a href = ${tempZoomLink} style = "color:white;"><i>Click to join </i><b>${appt.title}</b></a></h5>`);}
 
 
             arr.push({
