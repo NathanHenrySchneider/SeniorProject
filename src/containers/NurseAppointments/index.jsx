@@ -10,12 +10,14 @@ import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css';
 import './style.css';
 import accountIcon from "../../images/account.png";
-import { Button, Form, FormControl } from "react-bootstrap";
+import { Form, FormControl } from "react-bootstrap";
+import  Alert  from "react-bootstrap/Alert";
 
 export function NurseAppointments(props) {
   const [email, setEmail] = useState("Not logged in");
   const [userID, setUserID] = useState(null);
   const [allAppointment, setAllAppointment] = useState([]);
+  const [chosen, setChosen] = useState(false)
   const [doctorList, setDoctorList] = useState(null);
   const [userFullName, setUserFullName] = useState(null);
   const [selectedDoctorID, setSelectedDoctorID] = useState(null);
@@ -204,6 +206,7 @@ const textInput = useRef(null);
   };
 
   const imageClick = (e) => {
+    setChosen(true)
     setNameDoctor(e.item.full_name);
     setSelectedDoctorID(e.item.user_id);
   }
@@ -216,16 +219,17 @@ return (
       <br/>
       <PseudoBorder>Manage Appointments:</PseudoBorder>
       <br/>
-      <h4>To Confirm: <i>Double click the appointment block to remove '-UNCONFIRMED' tag.</i></h4>
-      <h4>To Reject: <i>Click the 'x' on the top right corner of appointment block</i></h4>
-      
-      <Form className="d-flex m-2" onSubmit={searchDoctor}>
-        <FormControl type="search" placeholder="Search" className="me-2" aria-label="Search" ref={textInput} style={{position: "relative"}}/>
-        <Button variant="outline-success" onClick={searchDoctor}>Search</Button>
+      <div style = {{maxWidth: '700px'}}>
+      <Alert style = {{width: 'auto'}}variant = "info">
+      <b>To Confirm: </b>Double click the appointment block to remove '-UNCONFIRMED' tag. <br/>
+      <b>To Reject: </b>Click the 'x' on the top right corner of appointment block
+      </Alert></div>
+      <Form className="d-flex m-2">
+        <FormControl type="search" onChange={searchDoctor} placeholder="Search a doctor..." className="me-2" aria-label="Search" ref={textInput} style={{position: "relative"}}/>
       </Form>
       <div className="col-xs-12 cardcont nopadding">
         <div className="wrapper">
-          <h3>Doctor Availability</h3>
+          {(listDoctor.length!== 0) && <h3>Select a doctor:</h3>}
           <Carousel responsive={responsive} autoPlay={false} shouldResetAutoplay={false}>
             {listDoctor.map((item) => (
               <div className="col-md-12">
@@ -236,7 +240,7 @@ return (
               </div>
             ))}
           </Carousel>
-          <h3>Doctor Chosen: {nameDoctor}</h3>
+          {chosen && <h3>Current doctor: <b>{nameDoctor}</b></h3>}
         </div>
       </div>
 

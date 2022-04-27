@@ -29,15 +29,13 @@
   }
   
   .wrapper {
-    padding: 40px;
+    padding: 10px;
+    max-width: 720px;
+    margin:0 auto;
   }
   
   .wrapper h3 {
-    font-size: 2em;
-    letter-spacing: .75vh;
-    font-weight: 700;
     font-family: Lato, sans-serif;
-    margin-bottom: 20px;
   }
   
   .wrapper .col-md-12 {
