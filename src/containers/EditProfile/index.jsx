@@ -40,6 +40,7 @@ export function EditProfile(props) {
     const [openDoctor, setOpenDoctor] = useState(false);
     const [show, setShow] = useState(false);
     const [prefDocPlaceHolder, setPrefDocPlaceHolder] = useState();
+    const [mobileNumber, setMobileNumber] =useState(null);
     const history = useHistory(); 
     
 
@@ -61,6 +62,7 @@ export function EditProfile(props) {
                 setIns(response.data.insurance);
                 setGroupNo(response.data.groupId);
                 setPolicyHolder(response.data.insurance_policy_holder);
+                setMobileNumber(response.data.mobile_number);
                 if (response.data.preferred_doc) {
                     setPrefDocPlaceHolder(response.data.preferred_doc);
                 } else {
@@ -116,7 +118,8 @@ export function EditProfile(props) {
             allergy: allergy,
             insurance: insurance,
             groupId: groupNo,
-            insurance_policy_holder: policyHolder
+            insurance_policy_holder: policyHolder,
+            mobile_number: mobileNumber,
           },
           {
             headers: {
@@ -202,6 +205,11 @@ export function EditProfile(props) {
                                 <p className="m-b-10 f-w-600">Weight</p>
                                 <Input type="text" name="txt" placeholder={weight}
                                     onChange = {e => setWeight(e.target.value)}/>
+                            </div>
+                            <div className="col-sm-6">
+                                <p className="m-b-10 f-w-600">Contact</p>
+                                <Input type="text" name="txt" placeholder={mobileNumber}
+                                    onChange = {e => setMobileNumber(e.target.value)}/>
                             </div>
                         </div>                
                         <h1 className="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Allergies</h1>

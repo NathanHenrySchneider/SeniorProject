@@ -39,7 +39,7 @@ export function Appointments(props) {
         setUserAppointment(response.data.userAppointment);
         setAssignedDoctor(response.data.assigned_doctor_id);
         console.log("Appointment Response");
-        console.log(response);
+        console.log(response.data);
         // getSchedule();
 
         //Retrive appt schedule

@@ -11,7 +11,7 @@ import PhoneInput from "react-phone-number-input/input";
 export function SignUpForm(props){
     const { switchToLogin } = useContext(AccountContext);
     const[name, setName] = useState('');
-    const[phone, setPhone] = useState('');
+    const[phone, setPhone] = useState(null);
     const[email, setEmail] = useState('');
     const[password, setPassword] = useState('');
     const[err, setError] = useState(false);
@@ -24,7 +24,7 @@ export function SignUpForm(props){
         axios.post('http://localhost:3001/register', {
             full_name: name,
             email : email,
-            phone_number: phone,
+            mobile_number: phone,
             password: password,
             user_type: selects
           })
