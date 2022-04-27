@@ -12,7 +12,8 @@ export function YourProfile(props) {
     const [fullName, setFullName] = useState();
     const [dob, setDoB] = useState();
     const [height, setHeight] = useState(); 
-    const [weight, setWeight] = useState(); 
+    const [weight, setWeight] = useState();
+    const [phone, setPhone] = useState(); 
     const [doc, setDoc] = useState(); 
     const [meds, setMeds] = useState(); 
     const [allergy, setAllergy] = useState();
@@ -29,7 +30,8 @@ export function YourProfile(props) {
         axios.post('http://localhost:3001/me', { withCredentials: true })
             .then((response) => {
                 console.log(response.data)
-                setEmail(response.data.email)
+                setEmail(response.data.email);
+                setPhone(response.data.phone);
                 setFullName(response.data.full_name);
                 setDoB(response.data.birthdate);
                 setHeight(response.data.height);
@@ -89,7 +91,11 @@ export function YourProfile(props) {
                                                     <h6 className="text-muted f-w-400">{fullName}</h6>
                                                 </div>
                                                 <div className="col-sm-6">
-                                                    <p className="m-b-10 f-w-600">DoB</p>
+                                                    <p className="m-b-10 f-w-600">Phone</p>
+                                                    <h6 className="text-muted f-w-400">{phone}</h6>
+                                                </div>
+                                                <div className="col-sm-6">
+                                                    <p className="m-b-10 f-w-600">Date of Birth</p>
                                                     <h6 className="text-muted f-w-400">{dob}</h6>
                                                 </div>
                                                 <div className="col-sm-6">

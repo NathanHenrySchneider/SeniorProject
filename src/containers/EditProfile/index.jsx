@@ -27,6 +27,7 @@ export function EditProfile(props) {
     const [fullName, setFullName] = useState();
     // const [newName, setNewName] = useState();
     const [dob, setDoB] = useState();
+    const [phone, setPhone] = useState();
     const [height, setHeight] = useState(); 
     const [weight, setWeight] = useState(); 
     const [doc, setDoc] = useState(); 
@@ -50,6 +51,7 @@ export function EditProfile(props) {
             .then((response) => {
                 console.log(response.data)
                 setEmail(response.data.email);
+                setPhone(response.data.phone);
                 setUserID(response.data.user_id);
                 setFullName(response.data.full_name);
                 setDoB(response.data.birthdate);
@@ -87,6 +89,7 @@ export function EditProfile(props) {
                         user_id : element.user_id,
                         full_name: element.full_name,
                         email: element.email,
+                        phone: element.phone,
                         user_type: element.user_type
                     })
                 }
@@ -110,6 +113,7 @@ export function EditProfile(props) {
             // full_name: newName,
             birthdate: dob,
             height: height,
+            phone: phone,
             weight: weight,
             preferred_doc: doc,
             meds: meds,
@@ -202,6 +206,11 @@ export function EditProfile(props) {
                                 <p className="m-b-10 f-w-600">Weight</p>
                                 <Input type="text" name="txt" placeholder={weight}
                                     onChange = {e => setWeight(e.target.value)}/>
+                            </div>
+                            <div className="col-sm-6">
+                                <p className="m-b-10 f-w-600">Phone</p>
+                                <Input type="text" name="txt" placeholder={phone}
+                                    onChange = {e => setPhone(e.target.value)}/>
                             </div>
                         </div>                
                         <h1 className="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Allergies</h1>
