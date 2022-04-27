@@ -5,8 +5,7 @@ import { AccountContext } from "./accountContext";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Alert from 'react-bootstrap/Alert';
-import 'react-phone-number-input/style.css';
-import PhoneInput from "react-phone-number-input/input";
+
 
 export function SignUpForm(props){
     const { switchToLogin } = useContext(AccountContext);
@@ -58,7 +57,7 @@ export function SignUpForm(props){
                 onChange = {e => setEmail(e.target.value)}/>
             <Input type ="date" name="DOB" placeholder="Date Of Birth mm/dd/yyyy"/>
             <Input type ="password" name="password" placeholder="Password" onChange = {e => setPassword(e.target.value)}/>
-            <PhoneInput country = "US" placeholder="Enter phone number" value={phone} onChange={setPhone}/>
+            <Input type ="text" name="txt" placeholder="Enter phone number" onChange = {e => setPhone(e.target.value)}/>
             <Marginer direction="vertical" margin="1.6em" />
             {err ? <Alert variant = "danger">{message}</Alert> : <></>}
             <SubmitButton type="submit">Register</SubmitButton>
