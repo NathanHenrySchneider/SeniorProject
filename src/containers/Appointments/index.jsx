@@ -50,6 +50,16 @@ export function Appointments(props) {
             let id = appt.id;
             let description= appt.description;
             let tempZoomLink = "";
+
+            if(assignedDoctor){
+              axios.get(`http://localhost:3001/user/find/${assignedDoctor}`, { withCredentials: true })
+              .then((response) => {
+                console.log(response)
+                  setAssignedDocName(response.data[0].full_name)
+              }).catch((err) => {
+                  console.log("CHP/index.jsx" + err);
+              });
+            }
             if (appt.doctor_id === 21) {
               tempZoomLink = zoom1;
               console.log("zoom1");
@@ -77,16 +87,6 @@ export function Appointments(props) {
       .catch((err) => {
         console.log("customer homepage index.jsx" + err);
       });
-
-      if(assignedDoctor){
-        axios.get(`http://localhost:3001/user/find/${assignedDoctor}`, { withCredentials: true })
-        .then((response) => {
-          console.log(response)
-            setAssignedDocName(response.data[0].full_name)
-        }).catch((err) => {
-            console.log("CHP/index.jsx" + err);
-        });
-    }
 
     axios
       .get("http://localhost:3001/user/findAll")

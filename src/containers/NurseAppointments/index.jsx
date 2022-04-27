@@ -102,13 +102,17 @@ const showAppt= (response) =>{
  * @param {updated} param0 
  */
 const updateApptConfirm = ({updated})=>{
+  let textTitle = "";
+  let textDate = "";
   axios
     .put('http://localhost:3001/appointment/nurseUpdateAppt', {
       id: updated[0].id,
       title: updated[0].title,
     })
     .then((response) => {
-      // console.log("updateApptConfirm response: ", response.data)
+      console.log("updateApptConfirm response: ", response.data)
+      textTitle = response.data[0].title;
+      textDate =  response.data[0].appt_date;
       setAllAppointment((old) =>
       old // Find and replace the updated items
         .map(
@@ -117,6 +121,11 @@ const updateApptConfirm = ({updated})=>{
             ) || item
         )
     );
+    axios
+        .post("http://localhost:3001/send-sms", {  phone_number: "7706332309", text_content: `Your appointment ${textTitle} sheduled for ${textDate} has been confirmed.`})
+        .catch((err) => {
+          console.log("CHP/index.jsx" + err);
+        });
     })
     .catch((err) => {
       console.log("CHP/index.jsx" + err);
