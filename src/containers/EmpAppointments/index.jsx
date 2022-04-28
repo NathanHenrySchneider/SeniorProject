@@ -125,8 +125,10 @@ export function EmpAppointments(props) {
               // style={{ border: "none", background: "none" }}
               onClick={() => {
                 if (allAppointment && allAppointment.length > 0) {
+                  // console.log(allAppointment[allAppointment.length - 1].title.props.children.props.children[1].props.children)
+                  console.log(allAppointment[0].start)
                   axios
-                    .post("http://localhost:3001/send-sms", {  phone_number: "7706332309", text_content: `This is a reminder about your appointment ${allAppointment[0].title} sheduled for ${allAppointment[0].start} with ${userFullName}.`})
+                    .post("http://localhost:3001/send-sms", {  phone_number: "7706332309", text_content: `This is a reminder about your appointment ${allAppointment[allAppointment.length - 1].title.props.children.props.children[1].props.children} scheduled for ${allAppointment[0].start} with ${userFullName}.`})
                     .then(function (response) {
                       alert("Patient notified"); 
                     })
