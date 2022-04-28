@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
-import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton } from "./common";
+import { WhiteBoldLink, BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton } from "./common";
 import { Marginer } from "../components/marginer";
 import { AccountContext } from "./accountContext";
 import { useHistory } from "react-router-dom";
 import Alert from 'react-bootstrap/Alert'
 import axios from "axios";
+import styled from "styled-components";
 import Spinner from 'react-bootstrap/Spinner'
 
 // axios.defaults.withCredentials = true;
@@ -75,5 +76,20 @@ export function LoginForm(props){
         </> :
         <h4 style = {{color: '#0d6efd', textAlign:'center'}}>Loading {userType} dashboard...</h4>}
         <Marginer direction="vertical" margin={5} />
+        <AboutUsButton>
+        <SubmitButton>
+              {/* // style={{ border: "none", background: "none" }} */}
+               
+            <WhiteBoldLink href="https://linkedin-list.shaileshthapa.repl.co/" >About Us</WhiteBoldLink>
+              
+            </SubmitButton>
+            </AboutUsButton>
     </BoxContainer>
 }
+
+
+const AboutUsButton = styled.div`
+  display: flex;
+  width: 350px;
+  height: 50px;
+`;

@@ -30,6 +30,14 @@ export const BoldLink = styled.a`
     margin: 0 4px;
 `;
 
+export const WhiteBoldLink = styled.a`
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: 500;
+    text-decoration: none;
+    margin: 0 4px;
+`;
+
 export const Input = styled.input`
     width: 100%;
     height: 42px;
