@@ -23,6 +23,7 @@ export function EmpAppointments(props) {
   const [allAppointment, setAllAppointment] = useState([]);
   const [zoomLink, setZoomLink] = useState();
   const [userFullName, setUserFullName] = useState(null);
+  const [upcomingAppt, setUpcomingAppt] = useState(false);
   // const todayDate = new Date().toISOString().split("T")[0];
 
 
@@ -46,6 +47,7 @@ export function EmpAppointments(props) {
           tempZoomLink = zoom1;
           console.log("zoom2");
         }
+        let foundNext = false;
 
         if(response.data.userAppointment !== 0){
           response.data.userAppointment.forEach((appt) => {
@@ -58,6 +60,11 @@ export function EmpAppointments(props) {
             let description= appt.description;
             
             let title = parse(`<h5><a href = ${tempZoomLink} style = "color:white;"><i>Click to join </i><b>${appt.title}</b> with <b>${appt.patient_name}</b></a></h5>`);
+
+            if (!foundNext & end > new Date(new Date().setDate(new Date().getDate()))){
+              setUpcomingAppt(appt);
+              foundNext = true;
+            } 
 
             arr.push({
               id: id,
@@ -128,7 +135,7 @@ export function EmpAppointments(props) {
                   // console.log(allAppointment[allAppointment.length - 1].title.props.children.props.children[1].props.children)
                   console.log(allAppointment[0].start)
                   axios
-                    .post("http://localhost:3001/send-sms", {  phone_number: "7706332309", text_content: `This is a reminder about your appointment ${allAppointment[allAppointment.length - 1].title.props.children.props.children[1].props.children} scheduled for ${allAppointment[0].start} with ${userFullName}.`})
+                    .post("http://localhost:3001/send-sms", {  phone_number: "7706332309", text_content: `This is a reminder about your appointment ${upcomingAppt.title} scheduled for ${new Date(upcomingAppt.start)} with ${userFullName}.`})
                     .then(function (response) {
                       alert("Patient notified"); 
                     })
@@ -146,7 +153,7 @@ export function EmpAppointments(props) {
             style = {{maxWidth: '700px'}}
             data={allAppointment} 
             defaultDate={displayDate} 
-            timezone="Etc/UTC"
+            // timezone="Etc/UTC"
             editable={false}
             >  
             <DayView 
