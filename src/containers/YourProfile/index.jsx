@@ -65,6 +65,17 @@ export function YourProfile(props) {
         document.title = "Your Profile";  
       }, []);
 
+    useEffect(() => {
+        if(assignedDocId & !assignedDocName){
+            axios.get(`http://localhost:3001/user/find/${assignedDocId}`, { withCredentials: true })
+            .then((response) => {
+                setAssignedDocName(response.data[0].full_name)
+            }).catch((err) => {
+                console.log("CHP/index.jsx" + err);
+            });
+        }
+    })
+
     return (<>
         <NavBar email={fullName} />
         <PageContainer>
