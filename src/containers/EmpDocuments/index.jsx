@@ -35,6 +35,7 @@ export function EmpDocuments(props) {
     const [patientList, setPatientList] = useState(null);
     const [fullName, setFullName] = useState("");
     const [preview, setPreview] = useState({})
+    const [isDoctor, setIsDoctor] = useState(true)
     let patients = [];
 
     const handleClose = () => setShow(false);
@@ -90,7 +91,6 @@ export function EmpDocuments(props) {
 
         axios.post('http://localhost:3001/me', { withCredentials: true })
             .then((response) => {
-                console.log(response.data)
                 setEmail(response.data.email)
                 setFullName(response.data.full_name)
                 setID(response.data.user_id)
@@ -107,20 +107,24 @@ export function EmpDocuments(props) {
                 console.log(err.message)
             })
         
-            axios.get("http://localhost:3001/user/findAll")
-                .then((response) => {
-                    response.data.forEach((element) => {
-                        if (element.user_type === "patient") {
-                            patients.push({ id: element.user_id, name: element.full_name });
-                        }
-                    });
-                    setPatientList(patients);
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
 
-    }, [user_id])
+            if(isDoctor){
+                axios.post('http://localhost:3001/get-patients-by-docId', 
+                {
+                    "doctor_id" : user_id
+                },{ 
+                    withCredentials: true 
+                })
+                    .then((response) => {
+                        setPatientList(response.data)
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
+            }
+            
+
+    }, [user_id, isDoctor])
 
     useEffect(() => {
         document.title = "Documents";  
@@ -137,8 +141,7 @@ export function EmpDocuments(props) {
                 onHide={handleCloseSuccess}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
-                >
-                        
+                >   
                 <Modal.Header closeButton>
                 <Modal.Title>Success!</Modal.Title>
                 </Modal.Header>
@@ -165,7 +168,7 @@ export function EmpDocuments(props) {
                             <option>Current Patients</option>
                             {patientList
                             ? patientList.map((patient) => (
-                                <option key={patient.id} value={patient.id}>{patient.name}</option>
+                                <option key={patient.user_id} value={patient.user_id}>{patient.full_name}</option>
                             ))
                             : null}    
                         </Form.Select>  
@@ -214,7 +217,7 @@ export function EmpDocuments(props) {
                             <option>Current Patients</option>
                             {patientList
                             ? patientList.map((patient) => (
-                                <option key={patient.id} value={patient.id}>{patient.name}</option>
+                                <option key={patient.user_id} value={patient.user_id}>{patient.full_name}</option>
                             ))
                             : null} 
                         </Form.Select>  
