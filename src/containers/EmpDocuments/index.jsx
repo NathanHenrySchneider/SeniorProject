@@ -35,7 +35,7 @@ export function EmpDocuments(props) {
     const [patientList, setPatientList] = useState(null);
     const [fullName, setFullName] = useState("");
     const [preview, setPreview] = useState({})
-    const [isDoctor, setIsDoctor] = useState(true)
+    const [isDoctor, setIsDoctor] = useState(false)
     let patients = [];
 
     const handleClose = () => setShow(false);
@@ -94,6 +94,7 @@ export function EmpDocuments(props) {
                 setEmail(response.data.email)
                 setFullName(response.data.full_name)
                 setID(response.data.user_id)
+                if(response.data.user_type === 'doctor') setIsDoctor(true)
             })
             .catch((err) => {
                 console.log("CHP/index.jsx" + err);
@@ -121,6 +122,22 @@ export function EmpDocuments(props) {
                     .catch((err) => {
                         console.log(err);
                     })
+            } else {
+                axios.get("http://localhost:3001/user/findAll")
+                .then((response) => {
+                    response.data.forEach((element) => {
+                        if (element.user_type === "patient") {
+                            patients.push({ user_id: element.user_id, full_name: element.full_name });
+                        }
+                    });
+                    setPatientList(patients)
+                })
+                .catch((err) => {
+                     console.log(err);
+                });
+
+
+
             }
             
 
